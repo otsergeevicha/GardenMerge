@@ -1,76 +1,96 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Services.Input
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class DragDrop : MonoBehaviour
     {
         [SerializeField] private InputAction _press;
-        [SerializeField] private InputAction _screenPosition;
 
         private Camera _camera;
-        private Vector3 _currentScreenPosition;
-        private Vector3 _currentOffset;
-        private bool _isDragging;
         private Rigidbody _rigidbody;
-        private Plane _dragPlane;
-        private Coroutine _coroutine;
 
-        private bool isClickedOn =>
+        private Vector3 _currentScreenPosition;
+        private IDragAndDrop _dragAndDrop;
+        private bool _isDragging;
+        private Coroutine _dragRoutine;
+
+        private bool IsClickedOn =>
             CheckRayCast();
-
-        private Vector3 worldPosition => 
-            ScreenToWorldPoint(out float z);
 
         private void OnEnable()
         {
             _press.Enable();
-            _screenPosition.Enable();
+            _press.started += OnUp;
+            _press.canceled += OnDrop;
+        }
 
+        private void OnUp(InputAction.CallbackContext callbackContext)
+        {
+            if (IsClickedOn == false)
+            {
+                return;
+            }
+
+            _dragAndDrop.Up();
+            _dragRoutine ??= StartCoroutine(Drag());
+        }
+
+        private void OnDrop(InputAction.CallbackContext callbackContext)
+        {
+            if (_dragAndDrop == null)
+            {
+                return;
+            }
+
+            _dragAndDrop.Drop();
+            _isDragging = false;
+
+            if (_dragRoutine != null)
+            {
+                StopCoroutine(_dragRoutine);
+                _dragRoutine = null;
+            }
+
+            _dragAndDrop = null;
+        }
+
+        private void Start() =>
             _camera = Camera.main;
-            _rigidbody = GetComponent<Rigidbody>();
 
-            _screenPosition.performed += context => {_currentScreenPosition = context.ReadValue<Vector2>();};
-
-            _press.performed += _ => {_coroutine = StartCoroutine(Drag());};
-
-            _press.canceled += _ => {_isDragging = false;};
-        }
-
-        private void OnDisable()
+        private Vector3 ScreenToWorldPoint()
         {
-            if(_coroutine != null)
-                StopCoroutine(_coroutine);
-        }
-
-        private Vector3 ScreenToWorldPoint(out float z)
-        {
-            z = _camera.WorldToScreenPoint(transform.position).z;
-            return _camera.ScreenToWorldPoint(_currentScreenPosition + new Vector3(0, 0, z));
+            float z = _camera.WorldToScreenPoint(transform.position).z;
+            return _camera.ScreenToWorldPoint((Vector3) Mouse.current.position.ReadValue() + new Vector3(0, 0, z));
         }
 
         private bool CheckRayCast()
         {
-            Ray ray = _camera.ScreenPointToRay(_currentScreenPosition);
-            return Physics.Raycast(ray, out RaycastHit hit) ? hit.transform : false;
+            Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            return Physics.Raycast(ray, out RaycastHit hit) && TrySetBlockPlant(hit);
+        }
+
+        private bool TrySetBlockPlant(RaycastHit hit)
+        {
+            if (hit.collider.gameObject.TryGetComponent(out IDragAndDrop dragAndDropping))
+            {
+                _dragAndDrop = dragAndDropping;
+                return true;
+            }
+
+            return false;
         }
 
         private IEnumerator Drag()
         {
             _isDragging = true;
-            Vector3 offset = transform.position - worldPosition;
-            _rigidbody.useGravity = false;
 
             while(_isDragging)
             {
-                transform.position = worldPosition + offset;
-                yield return null;
+                _dragAndDrop.Drag(ScreenToWorldPoint());
+                yield return new WaitForFixedUpdate();
             }
-            
-            _rigidbody.useGravity = true;
         }
     }
 }
