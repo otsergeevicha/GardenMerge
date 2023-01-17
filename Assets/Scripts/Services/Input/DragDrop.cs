@@ -6,15 +6,17 @@ namespace Services.Input
 {
     public class DragDrop : MonoBehaviour
     {
-        [SerializeField] private InputAction _press;
+        private readonly WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
 
+        [SerializeField] private InputAction _press;
+        [SerializeField] private LayerMask _layerMask;
+
+        private bool _isDragging;
+        private IDragAndDrop _dragAndDrop;
         private Camera _camera;
         private Rigidbody _rigidbody;
-
-        private Vector3 _currentScreenPosition;
-        private IDragAndDrop _dragAndDrop;
-        private bool _isDragging;
         private Coroutine _dragRoutine;
+        private Vector3 _currentScreenPosition;
 
         private bool IsClickedOn =>
             CheckRayCast();
@@ -25,6 +27,9 @@ namespace Services.Input
             _press.started += OnUp;
             _press.canceled += OnDrop;
         }
+
+        private void Start() =>
+            _camera = Camera.main;
 
         private void OnUp(InputAction.CallbackContext callbackContext)
         {
@@ -56,40 +61,51 @@ namespace Services.Input
             _dragAndDrop = null;
         }
 
-        private void Start() =>
-            _camera = Camera.main;
-
         private Vector3 ScreenToWorldPoint()
         {
             float z = _camera.WorldToScreenPoint(transform.position).z;
             return _camera.ScreenToWorldPoint((Vector3) Mouse.current.position.ReadValue() + new Vector3(0, 0, z));
         }
 
+        private Vector3 ScreenToWorldOnPlainPoint()
+        {
+            Ray ray = GetCameraRay();
+
+            Physics.Raycast(ray, out RaycastHit hit, 50f, _layerMask);
+            return hit.point;
+        }
+
         private bool CheckRayCast()
         {
-            Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Ray ray = GetCameraRay();
             return Physics.Raycast(ray, out RaycastHit hit) && TrySetBlockPlant(hit);
+        }
+
+        private Ray GetCameraRay()
+        {
+            Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            return ray;
         }
 
         private bool TrySetBlockPlant(RaycastHit hit)
         {
-            if (hit.collider.gameObject.TryGetComponent(out IDragAndDrop dragAndDropping))
+            if (hit.collider.gameObject.TryGetComponent(out IDragAndDrop dragAndDropping) == false)
             {
-                _dragAndDrop = dragAndDropping;
-                return true;
+                return false;
             }
 
-            return false;
+            _dragAndDrop = dragAndDropping;
+            return true;
         }
 
         private IEnumerator Drag()
         {
             _isDragging = true;
 
-            while(_isDragging)
+            while (_isDragging)
             {
-                _dragAndDrop.Drag(ScreenToWorldPoint());
-                yield return new WaitForFixedUpdate();
+                _dragAndDrop.Drag(ScreenToWorldOnPlainPoint());
+                yield return _waitForFixedUpdate;
             }
         }
     }
