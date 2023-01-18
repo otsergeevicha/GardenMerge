@@ -1,4 +1,5 @@
 using System.Collections;
+using Services.Move;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,16 +7,16 @@ namespace Services.Input
 {
     public class DragDrop : MonoBehaviour
     {
-        private readonly WaitForFixedUpdate _waitForFixedUpdate = new WaitForFixedUpdate();
-
         [SerializeField] private InputAction _press;
+        [SerializeField] private InputAction _mousePosition;
         [SerializeField] private LayerMask _layerMask;
 
+        private const float MaxDistance = 50f;
+
         private bool _isDragging;
-        private IDragAndDrop _dragAndDrop;
+        private IServiceDragAndDrop _serviceDragAndDrop;
         private Camera _camera;
-        private Rigidbody _rigidbody;
-        private Coroutine _dragRoutine;
+        private Coroutine _coroutine;
         private Vector3 _currentScreenPosition;
 
         private bool IsClickedOn =>
@@ -23,6 +24,7 @@ namespace Services.Input
 
         private void OnEnable()
         {
+            _mousePosition.Enable();
             _press.Enable();
             _press.started += OnUp;
             _press.canceled += OnDrop;
@@ -31,47 +33,44 @@ namespace Services.Input
         private void Start() =>
             _camera = Camera.main;
 
+        private void OnDisable()
+        {
+            if(_coroutine != null) StopCoroutine(_coroutine);
+        }
+
         private void OnUp(InputAction.CallbackContext callbackContext)
         {
-            if (IsClickedOn == false)
+            if(IsClickedOn == false)
             {
                 return;
             }
 
-            _dragAndDrop.Up();
-            _dragRoutine ??= StartCoroutine(Drag());
+            _serviceDragAndDrop.Up();
+            _coroutine = StartCoroutine(Drag());
         }
 
         private void OnDrop(InputAction.CallbackContext callbackContext)
         {
-            if (_dragAndDrop == null)
-            {
-                return;
-            }
+            if(_serviceDragAndDrop == null) return;
 
-            _dragAndDrop.Drop();
+            _serviceDragAndDrop.Drop();
             _isDragging = false;
 
-            if (_dragRoutine != null)
-            {
-                StopCoroutine(_dragRoutine);
-                _dragRoutine = null;
-            }
-
-            _dragAndDrop = null;
+            if(_coroutine == null) return;
+            StopCoroutine(_coroutine); _serviceDragAndDrop = null;
         }
 
         private Vector3 ScreenToWorldPoint()
         {
             float z = _camera.WorldToScreenPoint(transform.position).z;
-            return _camera.ScreenToWorldPoint((Vector3) Mouse.current.position.ReadValue() + new Vector3(0, 0, z));
+            return _camera.ScreenToWorldPoint((Vector3) _mousePosition.ReadValue<Vector2>() + new Vector3(0, 0, z));
         }
 
         private Vector3 ScreenToWorldOnPlainPoint()
         {
             Ray ray = GetCameraRay();
 
-            Physics.Raycast(ray, out RaycastHit hit, 50f, _layerMask);
+            Physics.Raycast(ray, out RaycastHit hit, MaxDistance, _layerMask);
             return hit.point;
         }
 
@@ -83,18 +82,18 @@ namespace Services.Input
 
         private Ray GetCameraRay()
         {
-            Ray ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Ray ray = _camera.ScreenPointToRay(_mousePosition.ReadValue<Vector2>());
             return ray;
         }
 
         private bool TrySetBlockPlant(RaycastHit hit)
         {
-            if (hit.collider.gameObject.TryGetComponent(out IDragAndDrop dragAndDropping) == false)
+            if(hit.collider.gameObject.TryGetComponent(out IServiceDragAndDrop dragAndDropping) == false)
             {
                 return false;
             }
 
-            _dragAndDrop = dragAndDropping;
+            _serviceDragAndDrop = dragAndDropping;
             return true;
         }
 
@@ -102,10 +101,10 @@ namespace Services.Input
         {
             _isDragging = true;
 
-            while (_isDragging)
+            while(_isDragging)
             {
-                _dragAndDrop.Drag(ScreenToWorldOnPlainPoint());
-                yield return _waitForFixedUpdate;
+                _serviceDragAndDrop.Drag(ScreenToWorldOnPlainPoint());
+                yield return null;
             }
         }
     }

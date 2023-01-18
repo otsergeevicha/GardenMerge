@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Services.Input
+namespace Services.Move
 {
-    public interface IDragAndDrop
+    public interface IServiceDragAndDrop
     {
         public void Up();
         public void Drag(Vector3 newPosition);
