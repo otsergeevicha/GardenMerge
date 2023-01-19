@@ -8,7 +8,7 @@ namespace Field.Plants.EpicPlants
     {
         private const float RequiredTimeForCollect = 3.5f;
         private const float RewardTimeToRipe = 6f;
-        private const int Level = 31;
+        private const int Level = 10;
 
         private bool _isRiped;
         private Coroutine _coroutine;

@@ -8,7 +8,7 @@ namespace Field.Plants.EpicPlants
     {
         private const float RequiredTimeForCollect = 5.5f;
         private const float RewardTimeToRipe = 8f;
-        private const int Level = 33;
+        private const int Level = 12;
 
         private bool _isRiped;
         private Coroutine _coroutine;
@@ -31,10 +31,10 @@ namespace Field.Plants.EpicPlants
 
             _coroutine = StartCoroutine(IServiceCollect.WorkWithPlants(RewardTimeToRipe));
             
+            _isRiped = true;
+            
             if(_coroutine != null)
                 StopCoroutine(_coroutine);
-
-            _isRiped = true;
         }
 
         public override bool IsRipe() =>

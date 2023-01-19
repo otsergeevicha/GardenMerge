@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 1874685710899639028}
   - component: {fileID: 6266773809978276455}
   - component: {fileID: 8395794683421011326}
+  - component: {fileID: -140708229337027357}
+  - component: {fileID: -7177859375681412666}
+  - component: {fileID: 7137254464121941009}
   m_Layer: 0
   m_Name: TreeGold
   m_TagString: Untagged
@@ -97,3 +100,44 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-140708229337027357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7325744630621228096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 622f240611d342a0bf4e85f7293de3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &-7177859375681412666
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7325744630621228096}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7137254464121941009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7325744630621228096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2611335171e2d8b4c9826dda8faaea80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundOffset: 2.1

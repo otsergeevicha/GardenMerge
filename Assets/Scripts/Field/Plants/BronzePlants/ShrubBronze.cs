@@ -8,7 +8,7 @@ namespace Field.Plants.BronzePlants
     {
         private const float RequiredTimeForCollect = 2.5f;
         private const float RewardTimeToRipe = 4f;
-        private const int Level = 12;
+        private const int Level = 3;
 
         private bool _isRiped;
         private Coroutine _coroutine;
