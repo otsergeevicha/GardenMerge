@@ -1,25 +1,27 @@
-using System;
+using Field.Plants;
 using Field.Tiles;
-using Field.Vegetation.Seeds;
 using UnityEngine;
 
 namespace Services.Move
 {
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Vegetation))]
     public class DraggingOptionVegetation : MonoBehaviour, IServiceDragAndDrop
     {
         [SerializeField] private float _groundOffset;
-        [SerializeField] private Seed _seed;
 
         private Rigidbody _rigidbody;
-        private Coroutine _coroutine;
+        private Vegetation _vegetation;
 
-        private void Start() =>
+        private void Start()
+        {
+            _vegetation = GetComponent<Vegetation>();
             _rigidbody = GetComponent<Rigidbody>();
+        }
 
         public void Up()
         {
-            _seed.RecordFirstPosition(transform.position);
+            _vegetation.RecordFirstPosition(transform.position);
             SetGravity(false);
         }
 
@@ -42,18 +44,18 @@ namespace Services.Move
             Ray ray = SendRay();
 
             if(Physics.Raycast(ray, out RaycastHit hit))
-                if(hit.collider.gameObject.TryGetComponent(out Seed seedCollision))
-                    Merge(seedCollision);
+                if(hit.collider.gameObject.TryGetComponent(out Vegetation vegetationCollision))
+                    Merge(vegetationCollision);
         }
 
-        private void Merge(Seed seedCollision)
+        private void Merge(Vegetation vegetationCollision)
         {
-            if(seedCollision.GetLevel() != _seed.GetLevel())
+            if(vegetationCollision.GetLevel() == _vegetation.GetLevel())
             {
-                Vector3 placeMerge = seedCollision.transform.position;
-                int levelMerge = seedCollision.GetLevel();
-                seedCollision.gameObject.SetActive(false);
-                _seed.gameObject.SetActive(false);
+                Vector3 placeMerge = vegetationCollision.transform.position;
+                int levelMerge = vegetationCollision.GetLevel();
+                vegetationCollision.gameObject.SetActive(false);
+                _vegetation.gameObject.SetActive(false);
 
                 //Instantiate(); - здесь появляется третья сущность в зависимости от левела слитых сущностей
                 print("Сущности слились " + placeMerge +
@@ -68,16 +70,16 @@ namespace Services.Move
             if(Physics.Raycast(ray, out RaycastHit hit))
             {
                 if(hit.collider.gameObject.TryGetComponent(out TileLanding tileLanding))
-                    tileLanding.TryGetLanding(_seed);
+                    tileLanding.TryGetLanding(_vegetation);
 
                 else if(hit.collider.gameObject.TryGetComponent(out TileMerge tileMerge))
-                    tileMerge.TryGetLanding(_seed);
+                    tileMerge.TryGetLanding(_vegetation);
 
-                else if(hit.collider.gameObject.TryGetComponent(out Seed _))
-                    _seed.InitPosition(_seed.ReadFirstPosition());
+                else if(hit.collider.gameObject.TryGetComponent(out Vegetation _))
+                    _vegetation.InitPosition(_vegetation.ReadFirstPosition());
 
                 else
-                    _seed.InitPosition(_seed.ReadFirstPosition());
+                    _vegetation.InitPosition(_vegetation.ReadFirstPosition());
             }
         }
 

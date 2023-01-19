@@ -1,6 +1,6 @@
-namespace Field.Vegetation.Seeds
+namespace Field.Plants.Seeds
 {
-    public class SeedGold : Seed
+    public class SeedGold : Vegetation
     {
         private const int Level = 2;
 

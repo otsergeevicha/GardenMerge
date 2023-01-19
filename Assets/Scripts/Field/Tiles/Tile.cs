@@ -1,4 +1,4 @@
-using Field.Vegetation.Seeds;
+using Field.Plants;
 using Services.Move;
 using UnityEngine;
 
@@ -8,31 +8,31 @@ namespace Field.Tiles
     {
         private const float CorrectPositionY = 1.5f;
                 
-        private Seed _seed = null;
+        private Vegetation _vegetation = null;
         private bool _isFreePlace = true;
 
         private void OnTriggerExit(Collider collision)
         {
-            if(collision.TryGetComponent<Seed>(out _))
+            if(collision.TryGetComponent<Vegetation>(out _))
             {
-                _seed = null;
+                _vegetation = null;
                 _isFreePlace = true;
             }
         }
 
-        public void TryGetLanding(Seed seed)
+        public void TryGetLanding(Vegetation vegetation)
         {
             if(_isFreePlace)
             {
                 Vector3 position = transform.position;
-                seed.InitPosition(new Vector3(position.x, position.y + CorrectPositionY, position.z));
-                ChangeFlagFreePlace(seed);
+                vegetation.InitPosition(new Vector3(position.x, position.y + CorrectPositionY, position.z));
+                ChangeFlagFreePlace(vegetation);
             }
         }
 
-        private void ChangeFlagFreePlace(Seed seed)
+        private void ChangeFlagFreePlace(Vegetation vegetation)
         {
-            _seed = seed;
+            _vegetation = vegetation;
             _isFreePlace = false;
         }
     }

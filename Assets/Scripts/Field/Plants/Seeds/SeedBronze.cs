@@ -1,12 +1,12 @@
-namespace Field.Vegetation.Seeds
+namespace Field.Plants.Seeds
 {
-    public class SeedEpic : Seed
+    public class SeedBronze : Vegetation
     {
-        private const int Level = 3;
+        private const int Level = 1;
 
         public override int GetLevel() => 
             Level;
-        
+
         public override bool IsRipe() => 
             false;
     }

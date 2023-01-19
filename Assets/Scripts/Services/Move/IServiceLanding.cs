@@ -1,10 +1,9 @@
-using Field.Vegetation;
-using Field.Vegetation.Seeds;
+using Field.Plants;
 
 namespace Services.Move
 {
     public interface IServiceLanding
     {
-        public void TryGetLanding(Seed seed);
+        public void TryGetLanding(Vegetation vegetation);
     }
 }
