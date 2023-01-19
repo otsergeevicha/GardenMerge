@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Field.Plants;
 using Infrastructure.Factory;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,6 +14,7 @@ namespace Field.GardenObserver
 
         private bool _isWork;
         private Coroutine _coroutine;
+        private Vegetation _plant;
 
         private void Start()
         {
@@ -41,11 +43,15 @@ namespace Field.GardenObserver
 
         private IEnumerator CuttingLeaves()
         {
+            var waitForFixedUpdate = new WaitForFixedUpdate();
+
             while(_isWork)
             {
-                _agent.Move(SelectedTarget());
-                _agent.ResetPath();
-                yield return new WaitForFixedUpdate();
+                _agent.SetDestination(SelectedTarget());
+                
+                if(_agent.isPathStale) 
+                    _agent.ResetPath();
+                yield return waitForFixedUpdate;
             }
         }
     }

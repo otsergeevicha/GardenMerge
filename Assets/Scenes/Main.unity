@@ -4278,6 +4278,7 @@ GameObject:
   - component: {fileID: 1635511947}
   - component: {fileID: 1635511951}
   - component: {fileID: 1635511952}
+  - component: {fileID: 1635511953}
   m_Layer: 0
   m_Name: Gardener
   m_TagString: Untagged
@@ -4374,7 +4375,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0.2
+  m_Speed: 2.5
   m_Acceleration: 2
   avoidancePriority: 50
   m_AngularSpeed: 1
@@ -4400,6 +4401,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _agent: {fileID: 1635511951}
   _factory: {fileID: 1170050902}
+--- !u!65 &1635511953
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635511946}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1638146839
 GameObject:
   m_ObjectHideFlags: 0

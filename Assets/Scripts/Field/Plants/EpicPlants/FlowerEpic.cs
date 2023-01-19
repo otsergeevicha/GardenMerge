@@ -1,5 +1,5 @@
+using System.Collections;
 using Field.GardenObserver;
-using Services.Collect;
 using UnityEngine;
 
 namespace Field.Plants.EpicPlants
@@ -18,22 +18,16 @@ namespace Field.Plants.EpicPlants
 
         private void OnTriggerEnter(Collider collision)
         {
-            if(collision.TryGetComponent(out Gardener _))
-                CollectingLeaves();
+            if(collision.TryGetComponent(out Gardener _)) 
+                _coroutine = StartCoroutine(CollectingLeaves());
         }
 
-        private void CollectingLeaves()
+        private IEnumerator CollectingLeaves()
         {
-            _coroutine = StartCoroutine(IServiceCollect.WorkWithPlants(RequiredTimeForCollect));
+            yield return new WaitForSeconds(RequiredTimeForCollect);
+            _isRiped = false;
 
-            if(_coroutine != null)
-                StopCoroutine(_coroutine);
-
-            _coroutine = StartCoroutine(IServiceCollect.WorkWithPlants(RewardTimeToRipe));
-            
-            if(_coroutine != null)
-                StopCoroutine(_coroutine);
-
+            yield return new WaitForSeconds(RewardTimeToRipe);
             _isRiped = true;
         }
 
