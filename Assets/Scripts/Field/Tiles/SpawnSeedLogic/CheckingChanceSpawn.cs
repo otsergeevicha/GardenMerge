@@ -9,8 +9,8 @@ namespace Field.Tiles.SpawnSeedLogic
     {
         [SerializeField] private TileMerge[] _tileMerges;
 
-        private const float RequiredTimeForSendRay = 1f;
-        private const float RequiredTimeCooldown = 5f;
+        private const float RequiredTimeForSendRay = .1f;
+        private const float RequiredTimeCooldown = 1f;
 
         private Coroutine _coroutine;
         private Vector3 _creatingPlatform;

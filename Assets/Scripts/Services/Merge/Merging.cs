@@ -38,8 +38,8 @@ namespace Services.Merge
 
             if(vegetationCollision.GetLevel() != vegetation.GetLevel())
             {
-                Vector3 tempVarPoint = vegetation.ReadFirstPosition();
-                vegetationCollision.InitPosition(vegetation.transform.position);
+                Vector3 tempVarPoint = vegetationCollision.transform.position;
+                vegetationCollision.InitPosition(vegetation.ReadFirstPosition());
                 vegetation.InitPosition(tempVarPoint);
             }
         }
