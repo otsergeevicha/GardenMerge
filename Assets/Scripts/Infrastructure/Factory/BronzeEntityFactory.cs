@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Field.Plants;
 using Infrastructure.AssetManagement;
+using Services.Move;
 using UnityEngine;
 
 namespace Infrastructure.Factory
@@ -8,12 +10,14 @@ namespace Infrastructure.Factory
     public class BronzeEntityFactory : PlantsFactory
     {
         [SerializeField] private int _capacity;
-        
+
         private AssetProvider _assetProvider = new AssetProvider();
 
-        private void Start() => 
+        private void Awake()
+        {
             Init();
-        
+        }
+
         public override void Init()
         {
             for(int i = 0; i < _capacity; i++)
@@ -26,12 +30,13 @@ namespace Infrastructure.Factory
                     .GetComponent<Vegetation>());
             }
         }
-        
+
         private GameObject InstantiateRegistered(string typeSeed)
         {
             GameObject vegetation = _assetProvider.Instantiate(typeSeed, Vector3.zero);
-             vegetation.gameObject.SetActive(false);
-             return vegetation;
+            vegetation.gameObject.SetActive(false);
+            vegetation.GetComponent<DraggingOptionVegetation>().Init(Merging);
+            return vegetation;
         }
     }
 }

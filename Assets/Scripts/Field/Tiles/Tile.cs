@@ -9,7 +9,7 @@ namespace Field.Tiles
         private const float CorrectPositionY = 1.5f;
                 
         private Vegetation _vegetation = null;
-        private bool _isFreePlace = true;
+        protected bool _isFreePlace = true;
 
         private void OnTriggerExit(Collider collision)
         {

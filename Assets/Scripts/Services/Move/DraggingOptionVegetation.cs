@@ -1,6 +1,7 @@
 using Field.Plants;
 using Field.Tiles;
-using Infrastructure.Factory;
+using Field.Tiles.Move;
+using Services.Merge;
 using UnityEngine;
 
 namespace Services.Move
@@ -11,9 +12,11 @@ namespace Services.Move
     {
         [SerializeField] private float _groundOffset;
 
-        private PlantsFactory _plantsFactory = new OperatorFactory();
         private Rigidbody _rigidbody;
         private Vegetation _vegetation;
+
+        private Merging _merging;
+        private TileMerge _tileMerge;
 
         private void Start()
         {
@@ -21,13 +24,16 @@ namespace Services.Move
             _rigidbody = GetComponent<Rigidbody>();
         }
 
+        public void Init(Merging merging) => 
+            _merging = merging;
+
         public void Up()
         {
             _vegetation.RecordFirstPosition(transform.position);
             SetGravity(false);
         }
 
-        public void Drag(Vector3 newPosition) => 
+        public void Drag(Vector3 newPosition) =>
             _rigidbody.position = GetWithOffset(newPosition);
 
         public void Drop()
@@ -35,38 +41,6 @@ namespace Services.Move
             CheckingMerge();
             Landing();
             SetGravity(true);
-        }
-
-        private void CheckingMerge()
-        {
-            Ray ray = SendRay();
-
-            if(Physics.Raycast(ray, out RaycastHit hit))
-                if(hit.collider.gameObject.TryGetComponent(out Vegetation vegetationCollision))
-                    Merge(vegetationCollision);
-        }
-
-        private void Merge(Vegetation vegetationCollision)
-        {
-            if(vegetationCollision.GetLevel() == _vegetation.GetLevel())
-            {
-                Vector3 placeMerge = vegetationCollision.transform.position;
-                int levelMerge = vegetationCollision.GetLevel();
-                levelMerge++;
-                vegetationCollision.gameObject.SetActive(false);
-                _vegetation.gameObject.SetActive(false);
-
-                foreach(Vegetation plant in _plantsFactory.GetAllPlants())
-                {
-                    if(plant.GetLevel() == levelMerge && plant.gameObject.activeInHierarchy == false)
-                    {
-                        print(levelMerge);
-                        plant.gameObject.transform.position = placeMerge;
-                        plant.gameObject.SetActive(true);
-                        return;
-                    }
-                }
-            }
         }
 
         private void Landing()
@@ -89,8 +63,34 @@ namespace Services.Move
             }
         }
 
-        private Ray SendRay() => 
-            new Ray(transform.position, Vector3.down);
+        private void CheckingMerge()
+        {
+            RaycastHit[] arrayHits = Physics.RaycastAll(transform.position, Vector3.down, 50f);
+            
+            Vegetation currentVegetation = null;
+            
+            bool tileMerge = false;
+            bool mergeVegetation = false;
+            
+            for(int i = 0; i < arrayHits.Length; i++)
+            {
+                if(arrayHits[i].collider.gameObject.TryGetComponent(out Vegetation vegetationCollision))
+                {
+                    currentVegetation = vegetationCollision;
+                    mergeVegetation = true;
+                }
+
+                if(arrayHits[i].collider.gameObject.TryGetComponent(out TileMerge _)) 
+                    tileMerge = true;
+            }
+
+            if(tileMerge && mergeVegetation) 
+                _merging.Merge(currentVegetation, _vegetation);
+
+        }
+
+        private Ray SendRay() =>
+            new(transform.position, Vector3.down);
 
         private void SetGravity(bool isEnabled) =>
             _rigidbody.useGravity = isEnabled;

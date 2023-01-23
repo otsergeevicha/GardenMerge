@@ -41,9 +41,7 @@ namespace Services.Input
         private void OnUp(InputAction.CallbackContext callbackContext)
         {
             if(IsClickedOn == false)
-            {
                 return;
-            }
 
             _serviceDragAndDrop.Up();
             _coroutine = StartCoroutine(Drag());

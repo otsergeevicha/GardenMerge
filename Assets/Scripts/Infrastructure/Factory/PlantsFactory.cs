@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using Field.Plants;
 using Services.Factory;
+using Services.Merge;
 using UnityEngine;
 
 namespace Infrastructure.Factory
 {
     public abstract class PlantsFactory : MonoBehaviour, IServicePlantsFactory
     {
-        public static List<Vegetation> Plants = new List<Vegetation>();
+        [SerializeField] protected Merging Merging;
+        
+        public List<Vegetation> Plants = new List<Vegetation>();
 
         public abstract void Init();
         
