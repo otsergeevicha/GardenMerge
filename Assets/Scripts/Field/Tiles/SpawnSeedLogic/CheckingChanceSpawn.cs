@@ -14,6 +14,7 @@ namespace Field.Tiles.SpawnSeedLogic
 
         private Coroutine _coroutine;
         private Vector3 _creatingPlatform;
+        private int _currentIndex = 0;
 
         public event Action<Vector3> OnAllowed;
 
@@ -36,13 +37,17 @@ namespace Field.Tiles.SpawnSeedLogic
 
         private bool SendRay()
         {
-            foreach(var tile in _tileMerges)
+            for(var i = _currentIndex; i < _tileMerges.Length; i++)
             {
-                if(!Physics.Raycast(tile.gameObject.transform.position, Vector3.up))
+                if(!Physics.Raycast(_tileMerges[i].gameObject.transform.position, Vector3.up))
                 {
-                    _creatingPlatform = tile.gameObject.transform.position;
+                    _currentIndex++;
+                    _creatingPlatform = _tileMerges[i].gameObject.transform.position;
                     return true;
                 }
+
+                if(_currentIndex >= _tileMerges.Length - 1) 
+                    _currentIndex = 0;
             }
 
             return false;
@@ -51,9 +56,9 @@ namespace Field.Tiles.SpawnSeedLogic
         private IEnumerator WorkingSpawn()
         {
             yield return new WaitForSeconds(RequiredTimeForSendRay);
-            SendRay();
+            bool tempVar = SendRay();
             
-            if(SendRay())
+            if(tempVar)
             {
                 yield return new WaitForSeconds(RequiredTimeCooldown);
                 OnAllowed?.Invoke(_creatingPlatform);

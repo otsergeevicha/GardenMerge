@@ -768,7 +768,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Merging: {fileID: 1370026350}
-  Plants: []
   _capacitySeed: 10
 --- !u!1 &570113675
 GameObject:
@@ -1482,7 +1481,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Merging: {fileID: 1370026350}
-  Plants: []
   _capacity: 10
 --- !u!1 &907633589
 GameObject:
@@ -1851,7 +1849,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Merging: {fileID: 1370026350}
-  Plants: []
   _capacity: 10
 --- !u!1 &1038141744
 GameObject:
@@ -2122,7 +2119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Merging: {fileID: 1370026350}
-  Plants: []
   _capacity: 10
 --- !u!1 &1104372232
 GameObject:
@@ -2283,7 +2279,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Merging: {fileID: 1370026350}
-  Plants: []
 --- !u!1 &1171012554
 GameObject:
   m_ObjectHideFlags: 0

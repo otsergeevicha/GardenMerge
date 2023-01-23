@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Field.Plants;
 using Field.Tiles.SpawnSeedLogic;
@@ -10,10 +11,13 @@ namespace Field.Tiles.Move
     {
         [SerializeField] private PlantsFactory _factory;
         [SerializeField] private CheckingChanceSpawn _checkingChanceSpawn;
-        
+
+        private Queue<Vegetation> _queueSpawnSeeds = new Queue<Vegetation>();
+        private bool _firstInitQueue = false;
+
         private const int LevelSpawn = 1;
 
-        private void OnEnable() => 
+        private void OnEnable() =>
             _checkingChanceSpawn.OnAllowed += OnVisibleNewSeed;
 
         private void OnDisable() =>
@@ -21,12 +25,31 @@ namespace Field.Tiles.Move
 
         private void OnVisibleNewSeed(Vector3 spawnPoint)
         {
-            Vegetation vegetation = _factory.GetAllPlants()
-                .FirstOrDefault(plant => 
-                    plant.GetLevel() == LevelSpawn);
+            if(_firstInitQueue == false) 
+                FirstInitQueue();
 
-            vegetation.gameObject.SetActive(true);
-            vegetation.InitPosition(spawnPoint);
+            var checkVar = _queueSpawnSeeds.Peek();
+            
+            if(checkVar.isActiveAndEnabled == false)
+            {
+                _queueSpawnSeeds.Enqueue(_queueSpawnSeeds.Peek());
+                var currentSeed = _queueSpawnSeeds.Dequeue();
+                currentSeed.gameObject.SetActive(true);
+                currentSeed.InitPosition(spawnPoint);
+            }
+        }
+
+        private void FirstInitQueue()
+        {
+            foreach(Vegetation vegetation in _factory.GetAllPlants())
+            {
+                if(vegetation.GetLevel() == LevelSpawn)
+                {
+                    _queueSpawnSeeds.Enqueue(vegetation);
+                }
+            }
+
+            _firstInitQueue = true;
         }
     }
 }

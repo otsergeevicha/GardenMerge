@@ -32,7 +32,6 @@ namespace Field.GardenObserver
 
             if(_isGetFirstTarget)
             {
-                print("first step");
                 _isGetFirstTarget = false;
                 OnFirstStep?.Invoke();
             }
