@@ -8,7 +8,7 @@ namespace Services.Merge
     public class Merging : MonoBehaviour
 
     {
-        [SerializeField] private GardenerBaseTargets _gardenerBase;
+        [SerializeField] private OperatorTargets _gardenerBase;
         [SerializeField] private OperatorFactory _plantsFactory;
 
         public void Merge(Vegetation vegetationCollision, Vegetation vegetation)
@@ -30,7 +30,6 @@ namespace Services.Merge
                     {
                         plant.gameObject.transform.position = placeMerge;
                         plant.gameObject.SetActive(true);
-                        _gardenerBase.Add(plant);
                         return;
                     }
                 }

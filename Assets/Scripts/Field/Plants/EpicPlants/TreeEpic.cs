@@ -1,4 +1,5 @@
 using System.Collections;
+using Field.GardenerLogic;
 using Field.GardenObserver;
 using UnityEngine;
 
@@ -14,12 +15,21 @@ namespace Field.Plants.EpicPlants
         private Coroutine _coroutine;
 
         private void Start() =>
-            _isRiped = true;
+            _isRiped = false;
 
         private void OnTriggerEnter(Collider collision)
         {
+            if(collision.TryGetComponent(out ObserverTargets _))
+                _isRiped = true;
+            
             if(collision.TryGetComponent(out Gardener _)) 
                 _coroutine = StartCoroutine(CollectingLeaves());
+        }
+
+        private void OnTriggerExit(Collider collision)
+        {
+            if(collision.TryGetComponent(out ObserverTargets _))
+                _isRiped = false;
         }
 
         private IEnumerator CollectingLeaves()

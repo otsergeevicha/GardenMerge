@@ -1,6 +1,8 @@
-using System;
 using System.Collections;
+using System.Linq;
+using Field.Plants;
 using Field.Tiles.Move;
+using Infrastructure.Factory;
 using UnityEngine;
 
 namespace Field.Tiles.SpawnSeedLogic
@@ -8,15 +10,16 @@ namespace Field.Tiles.SpawnSeedLogic
     public class CheckingChanceSpawn : MonoBehaviour
     {
         [SerializeField] private TileMerge[] _tileMerges;
+        [SerializeField] private SeedFactory _factory;
 
-        private const float RequiredTimeForSendRay = .1f;
-        private const float RequiredTimeCooldown = 1f;
+        [SerializeField] private float _requiredTimeForSendRay;
+        [SerializeField] private float _requiredTimeCooldown;
+        
+        private const int LevelSpawn = 1;
 
         private Coroutine _coroutine;
-        private Vector3 _creatingPlatform;
         private int _currentIndex = 0;
-
-        public event Action<Vector3> OnAllowed;
+        private Vector3 _creatingPlatform;
 
         private void Start() =>
             _coroutine = StartCoroutine(WorkingSpawn());
@@ -35,6 +38,19 @@ namespace Field.Tiles.SpawnSeedLogic
                 StopCoroutine(_coroutine);
         }
 
+        private void OnVisibleSeed()
+        {
+            Vegetation newSeed = _factory.GetAllPlants()
+                .FirstOrDefault(seed => 
+                    seed.GetLevel() == LevelSpawn && seed.isActiveAndEnabled == false);
+
+            if(newSeed != null)
+            {
+                newSeed.InitPosition(_creatingPlatform);
+                newSeed.gameObject.SetActive(true);
+            }
+        }
+
         private bool SendRay()
         {
             for(var i = _currentIndex; i < _tileMerges.Length; i++)
@@ -42,7 +58,7 @@ namespace Field.Tiles.SpawnSeedLogic
                 if(!Physics.Raycast(_tileMerges[i].gameObject.transform.position, Vector3.up))
                 {
                     _currentIndex++;
-                    _creatingPlatform = _tileMerges[i].gameObject.transform.position;
+                    _creatingPlatform = _tileMerges[i].GetPosition();
                     return true;
                 }
 
@@ -55,13 +71,13 @@ namespace Field.Tiles.SpawnSeedLogic
 
         private IEnumerator WorkingSpawn()
         {
-            yield return new WaitForSeconds(RequiredTimeForSendRay);
+            yield return new WaitForSeconds(_requiredTimeForSendRay);
             bool tempVar = SendRay();
             
             if(tempVar)
             {
-                yield return new WaitForSeconds(RequiredTimeCooldown);
-                OnAllowed?.Invoke(_creatingPlatform);
+                yield return new WaitForSeconds(_requiredTimeCooldown);
+                OnVisibleSeed();
                 StopCoroutine(_coroutine);
                 _coroutine = null;
             }

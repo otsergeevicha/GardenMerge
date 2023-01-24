@@ -11,10 +11,8 @@ namespace Infrastructure.Factory
         
         private AssetProvider _assetProvider = new AssetProvider();
 
-        private void Awake()
-        {
+        private void Awake() => 
             Init();
-        }
 
         public override void Init()
         {
