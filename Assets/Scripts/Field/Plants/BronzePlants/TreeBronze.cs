@@ -1,6 +1,7 @@
 using System.Collections;
 using Field.GardenerLogic;
 using Field.GardenObserver;
+using Field.Tiles.Move;
 using UnityEngine;
 
 namespace Field.Plants.BronzePlants
@@ -24,6 +25,14 @@ namespace Field.Plants.BronzePlants
             
             if(collision.TryGetComponent(out Gardener _)) 
                 _coroutine = StartCoroutine(CollectingLeaves());
+            
+            if (collision.TryGetComponent(out TileMerge _))
+            {
+                if (_coroutine != null) 
+                    StopCoroutine(_coroutine);
+                
+                _isRiped = false;
+            }
         }
 
         private void OnTriggerExit(Collider collision)
@@ -32,6 +41,12 @@ namespace Field.Plants.BronzePlants
                 _isRiped = false;
         }
 
+        public override bool IsRipe() =>
+            _isRiped;
+
+        public override int GetLevel() =>
+            Level;
+        
         private IEnumerator CollectingLeaves()
         {
             yield return new WaitForSeconds(RequiredTimeForCollect);
@@ -40,11 +55,5 @@ namespace Field.Plants.BronzePlants
             yield return new WaitForSeconds(RewardTimeToRipe);
             _isRiped = true;
         }
-
-        public override bool IsRipe() =>
-            _isRiped;
-
-        public override int GetLevel() =>
-            Level;
     }
 }

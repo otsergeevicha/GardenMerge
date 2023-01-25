@@ -14,19 +14,35 @@ namespace Field.GardenObserver
         private const int LevelGoldSeed = 5;
         private const int LevelEpicSeed = 9;
         
-        protected readonly Queue<Vegetation> PointsCollect = new Queue<Vegetation>();
+        protected readonly List<Vegetation> PointsCollect = new List<Vegetation>();
 
         private void Awake() => 
             Init();
 
+        private void Update() => 
+            CustomQueue();
+
+        private void CustomQueue()
+        {
+            foreach (var vegetation in PointsCollect
+                         .Where(vegetation => 
+                             vegetation.IsRipe() == false))
+            {
+                PointsCollect.Remove(vegetation);
+                PointsCollect.Add(vegetation);
+                return;
+            }
+        }
+
         private void Init()
         {
             foreach (var vegetation in _factory.GetAllPlants()
-                         .Where(vegetation => vegetation.GetLevel() != LevelBronzeSeed 
-                                              && vegetation.GetLevel() != LevelGoldSeed 
-                                              && vegetation.GetLevel() != LevelEpicSeed))
+                         .Where(vegetation => 
+                             vegetation.GetLevel() != LevelBronzeSeed
+                         && vegetation.GetLevel() != LevelGoldSeed 
+                         && vegetation.GetLevel() != LevelEpicSeed))
             {
-                PointsCollect.Enqueue(vegetation);
+                PointsCollect.Add(vegetation);
             }
         }
     }
