@@ -30,6 +30,7 @@ namespace Field.Tiles
             }
         }
 
+
         private void ChangeFlagFreePlace(Vegetation vegetation)
         {
             _vegetation = vegetation;
