@@ -21,7 +21,7 @@ namespace Field.Tiles.SpawnSeedLogic
         private int _currentIndex = 0;
         private Vector3 _creatingPlatform;
 
-        private void Start() =>
+        private void Start() => 
             _coroutine = StartCoroutine(WorkingSpawn());
 
         private void Update()

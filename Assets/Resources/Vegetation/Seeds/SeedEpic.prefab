@@ -129,7 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundOffset: 2.1
-  _seed: {fileID: 6051974350652592679}
 --- !u!114 &6051974350652592679
 MonoBehaviour:
   m_ObjectHideFlags: 0

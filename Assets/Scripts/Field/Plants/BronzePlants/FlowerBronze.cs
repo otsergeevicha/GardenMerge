@@ -8,6 +8,10 @@ namespace Field.Plants.BronzePlants
 {
     public class FlowerBronze : Vegetation
     {
+        [SerializeField] private Leaves _leaves;
+        [SerializeField] private GameObject _dustStorm;
+        [SerializeField] private GameObject _leafExplosion;
+        
         private const float RequiredTimeForCollect = 1.5f;
         private const float RewardTimeToRipe = 3f;
         private const int Level = 2;
@@ -49,11 +53,18 @@ namespace Field.Plants.BronzePlants
         
         private IEnumerator CollectingLeaves()
         {
+            _leafExplosion.gameObject.SetActive(true);
             yield return new WaitForSeconds(RequiredTimeForCollect);
+            
             _isRiped = false;
+            _leaves.gameObject.SetActive(false);
+            _dustStorm.gameObject.SetActive(true);
+            _leafExplosion.gameObject.SetActive(false);
 
             yield return new WaitForSeconds(RewardTimeToRipe);
             _isRiped = true;
+            _leaves.gameObject.SetActive(true);
+            _dustStorm.gameObject.SetActive(false);
         }
     }
 }
