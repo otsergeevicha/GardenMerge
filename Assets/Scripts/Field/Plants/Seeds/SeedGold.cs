@@ -6,8 +6,11 @@ namespace Field.Plants.Seeds
 
         public override int GetLevel() => 
             Level;
-        
+
         public override bool IsRipe() => 
             false;
+
+        public override void Collect() => 
+            throw new System.NotImplementedException();
     }
 }

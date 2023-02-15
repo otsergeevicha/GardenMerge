@@ -18,5 +18,7 @@ namespace Field.Plants
 
         public void InitPosition(Vector3 newPosition) =>
             transform.position = newPosition;
+
+        public abstract void Collect();
     }
 }

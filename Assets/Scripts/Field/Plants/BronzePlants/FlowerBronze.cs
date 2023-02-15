@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Field.GardenerLogic;
 using Field.GardenObserver;
@@ -26,15 +27,11 @@ namespace Field.Plants.BronzePlants
         {
             if(collision.TryGetComponent(out ObserverTargets _))
                 _isRiped = true;
-            
-            if(collision.TryGetComponent(out Gardener _)) 
-                _coroutine = StartCoroutine(CollectingLeaves());
 
             if (collision.TryGetComponent(out TileMerge _))
             {
-                if (_coroutine != null) 
-                    StopCoroutine(_coroutine);
-                
+                OffCoroutine();
+
                 _isRiped = false;
             }
         }
@@ -44,6 +41,21 @@ namespace Field.Plants.BronzePlants
             if(collision.TryGetComponent(out ObserverTargets _))
                 _isRiped = false;
         }
+
+        private void OnDisable() => 
+            OffCoroutine();
+
+        private void OffCoroutine()
+        {
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+                _coroutine = null;
+            }
+        }
+
+        public override void Collect() => 
+            _coroutine = StartCoroutine(CollectingLeaves());
 
         public override bool IsRipe() =>
             _isRiped;

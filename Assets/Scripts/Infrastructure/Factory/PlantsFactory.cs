@@ -10,7 +10,7 @@ namespace Infrastructure.Factory
     {
         [SerializeField] protected Merging Merging;
         
-        public static List<Vegetation> Plants = new List<Vegetation>();
+        public static readonly List<Vegetation> Plants = new List<Vegetation>();
 
         public abstract void Init();
         

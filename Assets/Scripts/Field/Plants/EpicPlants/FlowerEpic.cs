@@ -26,15 +26,11 @@ namespace Field.Plants.EpicPlants
         {
             if(collision.TryGetComponent(out ObserverTargets _))
                 _isRiped = true;
-            
-            if(collision.TryGetComponent(out Gardener _)) 
-                _coroutine = StartCoroutine(CollectingLeaves());
-            
+
             if (collision.TryGetComponent(out TileMerge _))
             {
-                if (_coroutine != null) 
-                    StopCoroutine(_coroutine);
-                
+                OffCoroutine();
+
                 _isRiped = false;
             }
         }
@@ -45,25 +41,41 @@ namespace Field.Plants.EpicPlants
                 _isRiped = false;
         }
 
-        private IEnumerator CollectingLeaves()
-        {
-            yield return new WaitForSeconds(RequiredTimeForCollect);
-            _isRiped = false;
-            _leaves.gameObject.SetActive(false);
-            _dustStorm.gameObject.SetActive(true);
-            _leafExplosion.gameObject.SetActive(true);
+        private void OnDisable() => 
+            OffCoroutine();
 
-            yield return new WaitForSeconds(RewardTimeToRipe);
-            _isRiped = true;
-            _leaves.gameObject.SetActive(true);
-            _dustStorm.gameObject.SetActive(false);
-            _leafExplosion.gameObject.SetActive(false);
+        private void OffCoroutine()
+        {
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+                _coroutine = null;
+            }
         }
+
+        public override void Collect() => 
+            _coroutine = StartCoroutine(CollectingLeaves());
 
         public override bool IsRipe() =>
             _isRiped;
 
         public override int GetLevel() =>
             Level;
+        
+        private IEnumerator CollectingLeaves()
+        {
+            _leafExplosion.gameObject.SetActive(true);
+            yield return new WaitForSeconds(RequiredTimeForCollect);
+            
+            _isRiped = false;
+            _leaves.gameObject.SetActive(false);
+            _dustStorm.gameObject.SetActive(true);
+            _leafExplosion.gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(RewardTimeToRipe);
+            _isRiped = true;
+            _leaves.gameObject.SetActive(true);
+            _dustStorm.gameObject.SetActive(false);
+        }
     }
 }

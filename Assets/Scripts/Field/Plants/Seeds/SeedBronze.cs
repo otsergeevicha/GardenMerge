@@ -9,5 +9,8 @@ namespace Field.Plants.Seeds
 
         public override bool IsRipe() => 
             false;
+
+        public override void Collect() => 
+            throw new System.NotImplementedException();
     }
 }
