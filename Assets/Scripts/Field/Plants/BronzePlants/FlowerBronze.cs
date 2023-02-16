@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Field.GardenerLogic;
 using Field.GardenObserver;
 using Field.Tiles.Move;
 using UnityEngine;
