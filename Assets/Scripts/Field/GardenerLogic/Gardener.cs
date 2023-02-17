@@ -1,4 +1,3 @@
-using System;
 using Field.GardenerLogic.StateMachine;
 using Field.GardenerLogic.WalletGardener;
 using UnityEngine;
@@ -21,18 +20,9 @@ namespace Field.GardenerLogic
 
         public bool CheckAmountMoney(int scaleBuying) => 
             _wallet.Read() > 0;
-    }
 
-    public class SaveLoad : MonoBehaviour
-    {
-        public int ReadPriceSeed()
-        {
-            throw new NotImplementedException();
-        }
 
-        public void SaveNewPriceSeed(int currentPrice)
-        {
-            throw new NotImplementedException();
-        }
+        public int ReadAmountWallet() => 
+            _wallet.Read();
     }
-}
+} 
