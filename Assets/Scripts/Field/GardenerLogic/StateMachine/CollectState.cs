@@ -1,18 +1,19 @@
-using System.Timers;
 using Field.Plants;
+using UnityEngine;
 
 namespace Field.GardenerLogic.StateMachine
 {
+    [RequireComponent(typeof(Gardener))]
     public class CollectState : State
     {
         private const string IsCollect = "IsCollect";
-
-        private readonly double _timeWait = 6500;
-
-        private Timer _timer;
+        
         private int _counter = 0;
-        private bool _isReadyCollect;
         private Vegetation _vegetation;
+        private Gardener _gardener;
+
+        private void Start() => 
+            _gardener = GetComponent<Gardener>();
 
         private void Update()
         {
@@ -38,11 +39,9 @@ namespace Field.GardenerLogic.StateMachine
         {
             Animator.SetBool(IsCollect, false);
             _counter = 0;
+            _gardener.ApplyMoney(_vegetation.PriceCollect());
             StateMachine.EnterBehavior<SearchTargetState>();
         }
-
-        private void OnTimerEvent(object sender, ElapsedEventArgs e) =>
-            _isReadyCollect = true;
 
         public void InitVegetation(Vegetation vegetation) =>
             _vegetation = vegetation;

@@ -12,5 +12,8 @@ namespace Field.Plants.Seeds
 
         public override void Collect() => 
             throw new System.NotImplementedException();
+
+        public override int PriceCollect() => 
+            throw new System.NotImplementedException();
     }
 }

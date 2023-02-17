@@ -15,6 +15,7 @@ namespace Field.Plants.EpicPlants
         private const float RequiredTimeForCollect = 3.5f;
         private const float RewardTimeToRipe = 6f;
         private const int Level = 10;
+        private const int Price = 8;
 
         private bool _isRiped;
         private Coroutine _coroutine;
@@ -55,6 +56,9 @@ namespace Field.Plants.EpicPlants
 
         public override void Collect() => 
             _coroutine = StartCoroutine(CollectingLeaves());
+
+        public override int PriceCollect() => 
+            Price;
 
         public override bool IsRipe() =>
             _isRiped;

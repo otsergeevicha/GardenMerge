@@ -20,5 +20,7 @@ namespace Field.Plants
             transform.position = newPosition;
 
         public abstract void Collect();
+
+        public abstract int PriceCollect();
     }
 }

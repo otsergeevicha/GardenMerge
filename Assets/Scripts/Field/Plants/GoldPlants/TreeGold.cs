@@ -14,6 +14,7 @@ namespace Field.Plants.GoldPlants
         private const float RequiredTimeForCollect = 3f;
         private const float RewardTimeToRipe = 3.5f;
         private const int Level = 8;
+        private const int Price = 7;
 
         private bool _isRiped;
         private Coroutine _coroutine;
@@ -54,6 +55,9 @@ namespace Field.Plants.GoldPlants
 
         public override void Collect() => 
             _coroutine = StartCoroutine(CollectingLeaves());
+
+        public override int PriceCollect() => 
+            Price;
 
         public override bool IsRipe() =>
             _isRiped;
