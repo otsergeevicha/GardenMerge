@@ -57015,6 +57015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dailySpin: {fileID: 7365465}
+  _roulette: {fileID: 1959525333}
 --- !u!1 &1676748977
 GameObject:
   m_ObjectHideFlags: 0
@@ -60247,7 +60248,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959525332}
-  m_LocalRotation: {x: 0, y: 0, z: -0.086981915, w: 0.99621}
+  m_LocalRotation: {x: 0, y: 0, z: -0.67288345, w: 0.7397486}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -60262,7 +60263,7 @@ RectTransform:
   - {fileID: 752240938}
   m_Father: {fileID: 1489417325}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9.98}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -84.58}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}

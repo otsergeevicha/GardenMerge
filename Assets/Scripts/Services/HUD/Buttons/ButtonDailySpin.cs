@@ -15,7 +15,7 @@ namespace Services.HUD.Buttons
         private const int RewardSpinsADS = 3;
         private const int MaxCountSpins = 3;
 
-        private int _counterSpins = 0;
+        private int _counterSpins = 3;
 
         private void Start()
         {
@@ -50,6 +50,9 @@ namespace Services.HUD.Buttons
         {
             //Сейчас всегда +3, далее только через рекламу
             _counterSpins += RewardSpinsADS;
+            
+            if (_counterSpins > MaxCountSpins)
+                _counterSpins = MaxCountSpins;
         }
 
         private void Draw() =>
