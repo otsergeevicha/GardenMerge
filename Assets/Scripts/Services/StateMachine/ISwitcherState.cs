@@ -1,12 +1,13 @@
 using Field.GardenerLogic.StateMachine;
+using Infrastructure.SaveLoadLogic;
 using UnityEngine;
 
-namespace Services.StateMachineGardener
+namespace Services.StateMachine
 {
     public interface ISwitcherState
     {
         public void EnterBehavior();
         public void ExitBehavior();
-        public void Init(Field.GardenerLogic.StateMachine.StateMachineGardener stateMachineGardener, Animator animator);
+        public void Init(StateMachineGardener stateMachineGardener, Animator animator, SaveLoad saveLoad);
     }
 }

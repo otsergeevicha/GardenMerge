@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Services.StateMachineGardener;
+using Infrastructure.SaveLoadLogic;
+using Services.StateMachine;
 using UnityEngine;
 
 namespace Field.GardenerLogic.StateMachine
@@ -11,6 +12,7 @@ namespace Field.GardenerLogic.StateMachine
     public class StateMachineGardener : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
+        [SerializeField] private SaveLoad _saveLoad;
 
         private Dictionary<Type, ISwitcherState> _allBehaviors;
         private ISwitcherState _currentBehavior;
@@ -26,7 +28,7 @@ namespace Field.GardenerLogic.StateMachine
 
             foreach (var behavior in _allBehaviors)
             {
-                behavior.Value.Init(this, _animator);
+                behavior.Value.Init(this, _animator, _saveLoad);
                 behavior.Value.ExitBehavior();
             }
 

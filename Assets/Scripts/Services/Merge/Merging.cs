@@ -8,7 +8,6 @@ namespace Services.Merge
     public class Merging : MonoBehaviour
 
     {
-        [SerializeField] private OperatorTargets _gardenerBase;
         [SerializeField] private OperatorFactory _plantsFactory;
 
         public void Merge(Vegetation vegetationCollision, Vegetation vegetation)

@@ -1,4 +1,5 @@
-using Services.StateMachineGardener;
+using Infrastructure.SaveLoadLogic;
+using Services.StateMachine;
 using UnityEngine;
 
 namespace Field.GardenerLogic.StateMachine
@@ -7,6 +8,7 @@ namespace Field.GardenerLogic.StateMachine
     {
         protected StateMachineGardener StateMachine;
         protected Animator Animator;
+        protected SaveLoad SaveLoad;
 
         public void EnterBehavior() =>
             enabled = true;
@@ -14,10 +16,11 @@ namespace Field.GardenerLogic.StateMachine
         public void ExitBehavior() =>
             enabled = false;
 
-        public void Init(StateMachineGardener stateMachine, Animator animator)
+        public void Init(StateMachineGardener stateMachine, Animator animator, SaveLoad saveLoad)
         {
             StateMachine = stateMachine;
             Animator = animator;
+            SaveLoad = saveLoad;
         }
     }
 }

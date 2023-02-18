@@ -1,3 +1,4 @@
+using System;
 using Field.Plants;
 using Services.Move;
 using UnityEngine;
@@ -20,6 +21,12 @@ namespace Field.Tiles
             }
         }
 
+        private void OnTriggerEnter(Collider collision)
+        {
+            if (collision.TryGetComponent(out Vegetation _)) 
+                _isFreePlace = false;
+        }
+
         public void TryGetLanding(Vegetation vegetation)
         {
             if(_isFreePlace)
@@ -30,6 +37,8 @@ namespace Field.Tiles
             }
         }
 
+        public bool CheckStatusPlace() =>
+            _isFreePlace;
 
         private void ChangeFlagFreePlace(Vegetation vegetation)
         {

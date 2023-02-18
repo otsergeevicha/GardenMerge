@@ -1,4 +1,4 @@
-using Field.GardenerLogic;
+using Infrastructure.SaveLoadLogic;
 using TMPro;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace Services.HUD
 {
     public class ViewGold : MonoBehaviour
     {
-        [SerializeField] private Gardener _gardener;
+        [SerializeField] private SaveLoad _saveLoad;
         [SerializeField] private TMP_Text _tmp;
         
         private int _currentAmount;
@@ -16,13 +16,13 @@ namespace Services.HUD
 
         private void Drawing()
         {
-            _currentAmount = _gardener.ReadAmountWallet();
+            _currentAmount = _saveLoad.ReadAmountWallet();
             _tmp.text = _currentAmount.ToString();
         }
 
         private void Update()
         {
-            if (_currentAmount == _gardener.ReadAmountWallet())
+            if (_currentAmount == _saveLoad.ReadAmountWallet())
                 return;
             
             Drawing();

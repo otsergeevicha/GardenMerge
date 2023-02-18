@@ -40,6 +40,12 @@ namespace Field.GardenerLogic.StateMachine
 
             transform.DOLookAt(positionVegetation, .01f);
 
+            if (_currentVegetation.IsRipe() == false)
+            {
+                Animator.SetBool(IsRun, false);
+                StateMachine.EnterBehavior<SearchTargetState>();
+            }
+
             _distance = Vector3.Distance(ourPosition, positionVegetation);
 
             if (_stoppingDistance >= _distance)

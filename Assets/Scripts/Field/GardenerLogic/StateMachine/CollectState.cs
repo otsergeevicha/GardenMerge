@@ -1,4 +1,5 @@
 using Field.Plants;
+using Infrastructure.SaveLoadLogic;
 using UnityEngine;
 
 namespace Field.GardenerLogic.StateMachine
@@ -10,10 +11,6 @@ namespace Field.GardenerLogic.StateMachine
         
         private int _counter = 0;
         private Vegetation _vegetation;
-        private Gardener _gardener;
-
-        private void Start() => 
-            _gardener = GetComponent<Gardener>();
 
         private void Update()
         {
@@ -39,7 +36,7 @@ namespace Field.GardenerLogic.StateMachine
         {
             Animator.SetBool(IsCollect, false);
             _counter = 0;
-            _gardener.ApplyMoney(_vegetation.PriceCollect());
+            SaveLoad.ApplyMoney(_vegetation.PriceCollect());
             StateMachine.EnterBehavior<SearchTargetState>();
         }
 

@@ -1,11 +1,12 @@
 using System;
 
-namespace Field.GardenerLogic.WalletGardener
+namespace Infrastructure.SaveLoadLogic
 {
     [Serializable]
-    public class Wallet
+    public class DataBase
     {
         private int _money = 0;
+        private int _priceSeed = 1;
 
         public void Add(int money) => 
             _money += money;
@@ -16,7 +17,14 @@ namespace Field.GardenerLogic.WalletGardener
                 _money -= money;
         }
 
-        public int Read() => 
+        public void ChangePriceSeed(int price) => 
+            _priceSeed = price;
+
+        public int GetPrice() => 
             _money;
+
+        public int GetAmountWallet() =>
+            _money;
+
     }
 }
