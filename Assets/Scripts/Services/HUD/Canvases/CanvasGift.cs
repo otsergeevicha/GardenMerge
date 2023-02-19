@@ -1,16 +1,18 @@
+using System.Collections;
+using Field.Tiles.Move;
+using Infrastructure.Factory;
+using Infrastructure.SaveLoadLogic;
 using Services.HUD.Buttons;
 using UnityEngine;
 
-enum RouletteSlots
+enum GiftType
 {
-    Slot1,
-    Slot2,
-    Slot3,
-    Slot4,
-    Slot5,
-    Slot6,
-    Slot7,
-    Slot8
+    SeedBronze = 1,
+    SeedGold = 5,
+    SeedEpic = 9,
+    FlowerBronze = 2,
+    ShrubBronze = 3,
+    TreeBronze = 4
 }
 
 namespace Services.HUD.Canvases
@@ -20,90 +22,115 @@ namespace Services.HUD.Canvases
         [SerializeField] private ButtonDailySpin _dailySpin;
         [SerializeField] private RectTransform _roulette;
 
-        private const int MultiplierSlot = 125;
-        private const int TimeWait = 5;
+        [SerializeField] private TileMerge[] _tileMerges;
+        [SerializeField] private OperatorFactory _plantsFactory;
+        [SerializeField] private SaveLoad _saveLoad;
+
+        private const int GiftMoney = 50;
 
         private int _result;
-        private bool _isMoveSpin = false;
-        
-        private void Update()
-        {
-            if (_isMoveSpin == false)
-                return;
+        private bool _isMoveSpin;
 
-            MoveSpin();
-        }
+        private int _randomValue;
+        private float _timeInterval;
+        private int _finalAngle;
+        private Coroutine _coroutine;
 
         public void Spin()
         {
-            if (_dailySpin.CanSpin()) 
+            if (_dailySpin.CanSpin())
                 Twist();
         }
-
-        private void Twist()
-        {
-            _result = GetRandomNumber();
-            _isMoveSpin = true;
-            
-            RouletteSlots slot = GetSlot(_result);
-
-            Invoke(nameof(Reward), TimeWait);
-        }
-
-        private void Reward()
-        {
-            _isMoveSpin = false;
-
-            print(_result);
-        }
-
-        private void MoveSpin() => 
-            _roulette.Rotate(new Vector3(0, 0, 
-                Mathf.MoveTowards(0, _result * 125 * Time.deltaTime, TimeWait)));
 
         public void Close() =>
             gameObject.SetActive(false);
 
-        private RouletteSlots GetSlot(int result)
+        private void Twist()
         {
-            switch (result / MultiplierSlot)
+            if (_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+                _coroutine = null;
+            }
+
+            _coroutine = StartCoroutine(RotationRoulette());
+        }
+
+        private IEnumerator RotationRoulette()
+        {
+            _randomValue = Random.Range(20, 30);
+            _timeInterval = .01f;
+
+            float zAngle = _roulette.rotation.z;
+
+            for (int i = 0; i < _randomValue; i++)
+            {
+                _roulette.Rotate(0, 0, Mathf.Lerp(zAngle, 22.5f, .8f));
+
+                if (i > Mathf.RoundToInt(_randomValue * .55f))
+                    _timeInterval *= .15f;
+                
+                yield return new WaitForSeconds(_timeInterval);
+            }
+            
+            _finalAngle = Mathf.RoundToInt(_roulette.eulerAngles.z / 45);
+
+            print(_finalAngle);
+
+            switch (_finalAngle)
             {
                 case 0:
-                    return RouletteSlots.Slot1;
+                    Gift((int)GiftType.TreeBronze);
+                    break;
                 case 1:
-                    return RouletteSlots.Slot2;
+                    _saveLoad.ApplyMoney(GiftMoney);
+                    break;
                 case 2:
-                    return RouletteSlots.Slot3;
+                    Twist();
+                    break;
                 case 3:
-                    return RouletteSlots.Slot4;
+                    Gift((int)GiftType.SeedBronze);
+                    break;
                 case 4:
-                    return RouletteSlots.Slot5;
+                    Gift((int)GiftType.SeedGold);
+                    break;
                 case 5:
-                    return RouletteSlots.Slot6;
+                    Gift((int)GiftType.SeedEpic);
+                    break;
                 case 6:
-                    return RouletteSlots.Slot7;
-                default:
-                    return RouletteSlots.Slot8;
+                    Gift((int)GiftType.FlowerBronze);
+                    break;
+                case 7:
+                    Gift((int)GiftType.ShrubBronze);
+                    break;
             }
         }
 
+        private void Gift(int levelSpawn)
+        {
+            foreach (TileMerge tile in _tileMerges)
+            {
+                if (tile.CheckStatusPlace())
+                {
+                    Vector3 placeSpawn = tile.transform.position;
+
+                    foreach (var plant in _plantsFactory.GetAllPlants())
+                    {
+                        if (plant.GetLevel() == levelSpawn && plant.gameObject.activeInHierarchy == false)
+                        {
+                            plant.gameObject.transform.position = placeSpawn;
+                            plant.gameObject.SetActive(true);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        private float GetTarget() =>
+            _result;
+
         private int GetRandomNumber() =>
-            Random.Range(0, 1001);
-    }
-    
-    public abstract class GiftSpin : MonoBehaviour
-    {
-    }
-
-    public class VegetationGift : GiftSpin
-    {
-    }
-
-    public class Money : GiftSpin
-    {
-    }
-
-    public class AttemptSpin : GiftSpin
-    {
+            Random.Range(0, 307);
     }
 }
