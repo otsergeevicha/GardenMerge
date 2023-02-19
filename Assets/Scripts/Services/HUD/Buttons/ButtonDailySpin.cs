@@ -17,9 +17,12 @@ namespace Services.HUD.Buttons
 
         private int _counterSpins = 3;
 
-        private void Start()
+        private void Update()
         {
-            // _counterSpins = _saveLoad.GetCountSpins();
+            if (isActiveAndEnabled == false)
+                return;
+
+          //  _counterSpins = _saveLoad.GetCountSpins();
 
             if (_counterSpins > MaxCountSpins)
                 _counterSpins = MaxCountSpins;
@@ -29,7 +32,7 @@ namespace Services.HUD.Buttons
             Draw();
         }
 
-        // private void OnDisable() => _saveLoad.SaveCountSpins(_counterSpins);
+     //    private void OnDisable() => _saveLoad.SaveCountSpins(_counterSpins);
 
         public bool CanSpin()
         {
@@ -37,11 +40,9 @@ namespace Services.HUD.Buttons
             {
                 _counterSpins--;
                 Draw();
-                _iconReward.gameObject.SetActive(false);
                 return true;
             }
 
-            _iconReward.gameObject.SetActive(true);
             Draw();
             return false;
         }
@@ -49,6 +50,7 @@ namespace Services.HUD.Buttons
         public void GetSpin()
         {
             //Сейчас всегда +3, далее только через рекламу
+            
             _counterSpins += RewardSpinsADS;
             
             if (_counterSpins > MaxCountSpins)
