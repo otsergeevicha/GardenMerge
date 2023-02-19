@@ -6,6 +6,8 @@ namespace Infrastructure.SaveLoadLogic
     public class DataBase
     {
         private int _money = 0;
+        private int _countSpins;
+        
         private int _priceSeed = 1;
 
         public void Add(int money) => 
@@ -26,5 +28,10 @@ namespace Infrastructure.SaveLoadLogic
         public int GetAmountWallet() =>
             _money;
 
+        public int ReadCountSpins() => 
+            _countSpins;
+
+        public void ChangeCountSpins(int counterSpins) => 
+            _countSpins = counterSpins;
     }
 }

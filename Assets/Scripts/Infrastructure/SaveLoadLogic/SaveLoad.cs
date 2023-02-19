@@ -37,6 +37,12 @@ namespace Infrastructure.SaveLoadLogic
         public void SaveNewPriceSeed(int currentPrice) => 
             _dataBase.ChangePriceSeed(currentPrice);
 
+        public int GetCountSpins() => 
+            _dataBase.ReadCountSpins();
+
+        public void SaveCountSpins(int counterSpins) => 
+            _dataBase.ChangeCountSpins(counterSpins);
+
         public void Save()
         {
             PlayerPrefs.SetString(Key, JsonUtility.ToJson(_dataBase));

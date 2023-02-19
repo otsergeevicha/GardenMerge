@@ -1,5 +1,5 @@
-using System;
 using Infrastructure.SaveLoadLogic;
+using Services.ADS;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,17 +12,20 @@ namespace Services.HUD.Buttons
         [SerializeField] private SaveLoad _saveLoad;
         [SerializeField] private Image _iconReward;
 
+        [SerializeField] private RewardAds _rewardAds;
+
         private const int RewardSpinsADS = 3;
         private const int MaxCountSpins = 3;
 
         private int _counterSpins = 3;
 
+        private void Start() => 
+            _counterSpins = _saveLoad.GetCountSpins();
+
         private void Update()
         {
             if (isActiveAndEnabled == false)
                 return;
-
-          //  _counterSpins = _saveLoad.GetCountSpins();
 
             if (_counterSpins > MaxCountSpins)
                 _counterSpins = MaxCountSpins;
@@ -32,7 +35,8 @@ namespace Services.HUD.Buttons
             Draw();
         }
 
-     //    private void OnDisable() => _saveLoad.SaveCountSpins(_counterSpins);
+         private void OnDisable() => 
+             _saveLoad.SaveCountSpins(_counterSpins);
 
         public bool CanSpin()
         {
@@ -50,11 +54,15 @@ namespace Services.HUD.Buttons
         public void GetSpin()
         {
             //Сейчас всегда +3, далее только через рекламу
+            print("Место где должен быть Reward за спины");
+
+            if (_rewardAds.TryCanADS())
+            {
+                _counterSpins += RewardSpinsADS;
             
-            _counterSpins += RewardSpinsADS;
-            
-            if (_counterSpins > MaxCountSpins)
-                _counterSpins = MaxCountSpins;
+                if (_counterSpins > MaxCountSpins)
+                    _counterSpins = MaxCountSpins;
+            }
         }
 
         private void Draw() =>

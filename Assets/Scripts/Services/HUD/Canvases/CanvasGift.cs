@@ -26,6 +26,8 @@ namespace Services.HUD.Canvases
         [SerializeField] private TileMerge[] _tileMerges;
         [SerializeField] private OperatorFactory _plantsFactory;
         [SerializeField] private SaveLoad _saveLoad;
+        
+        [SerializeField] private CanvasHud _canvasHud;
 
         private const int GiftMoney = 50;
 
@@ -41,8 +43,11 @@ namespace Services.HUD.Canvases
                 Twist();
         }
 
-        public void Close() =>
+        public void Close()
+        {
+            _canvasHud.gameObject.SetActive(true);
             gameObject.SetActive(false);
+        }
 
         private void Twist()
         {

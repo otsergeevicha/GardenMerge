@@ -27,10 +27,8 @@ namespace Services.HUD.Buttons
 
         public void Buy()
         {
-            print("we in buy");
             if (_saveLoad.CheckAmountMoney(_currentPrice) && TryFreePlace())
             {
-                print("we in if");
                 _currentPrice++;
                 _saveLoad.SaveNewPriceSeed(_currentPrice);
                 _saveLoad.BuySeed(_currentPrice);
@@ -40,21 +38,16 @@ namespace Services.HUD.Buttons
 
         private bool TryFreePlace()
         {
-            print("enter 1");
             foreach (TileMerge tile in _tileMerges)
             {
-                print("enter 2");
                 if (tile.CheckStatusPlace())
                 {
-                    print("enter 3");
                     Vector3 placeSpawn = tile.transform.position;
 
                     foreach(var plant in _seedFactory.GetAllPlants())
                     {
-                        print("enter 4");
                         if(plant.GetLevel() == LevelBuying && plant.gameObject.activeInHierarchy == false)
                         {
-                            print("enter 5");
                             plant.gameObject.transform.position = placeSpawn;
                             plant.gameObject.SetActive(true);
                             return true;

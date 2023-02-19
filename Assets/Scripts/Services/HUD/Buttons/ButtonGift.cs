@@ -6,11 +6,15 @@ namespace Services.HUD.Buttons
     public class ButtonGift : MonoBehaviour
     {
         [SerializeField] private CanvasGift _canvasGift;
+        [SerializeField] private CanvasHud _canvasHud;
 
         private void Start() => 
             _canvasGift.gameObject.SetActive(false);
 
-        public void Press() => 
+        public void Press()
+        {
+            _canvasHud.gameObject.SetActive(false);
             _canvasGift.gameObject.SetActive(true);
+        }
     }
 }
