@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Field.Tiles.Move;
 using Infrastructure.Factory;
 using Infrastructure.SaveLoadLogic;
@@ -28,12 +29,10 @@ namespace Services.HUD.Canvases
 
         private const int GiftMoney = 50;
 
-        private int _result;
-        private bool _isMoveSpin;
-
         private int _randomValue;
-        private float _timeInterval;
         private int _finalAngle;
+        private float _timeInterval;
+        
         private Coroutine _coroutine;
 
         public void Spin()
@@ -56,6 +55,27 @@ namespace Services.HUD.Canvases
             _coroutine = StartCoroutine(RotationRoulette());
         }
 
+        private void Gift(int levelSpawn)
+        {
+            foreach (TileMerge tile in _tileMerges)
+            {
+                if (tile.CheckStatusPlace())
+                {
+                    Vector3 placeSpawn = tile.transform.position;
+
+                    foreach (var plant in _plantsFactory.GetAllPlants()
+                                 .Where(plant => 
+                                     plant.GetLevel() == levelSpawn 
+                                     && plant.gameObject.activeInHierarchy == false))
+                    {
+                        plant.gameObject.transform.position = placeSpawn;
+                        plant.gameObject.SetActive(true);
+                        return;
+                    }
+                }
+            }
+        }
+
         private IEnumerator RotationRoulette()
         {
             _randomValue = Random.Range(20, 30);
@@ -74,9 +94,7 @@ namespace Services.HUD.Canvases
             }
             
             _finalAngle = Mathf.RoundToInt(_roulette.eulerAngles.z / 45);
-
-            print(_finalAngle);
-
+            
             switch (_finalAngle)
             {
                 case 0:
@@ -105,32 +123,5 @@ namespace Services.HUD.Canvases
                     break;
             }
         }
-
-        private void Gift(int levelSpawn)
-        {
-            foreach (TileMerge tile in _tileMerges)
-            {
-                if (tile.CheckStatusPlace())
-                {
-                    Vector3 placeSpawn = tile.transform.position;
-
-                    foreach (var plant in _plantsFactory.GetAllPlants())
-                    {
-                        if (plant.GetLevel() == levelSpawn && plant.gameObject.activeInHierarchy == false)
-                        {
-                            plant.gameObject.transform.position = placeSpawn;
-                            plant.gameObject.SetActive(true);
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
-        private float GetTarget() =>
-            _result;
-
-        private int GetRandomNumber() =>
-            Random.Range(0, 307);
     }
 }
