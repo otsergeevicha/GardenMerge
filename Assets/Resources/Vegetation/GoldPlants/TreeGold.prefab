@@ -14536,7 +14536,7 @@ GameObject:
   - component: {fileID: -140708229337027357}
   - component: {fileID: -7177859375681412666}
   - component: {fileID: 7137254464121941009}
-  - component: {fileID: 1045680530819514305}
+  - component: {fileID: 2379880613608499849}
   m_Layer: 0
   m_Name: TreeGold
   m_TagString: Untagged
@@ -14607,9 +14607,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2611335171e2d8b4c9826dda8faaea80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundOffset: 3.2
---- !u!136 &1045680530819514305
-CapsuleCollider:
+  _groundOffset: 3
+--- !u!65 &2379880613608499849
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14618,10 +14618,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.330309, z: 1}
+  m_Center: {x: 0, y: -0.16515464, z: 0}
 --- !u!1 &7412400406934632209
 GameObject:
   m_ObjectHideFlags: 0

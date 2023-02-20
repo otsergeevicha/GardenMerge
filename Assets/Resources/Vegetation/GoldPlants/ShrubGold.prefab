@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: -281426170032629906}
   - component: {fileID: -1187787758952618139}
   - component: {fileID: 6051028083833778170}
-  - component: {fileID: 8602343599500427198}
+  - component: {fileID: 1210979756442268163}
   m_Layer: 0
   m_Name: ShrubGold
   m_TagString: Untagged
@@ -247,9 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2611335171e2d8b4c9826dda8faaea80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundOffset: 3.2
---- !u!136 &8602343599500427198
-CapsuleCollider:
+  _groundOffset: 3
+--- !u!65 &1210979756442268163
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -258,10 +258,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: -1.3, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.2, y: 2.537292, z: 1.2}
+  m_Center: {x: 0.019989848, y: -0.7686453, z: -0.031062901}
 --- !u!1 &6581532040560931581
 GameObject:
   m_ObjectHideFlags: 0
@@ -19547,7 +19546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7001135474441035594}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 2.46, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

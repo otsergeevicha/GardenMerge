@@ -33708,10 +33708,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2020345601180213730}
-  - component: {fileID: 8475529052664464744}
   - component: {fileID: -4580630065927023991}
   - component: {fileID: 7727917107166990732}
   - component: {fileID: 6167236438275348402}
+  - component: {fileID: 469418317759522230}
   m_Layer: 0
   m_Name: FlowerEpic
   m_TagString: Untagged
@@ -33737,20 +33737,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &8475529052664464744
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6717138548124606127}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &-4580630065927023991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33794,7 +33780,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2611335171e2d8b4c9826dda8faaea80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundOffset: 3.2
+  _groundOffset: 3
+--- !u!65 &469418317759522230
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6717138548124606127}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2, y: 1.5083771, z: 1.2}
+  m_Center: {x: 0, y: -0.25418866, z: 0}
 --- !u!1 &7354095163674310385
 GameObject:
   m_ObjectHideFlags: 0
