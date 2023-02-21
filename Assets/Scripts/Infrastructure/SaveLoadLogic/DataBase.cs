@@ -1,37 +1,64 @@
 using System;
+using System.Collections.Generic;
+using Field.Plants;
+using UnityEngine;
 
 namespace Infrastructure.SaveLoadLogic
 {
     [Serializable]
     public class DataBase
     {
-        private int _money = 0;
-        private int _countSpins;
-        
-        private int _priceSeed = 1;
+        public int Money;
+        public int CountSpins;
+        public int PriceSeed = 1;
 
-        public void Add(int money) => 
-            _money += money;
+        public List<LevelData> LevelDatas = new ();
 
         public void SpendMoney(int money)
         {
-            if (money <= _money) 
-                _money -= money;
+            if (money <= Money)
+                Money -= money;
         }
 
-        public void ChangePriceSeed(int price) => 
-            _priceSeed = price;
+        public void Add(int money) =>
+            Money += money;
 
-        public int GetPrice() => 
-            _money;
+        public void ChangePriceSeed(int price) =>
+            PriceSeed = price;
+
+        public int GetPrice() =>
+            Money;
 
         public int GetAmountWallet() =>
-            _money;
+            Money;
 
-        public int ReadCountSpins() => 
-            _countSpins;
+        public int ReadCountSpins() =>
+            CountSpins;
 
-        public void ChangeCountSpins(int counterSpins) => 
-            _countSpins = counterSpins;
+        public void ChangeCountSpins(int counterSpins) =>
+            CountSpins = counterSpins;
+
+        public int GetPriceSeed() =>
+            PriceSeed;
+
+        public List<LevelData> ReadAllVegetation() =>
+            LevelDatas;
+
+        public void SaveVegetation(List<Vegetation> getAllPlants)
+        {
+            LevelDatas.Clear();
+            
+            Debug.Log("первый вход");
+
+            foreach (Vegetation vegetation in getAllPlants)
+            {
+                Debug.Log("форыч");
+                if (vegetation.isActiveAndEnabled)
+                {
+                    Debug.Log("тут все кто тру");
+                    LevelDatas.Add(new LevelData(vegetation.GetLevel(), vegetation.transform.position));
+                }
+            }
+        }
     }
 }

@@ -1,12 +1,22 @@
+using System.Collections;
+using System.Linq;
+using Field.Plants;
+using Infrastructure.Factory;
 using UnityEngine;
 
 namespace Infrastructure.SaveLoadLogic
 {
     public class SaveLoad : MonoBehaviour
     {
+        [SerializeField] private OperatorFactory _factory;
+        
         private const string Key = "Key";
         
+        private readonly WaitForSeconds _waitForSeconds = new (5f);
+        
         private DataBase _dataBase;
+        private Coroutine _coroutine;
+        private bool _isOnApplication;
 
         private void OnEnable()
         {
@@ -15,14 +25,52 @@ namespace Infrastructure.SaveLoadLogic
                 : new DataBase();
         }
 
-        private void OnDisable() => 
-            Save();
-        
-        public void ApplyMoney(int money) => 
-            _dataBase.Add(money);
+        private void Start()
+        {
+            SpawnVegetation();
 
-        public void BuySeed(int currentPrice) => 
+            _coroutine = StartCoroutine(AutoSaveVegetation());
+        }
+
+        private void SpawnVegetation()
+        {
+            foreach (LevelData levelData in _dataBase.ReadAllVegetation())
+            {
+                Vegetation vegetation = _factory.GetAllPlants().FirstOrDefault(vegetation =>
+                    vegetation.isActiveAndEnabled == false
+                    && vegetation.GetLevel() == levelData.LevelVegetation);
+
+                if (vegetation != null)
+                {
+                    vegetation.gameObject.SetActive(true);
+                    vegetation.InitPosition(levelData.PositionVegetation);
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_coroutine != null)
+            {
+                _isOnApplication = false;
+                StopCoroutine(_coroutine);
+                _coroutine = null;
+            }
+            
+            Save();
+        }
+
+        public void ApplyMoney(int money)
+        {
+            _dataBase.Add(money);
+            Save();
+        }
+
+        public void BuySeed(int currentPrice)
+        {
             _dataBase.SpendMoney(currentPrice);
+            Save();
+        }
 
         public bool CheckAmountMoney(int scaleBuying) => 
             _dataBase.GetPrice() > scaleBuying;
@@ -30,12 +78,15 @@ namespace Infrastructure.SaveLoadLogic
 
         public int ReadAmountWallet() => 
             _dataBase.GetAmountWallet();
-        
-        public int ReadPriceSeed() => 
-            _dataBase.GetPrice();
 
-        public void SaveNewPriceSeed(int currentPrice) => 
+        public int ReadPriceSeed() => 
+            _dataBase.GetPriceSeed();
+
+        public void SaveNewPriceSeed(int currentPrice)
+        {
             _dataBase.ChangePriceSeed(currentPrice);
+            Save();
+        }
 
         public int GetCountSpins() => 
             _dataBase.ReadCountSpins();
@@ -47,6 +98,18 @@ namespace Infrastructure.SaveLoadLogic
         {
             PlayerPrefs.SetString(Key, JsonUtility.ToJson(_dataBase));
             PlayerPrefs.Save();
+        }
+
+        private IEnumerator AutoSaveVegetation()
+        {
+
+            _isOnApplication = true;
+            
+            while (_isOnApplication)
+            {
+                _dataBase.SaveVegetation(_factory.GetAllPlants());
+                yield return _waitForSeconds;
+            }
         }
     }
 }

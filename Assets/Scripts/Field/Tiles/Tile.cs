@@ -1,5 +1,6 @@
 using System;
 using Field.Plants;
+using Infrastructure.SaveLoadLogic;
 using Services.Move;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace Field.Tiles
 {
     public abstract class Tile : MonoBehaviour, IServiceLanding
     {
+        [SerializeField] private SaveLoad _saveLoad;
+        
         private const float CorrectPositionY = 1.5f;
                 
         private Vegetation _vegetation = null;
@@ -14,7 +17,7 @@ namespace Field.Tiles
 
         private void OnTriggerExit(Collider collision)
         {
-            if(collision.TryGetComponent<Vegetation>(out _))
+            if(collision.TryGetComponent(out Vegetation _))
             {
                 _vegetation = null;
                 _isFreePlace = true;

@@ -9,11 +9,11 @@ namespace Infrastructure.Factory
     public abstract class PlantsFactory : MonoBehaviour, IServicePlantsFactory
     {
         [SerializeField] protected Merging Merging;
-        
+
         public static readonly List<Vegetation> Plants = new List<Vegetation>();
 
         public abstract void Init();
-        
+
         public List<Vegetation> GetAllPlants() => 
             Plants;
     }
