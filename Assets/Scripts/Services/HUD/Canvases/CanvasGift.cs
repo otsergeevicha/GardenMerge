@@ -28,6 +28,7 @@ namespace Services.HUD.Canvases
         [SerializeField] private SaveLoad _saveLoad;
         
         [SerializeField] private CanvasHud _canvasHud;
+        [SerializeField] private CanvasMerge _canvasMerge;
 
         private const int GiftMoney = 50;
 
@@ -58,6 +59,8 @@ namespace Services.HUD.Canvases
                 _coroutine = null;
             }
 
+            Time.timeScale = 1;
+            
             _coroutine = StartCoroutine(RotationRoulette());
         }
 
@@ -76,10 +79,13 @@ namespace Services.HUD.Canvases
                     {
                         plant.gameObject.transform.position = placeSpawn;
                         plant.gameObject.SetActive(true);
+                        _canvasMerge.ShowResult(levelSpawn);
                         return;
                     }
                 }
             }
+            
+            
         }
 
         private IEnumerator RotationRoulette()
@@ -108,6 +114,7 @@ namespace Services.HUD.Canvases
                     break;
                 case 1:
                     _saveLoad.ApplyMoney(GiftMoney);
+                    _canvasMerge.ShowResult(0);
                     break;
                 case 2:
                     Twist();

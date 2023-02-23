@@ -27,13 +27,5 @@ namespace Services.HUD.Canvases
             _buttonHolderMenu.gameObject.SetActive(false);
             _canvasLeaderBoard.gameObject.SetActive(true);
         }
-
-        public void ClearPlayerPrefs()
-        {
-            print("Тут требуется допилить логику, и в ручную все занулять, так как просто почистить префсы не достаточно,вначале отрабатывает старт");
-            PlayerPrefs.DeleteAll();
-            gameObject.SetActive(false);
-            Time.timeScale = 1;
-        }
     }
 }

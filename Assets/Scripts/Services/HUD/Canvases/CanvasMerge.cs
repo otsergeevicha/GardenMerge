@@ -1,98 +1,103 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace Services.HUD.Canvases
 {
+    enum CardType
+    {
+        Coins = 0,
+
+        SeedBronze = 1,
+        FlowerBronze = 2,
+        ShrubBronze = 3,
+        TreeBronze = 4,
+
+        SeedGold = 5,
+        FlowerGold = 6,
+        ShrubGold = 7,
+        TreeGold = 8,
+
+        SeedEpic = 9,
+        FlowerEpic = 10,
+        ShrubEpic = 11,
+        TreeEpic = 12,
+    }
+
     public class CanvasMerge : MonoBehaviour
     {
-        [SerializeField] private CanvasHud _canvasHud;
-        
+        [SerializeField] private CanvasGift _canvasGift;
+
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _result;
         [SerializeField] private TMP_Text _nameVegetation;
 
+        [SerializeField] private Sprite _coin;
+
         [SerializeField] private Sprite _imageSeedBronze;
         [SerializeField] private Sprite _imageSeedGold;
         [SerializeField] private Sprite _imageSeedEpic;
-        
+
         [SerializeField] private Sprite _imageFlowerBronze;
         [SerializeField] private Sprite _imageShrubBronze;
         [SerializeField] private Sprite _imageTreeBronze;
-        
+
         [SerializeField] private Sprite _imageFlowerGold;
         [SerializeField] private Sprite _imageShrubGold;
         [SerializeField] private Sprite _imageTreeGold;
-        
+
         [SerializeField] private Sprite _imageFlowerEpic;
         [SerializeField] private Sprite _imageShrubEpic;
         [SerializeField] private Sprite _imageTreeEpic;
 
         [SerializeField] private string[] _resultMerges;
 
-        private readonly List<MergeCard> _mergeCards = new ();
+        private Dictionary<int, MergeCard> _cards;
 
-        private void Start()
+        public void ShowResult(int level)
         {
-            _mergeCards.Add(new MergeCard(1, _imageSeedBronze, "Seed Bronze"));
-            _mergeCards.Add(new MergeCard(2, _imageFlowerBronze, "Flower Bronze"));
-            _mergeCards.Add(new MergeCard(3, _imageShrubBronze, "Shrub Bronze"));
-            _mergeCards.Add(new MergeCard(4, _imageTreeBronze, "Tree Bronze"));
-            
-            _mergeCards.Add(new MergeCard(5, _imageSeedGold, "Seed Gold"));
-            _mergeCards.Add(new MergeCard(6, _imageFlowerGold, "Flower Gold"));
-            _mergeCards.Add(new MergeCard(7, _imageShrubGold, "Shrub Gold"));
-            _mergeCards.Add(new MergeCard(8, _imageTreeGold, "Tree Gold"));
-            
-            _mergeCards.Add(new MergeCard(9, _imageSeedEpic, "Seed Epic"));
-            _mergeCards.Add(new MergeCard(10, _imageFlowerEpic, "Flower Epic"));
-            _mergeCards.Add(new MergeCard(11, _imageShrubEpic, "Shrub Epic"));
-            _mergeCards.Add(new MergeCard(12, _imageTreeEpic, "Tree Epic"));
-        }
+            _icon.sprite = _cards[level].IconVegetation;
+            _nameVegetation.text = _cards[level].NameVegetation;
 
-        public void ShowResultMerge(int levelMerge)
-        {
-            _canvasHud.gameObject.SetActive(false);
+            if (_resultMerges.Length != 0)
+                _result.text = _resultMerges[Random.Range(0, _resultMerges.Length)];
+
+            _canvasGift.gameObject.SetActive(false);
             gameObject.SetActive(true);
 
-            foreach (MergeCard card in _mergeCards)
-            {
-                if (card.LevelVegetation == levelMerge)
-                {
-                    _icon.sprite = card.IconVegetation;
-                    _nameVegetation.text = card.NameVegetation;
-                    
-                    if (_resultMerges.Length != 0)
-                    {
-                        _result.text = _resultMerges[Random.Range(0, _resultMerges.Length)];
-                    }
-                    return;
-                }
-            }
+            Time.timeScale = 0;
         }
 
         public void CloseCanvas()
         {
-            _canvasHud.gameObject.SetActive(true);
             gameObject.SetActive(false);
+            _canvasGift.gameObject.SetActive(true);
+
+            Time.timeScale = 1;
         }
-    }
 
-    [Serializable]
-    public class MergeCard
-    {
-        public int LevelVegetation;
-        public Sprite IconVegetation;
-        public string NameVegetation;
-
-        public MergeCard(int levelVegetation, Sprite iconVegetation, string nameVegetation)
+        public void Init()
         {
-            LevelVegetation = levelVegetation;
-            IconVegetation = iconVegetation;
-            NameVegetation = nameVegetation;
+            _cards = new Dictionary<int, MergeCard>()
+            {
+                [(int)CardType.Coins] = new(_coin, "50 COINS"),
+
+                [(int)CardType.SeedBronze] = new(_imageSeedBronze, "Seed Bronze"),
+                [(int)CardType.FlowerBronze] = new(_imageFlowerBronze, "Flower Bronze"),
+                [(int)CardType.ShrubBronze] = new(_imageShrubBronze, "Shrub Bronze"),
+                [(int)CardType.TreeBronze] = new(_imageTreeBronze, "Tree Bronze"),
+
+                [(int)CardType.SeedGold] = new(_imageSeedGold, "Seed Gold"),
+                [(int)CardType.FlowerGold] = new(_imageFlowerGold, "Flower Gold"),
+                [(int)CardType.ShrubGold] = new(_imageShrubGold, "Shrub Gold"),
+                [(int)CardType.TreeGold] = new(_imageTreeGold, "Tree Gold"),
+
+                [(int)CardType.SeedEpic] = new(_imageSeedEpic, "Seed Epic"),
+                [(int)CardType.FlowerEpic] = new(_imageFlowerEpic, "Flower Epic"),
+                [(int)CardType.ShrubEpic] = new(_imageShrubEpic, "Shrub Epic"),
+                [(int)CardType.TreeEpic] = new(_imageTreeEpic, "Tree Epic")
+            };
         }
     }
 }

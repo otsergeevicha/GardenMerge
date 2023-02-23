@@ -8,8 +8,6 @@ namespace Field.Tiles
 {
     public abstract class Tile : MonoBehaviour, IServiceLanding
     {
-        [SerializeField] private SaveLoad _saveLoad;
-        
         private const float CorrectPositionY = 1.5f;
                 
         private Vegetation _vegetation = null;
