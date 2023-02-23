@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -6,6 +7,7 @@ namespace Services.HUD.Canvases
     {
         [SerializeField] private CanvasSetting _canvasSetting;
         [SerializeField] private CanvasHud _canvasHud;
+        [SerializeField] private CanvasMenu _canvasMenu;
 
         public void OnVisibleCanvasSetting()
         {
@@ -14,7 +16,13 @@ namespace Services.HUD.Canvases
             gameObject.SetActive(false);
         }
         
-        public void Visible(bool status) =>
+        public void Visible(bool status) => 
             gameObject.SetActive(status);
+
+        public void OnMenu()
+        {
+            _canvasMenu.gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 }

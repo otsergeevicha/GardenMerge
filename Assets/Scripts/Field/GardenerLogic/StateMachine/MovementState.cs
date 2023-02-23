@@ -9,7 +9,7 @@ namespace Field.GardenerLogic.StateMachine
         private const string IsRun = "IsRun";
 
         private readonly float _rateStepGardener = .5f;
-        private readonly float _stoppingDistance = 1.2f;
+        private readonly float _stoppingDistance = 1.35f;
 
         private Vegetation _currentVegetation;
         private float _distance;

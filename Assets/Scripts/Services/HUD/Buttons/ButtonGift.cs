@@ -13,6 +13,7 @@ namespace Services.HUD.Buttons
 
         public void Press()
         {
+            Time.timeScale = 0;
             _canvasHud.gameObject.SetActive(false);
             _canvasGift.gameObject.SetActive(true);
         }

@@ -1,6 +1,7 @@
 using Field.GardenObserver;
 using Field.Plants;
 using Infrastructure.Factory;
+using Services.HUD.Canvases;
 using UnityEngine;
 
 namespace Services.Merge
@@ -9,6 +10,7 @@ namespace Services.Merge
 
     {
         [SerializeField] private OperatorFactory _plantsFactory;
+        [SerializeField] private CanvasMerge _canvasMerge;
 
         public void Merge(Vegetation vegetationCollision, Vegetation vegetation)
         {
@@ -29,6 +31,7 @@ namespace Services.Merge
                     {
                         plant.gameObject.transform.position = placeMerge;
                         plant.gameObject.SetActive(true);
+                        _canvasMerge.ShowResultMerge(plant.GetLevel());
                         return;
                     }
                 }

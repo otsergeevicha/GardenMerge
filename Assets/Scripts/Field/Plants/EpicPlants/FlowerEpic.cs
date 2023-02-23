@@ -25,8 +25,11 @@ namespace Field.Plants.EpicPlants
 
         private void OnTriggerEnter(Collider collision)
         {
-            if(collision.TryGetComponent(out ObserverTargets _))
+            if (collision.TryGetComponent(out ObserverTargets _))
+            {
+                _leaves.gameObject.SetActive(true);
                 _isRiped = true;
+            }
 
             if (collision.TryGetComponent(out TileMerge _))
             {
@@ -38,8 +41,12 @@ namespace Field.Plants.EpicPlants
 
         private void OnTriggerExit(Collider collision)
         {
-            if(collision.TryGetComponent(out ObserverTargets _))
+            if (collision.TryGetComponent(out ObserverTargets _))
+            {
+                OffCoroutine();
+                _leaves.gameObject.SetActive(true);
                 _isRiped = false;
+            }
         }
 
         private void OnDisable() => 

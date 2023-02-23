@@ -8,7 +8,7 @@ namespace Infrastructure.SaveLoadLogic
     [Serializable]
     public class DataBase
     {
-        public int Money;
+        public int Money = 100;
         public int CountSpins;
         public int PriceSeed = 1;
 
@@ -47,15 +47,11 @@ namespace Infrastructure.SaveLoadLogic
         public void SaveVegetation(List<Vegetation> getAllPlants)
         {
             LevelDatas.Clear();
-            
-            Debug.Log("первый вход");
 
             foreach (Vegetation vegetation in getAllPlants)
             {
-                Debug.Log("форыч");
                 if (vegetation.isActiveAndEnabled)
                 {
-                    Debug.Log("тут все кто тру");
                     LevelDatas.Add(new LevelData(vegetation.GetLevel(), vegetation.transform.position));
                 }
             }

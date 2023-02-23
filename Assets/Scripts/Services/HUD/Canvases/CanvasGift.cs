@@ -45,6 +45,7 @@ namespace Services.HUD.Canvases
 
         public void Close()
         {
+            Time.timeScale = 1;
             _canvasHud.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
