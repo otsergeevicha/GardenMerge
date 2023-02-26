@@ -1,3 +1,4 @@
+using System;
 using Field.Plants;
 using Infrastructure.Factory;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Services.Merge
     {
         [SerializeField] private OperatorFactory _plantsFactory;
 
+        public event Action<int> Merged;
+        
         public void Merge(Vegetation vegetationCollision, Vegetation vegetation)
         {
             
@@ -28,6 +31,7 @@ namespace Services.Merge
                     {
                         plant.gameObject.transform.position = placeMerge;
                         plant.gameObject.SetActive(true);
+                        Merged?.Invoke(levelMerge);
                         return;
                     }
                 }

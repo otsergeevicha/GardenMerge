@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 using Field.Plants;
-using UnityEngine;
 
 namespace Infrastructure.SaveLoadLogic
 {
     [Serializable]
     public class DataBase
     {
-        public int Money = 100;
-        public int CountSpins;
-        public int PriceSeed = 1;
-
         public List<LevelData> LevelDatas = new ();
-
+        
+        public int Money { get; private set; } = 100;
+        public int CountSpins { get; private set; }
+        public int PriceSeed { get; private set; } = 1;
+        public int Score { get; private set; }
+        
         public void SpendMoney(int money)
         {
             if (money <= Money)
@@ -56,5 +56,11 @@ namespace Infrastructure.SaveLoadLogic
                 }
             }
         }
+
+        public void AddPoints(int amountPoints) => 
+            Score += amountPoints;
+
+        public int GetScore() => 
+            Score;
     }
 }
