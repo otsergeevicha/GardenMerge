@@ -100,9 +100,14 @@ namespace Infrastructure.SaveLoadLogic
             PlayerPrefs.Save();
         }
 
+        public void SavePoint(int amountPoints) => 
+            _dataBase.AddPoints(amountPoints);
+
+        public int ReadScore() => 
+            _dataBase.GetScore();
+
         private IEnumerator AutoSaveVegetation()
         {
-
             _isOnApplication = true;
             
             while (_isOnApplication)

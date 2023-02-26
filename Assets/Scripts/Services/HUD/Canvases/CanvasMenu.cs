@@ -1,4 +1,4 @@
-using Services.HUD.Buttons;
+using System;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -6,12 +6,14 @@ namespace Services.HUD.Canvases
     public class CanvasMenu : MonoBehaviour
     {
         [SerializeField] private CanvasSetting _canvasSetting;
-        [SerializeField] private CanvasLeaderBoard _canvasLeaderBoard;
 
-        [SerializeField] private ButtonHolderMenu _buttonHolderMenu;
-
-        private void Start() => 
+        private void FixedUpdate()
+        {
+            if (isActiveAndEnabled == false)
+                return;
+            
             Time.timeScale = 0;
+        }
 
         public void ContinueGame()
         {
@@ -21,11 +23,5 @@ namespace Services.HUD.Canvases
         
         public void OnVisibleSettingCanvas() => 
             _canvasSetting.gameObject.SetActive(true);
-        
-        public void OnVisibleLeaderBoard()
-        {
-            _buttonHolderMenu.gameObject.SetActive(false);
-            _canvasLeaderBoard.gameObject.SetActive(true);
-        }
     }
 }
