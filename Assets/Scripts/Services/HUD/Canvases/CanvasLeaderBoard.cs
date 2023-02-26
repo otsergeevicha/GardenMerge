@@ -21,7 +21,6 @@ namespace Services.HUD.Canvases
         private const string Anonymous = "Anonymous";
 
         private readonly int _topPlayersCount = 4;
-        private readonly int _competingPlayersCount = 3;
 
         public void ToggleVisible(bool flag)
         {
@@ -52,10 +51,9 @@ namespace Services.HUD.Canvases
                 foreach (LeaderboardEntryResponse entry in result.entries) 
                     SetPlace(entry);
                 
-            }, null, _topPlayersCount, _competingPlayersCount);
+            }, null, _topPlayersCount, 0);
         }
-
-
+        
         private string NameCorrector(string name)
         {
             if (string.IsNullOrEmpty(name))

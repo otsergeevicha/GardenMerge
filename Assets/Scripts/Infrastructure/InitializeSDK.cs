@@ -11,7 +11,8 @@ namespace Infrastructure
         
         private string _language;
 
-        public string CurrentLanguage => _language;
+        public string CurrentLanguage => 
+            _language; //всегда приходит - en, нижний регистр
         
         private void Awake() => 
             StartCoroutine(Init());

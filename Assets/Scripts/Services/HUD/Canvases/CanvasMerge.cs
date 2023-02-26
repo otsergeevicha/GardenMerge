@@ -52,7 +52,24 @@ namespace Services.HUD.Canvases
         [SerializeField] private Sprite _imageShrubEpic;
         [SerializeField] private Sprite _imageTreeEpic;
 
-        [SerializeField] private string[] _resultMerges;
+        [SerializeField] private TMP_Text _name50Coins;
+        
+        [SerializeField] private TMP_Text _nameSeedBronze;
+        [SerializeField] private TMP_Text _nameFlowerBronze;
+        [SerializeField] private TMP_Text _nameShrubBronze;
+        [SerializeField] private TMP_Text _nameTreeBronze;
+        
+        [SerializeField] private TMP_Text _nameSeedGold;
+        [SerializeField] private TMP_Text _nameFlowerGold;
+        [SerializeField] private TMP_Text _nameShrubGold;
+        [SerializeField] private TMP_Text _nameTreeGold;
+        
+        [SerializeField] private TMP_Text _nameSeedEpic;
+        [SerializeField] private TMP_Text _nameFlowerEpic;
+        [SerializeField] private TMP_Text _nameShrubEpic;
+        [SerializeField] private TMP_Text _nameTreeEpic;
+
+        [SerializeField] private TMP_Text[] _resultMerges;
 
         private Dictionary<int, MergeCard> _cards;
 
@@ -62,7 +79,7 @@ namespace Services.HUD.Canvases
             _nameVegetation.text = _cards[level].NameVegetation;
 
             if (_resultMerges.Length != 0)
-                _result.text = _resultMerges[Random.Range(0, _resultMerges.Length)];
+                _result = _resultMerges[Random.Range(0, _resultMerges.Length)];
 
             _canvasGift.gameObject.SetActive(false);
             gameObject.SetActive(true);
@@ -82,22 +99,22 @@ namespace Services.HUD.Canvases
         {
             _cards = new Dictionary<int, MergeCard>()
             {
-                [(int)CardType.Coins] = new(_coin, "50 COINS"),
+                [(int)CardType.Coins] = new(_coin, _name50Coins.text),
 
-                [(int)CardType.SeedBronze] = new(_imageSeedBronze, "Seed Bronze"),
-                [(int)CardType.FlowerBronze] = new(_imageFlowerBronze, "Flower Bronze"),
-                [(int)CardType.ShrubBronze] = new(_imageShrubBronze, "Shrub Bronze"),
-                [(int)CardType.TreeBronze] = new(_imageTreeBronze, "Tree Bronze"),
+                [(int)CardType.SeedBronze] = new(_imageSeedBronze, _nameSeedBronze.text),
+                [(int)CardType.FlowerBronze] = new(_imageFlowerBronze, _nameFlowerBronze.text),
+                [(int)CardType.ShrubBronze] = new(_imageShrubBronze, _nameShrubBronze.text),
+                [(int)CardType.TreeBronze] = new(_imageTreeBronze, _nameTreeBronze.text),
 
-                [(int)CardType.SeedGold] = new(_imageSeedGold, "Seed Gold"),
-                [(int)CardType.FlowerGold] = new(_imageFlowerGold, "Flower Gold"),
-                [(int)CardType.ShrubGold] = new(_imageShrubGold, "Shrub Gold"),
-                [(int)CardType.TreeGold] = new(_imageTreeGold, "Tree Gold"),
+                [(int)CardType.SeedGold] = new(_imageSeedGold, _nameSeedGold.text),
+                [(int)CardType.FlowerGold] = new(_imageFlowerGold, _nameFlowerGold.text),
+                [(int)CardType.ShrubGold] = new(_imageShrubGold, _nameShrubGold.text),
+                [(int)CardType.TreeGold] = new(_imageTreeGold, _nameTreeGold.text),
 
-                [(int)CardType.SeedEpic] = new(_imageSeedEpic, "Seed Epic"),
-                [(int)CardType.FlowerEpic] = new(_imageFlowerEpic, "Flower Epic"),
-                [(int)CardType.ShrubEpic] = new(_imageShrubEpic, "Shrub Epic"),
-                [(int)CardType.TreeEpic] = new(_imageTreeEpic, "Tree Epic")
+                [(int)CardType.SeedEpic] = new(_imageSeedEpic, _nameSeedEpic.text),
+                [(int)CardType.FlowerEpic] = new(_imageFlowerEpic, _nameFlowerEpic.text),
+                [(int)CardType.ShrubEpic] = new(_imageShrubEpic, _nameShrubEpic.text),
+                [(int)CardType.TreeEpic] = new(_imageTreeEpic, _nameTreeEpic.text)
             };
         }
     }
