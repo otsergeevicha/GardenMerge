@@ -1,3 +1,4 @@
+using Services.HUD.Canvases.Gift;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -7,7 +8,7 @@ namespace Services.HUD.Canvases
         [SerializeField] private GameObject[] _canvasHolders;
         [SerializeField] private CanvasHud _canvasHud;
         [SerializeField] private CanvasMenu _canvasMenu;
-        [SerializeField] private CanvasMerge _canvasMerge;
+        [SerializeField] private CanvasGiftUp _canvasGiftUp;
 
         private void Start()
         {
@@ -16,7 +17,7 @@ namespace Services.HUD.Canvases
                 holder.SetActive(false);
             }
 
-            _canvasMerge.Init();
+            _canvasGiftUp.Init();
             
             Time.timeScale = 0;
             

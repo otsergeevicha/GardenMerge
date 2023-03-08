@@ -8,8 +8,10 @@ namespace Field.Plants.GoldPlants
     public class ShrubGold : Vegetation
     {
         [SerializeField] private Leaves _leaves;
+        
         [SerializeField] private GameObject _dustStorm;
         [SerializeField] private GameObject _leafExplosion;
+        [SerializeField] private ParticleSystem _mergeParticle;
         
         private const float RequiredTimeForCollect = 1.5f;
         private const float RewardTimeToRipe = 3f;
@@ -51,6 +53,9 @@ namespace Field.Plants.GoldPlants
         private void OnDisable() => 
             OffCoroutine();
 
+        public override void PlayParticleMerge() => 
+            _mergeParticle.Play();
+        
         private void OffCoroutine()
         {
             if (_coroutine != null)

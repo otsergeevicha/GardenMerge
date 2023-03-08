@@ -1,4 +1,3 @@
-using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
 using Services.Merge;
 using UnityEngine;
@@ -22,8 +21,7 @@ namespace Services.ScorePlayer
         {
             _saveLoad.SavePoint(amountPoints);
 
-            if (PlayerAccount.IsAuthorized) 
-                Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
+          //  if (PlayerAccount.IsAuthorized) Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
         }
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 namespace Services.Merge
 {
     public class Merging : MonoBehaviour
-
     {
         [SerializeField] private OperatorFactory _plantsFactory;
 
@@ -14,7 +13,6 @@ namespace Services.Merge
         
         public void Merge(Vegetation vegetationCollision, Vegetation vegetation)
         {
-            
             if(vegetationCollision.GetLevel() == vegetation.GetLevel())
             {
 
@@ -31,6 +29,7 @@ namespace Services.Merge
                     {
                         plant.gameObject.transform.position = placeMerge;
                         plant.gameObject.SetActive(true);
+                        plant.PlayParticleMerge();
                         Merged?.Invoke(levelMerge);
                         return;
                     }

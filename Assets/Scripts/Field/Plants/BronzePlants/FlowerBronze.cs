@@ -8,8 +8,10 @@ namespace Field.Plants.BronzePlants
     public class FlowerBronze : Vegetation
     {
         [SerializeField] private Leaves _leaves;
+        
         [SerializeField] private GameObject _dustStorm;
         [SerializeField] private GameObject _leafExplosion;
+        [SerializeField] private ParticleSystem _mergeParticle;
         
         private const float RequiredTimeForCollect = 1.5f;
         private const float RewardTimeToRipe = 3f;
@@ -59,6 +61,9 @@ namespace Field.Plants.BronzePlants
                 _coroutine = null;
             }
         }
+        
+        public override void PlayParticleMerge() => 
+            _mergeParticle.Play();
 
         public override void Collect() => 
             _coroutine = StartCoroutine(CollectingLeaves());

@@ -9,8 +9,10 @@ namespace Field.Plants.EpicPlants
     public class FlowerEpic : Vegetation
     {
         [SerializeField] private Leaves _leaves;
+        
         [SerializeField] private GameObject _dustStorm;
         [SerializeField] private GameObject _leafExplosion;
+        [SerializeField] private ParticleSystem _mergeParticle;
         
         private const float RequiredTimeForCollect = 3.5f;
         private const float RewardTimeToRipe = 6f;
@@ -52,6 +54,9 @@ namespace Field.Plants.EpicPlants
         private void OnDisable() => 
             OffCoroutine();
 
+        public override void PlayParticleMerge() => 
+            _mergeParticle.Play();
+        
         private void OffCoroutine()
         {
             if (_coroutine != null)

@@ -1,5 +1,4 @@
 using System.Collections;
-using Agava.YandexGames;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,18 +12,5 @@ namespace Infrastructure
 
         public string CurrentLanguage => 
             _language; //всегда приходит - en, нижний регистр
-        
-        private void Awake() => 
-            StartCoroutine(Init());
-
-        private IEnumerator Init()
-        {
-            while (YandexGamesSdk.IsInitialized == false)
-                yield return YandexGamesSdk.Initialize();
-
-            _language = YandexGamesSdk.Environment.i18n.lang;
-
-            SceneManager.LoadScene(_startSceneIndex);
-        }
     }
 }
