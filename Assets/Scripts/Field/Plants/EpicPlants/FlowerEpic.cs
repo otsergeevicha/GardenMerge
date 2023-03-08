@@ -13,6 +13,7 @@ namespace Field.Plants.EpicPlants
         [SerializeField] private GameObject _dustStorm;
         [SerializeField] private GameObject _leafExplosion;
         [SerializeField] private ParticleSystem _mergeParticle;
+        [SerializeField] private ParticleSystem _fxCoins;
         
         private const float RequiredTimeForCollect = 3.5f;
         private const float RewardTimeToRipe = 6f;
@@ -22,8 +23,12 @@ namespace Field.Plants.EpicPlants
         private bool _isRiped;
         private Coroutine _coroutine;
 
-        private void Start() =>
+        private void Start()
+        {
             _isRiped = false;
+            _mergeParticle.Stop();
+            _fxCoins.Stop();
+        }
 
         private void OnTriggerEnter(Collider collision)
         {
@@ -87,11 +92,13 @@ namespace Field.Plants.EpicPlants
             _leaves.gameObject.SetActive(false);
             _dustStorm.gameObject.SetActive(true);
             _leafExplosion.gameObject.SetActive(false);
+            _fxCoins.Play();
 
             yield return new WaitForSeconds(RewardTimeToRipe);
             _isRiped = true;
             _leaves.gameObject.SetActive(true);
             _dustStorm.gameObject.SetActive(false);
+            
         }
     }
 }
