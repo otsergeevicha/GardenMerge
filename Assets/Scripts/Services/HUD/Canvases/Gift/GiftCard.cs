@@ -7,12 +7,8 @@ namespace Services.HUD.Canvases.Gift
     public class GiftCard
     {
         public Sprite IconVegetation;
-        public string NameVegetation;
 
-        public GiftCard(Sprite iconVegetation, string nameVegetation)
-        {
+        public GiftCard(Sprite iconVegetation) => 
             IconVegetation = iconVegetation;
-            NameVegetation = nameVegetation;
-        }
     }
 }

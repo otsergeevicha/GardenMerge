@@ -1,5 +1,5 @@
 using Field.Plants;
-using Infrastructure.SaveLoadLogic;
+using Services.Sound;
 using UnityEngine;
 
 namespace Field.GardenerLogic.StateMachine
@@ -7,8 +7,10 @@ namespace Field.GardenerLogic.StateMachine
     [RequireComponent(typeof(Gardener))]
     public class CollectState : State
     {
+        [SerializeField] private FXOperator _fxOperator;
+
         private const string IsCollect = "IsCollect";
-        
+
         private int _counter = 0;
         private Vegetation _vegetation;
 
@@ -25,10 +27,11 @@ namespace Field.GardenerLogic.StateMachine
             if (_counter == 0)
             {
                 _counter++;
+                _fxOperator.PlaySoundCollect();
                 _vegetation.Collect();
             }
 
-            if (_vegetation.IsRipe() == false) 
+            if (_vegetation.IsRipe() == false)
                 NextState();
         }
 
@@ -37,6 +40,7 @@ namespace Field.GardenerLogic.StateMachine
             Animator.SetBool(IsCollect, false);
             _counter = 0;
             SaveLoad.ApplyMoney(_vegetation.PriceCollect());
+            _fxOperator.PlaySoundCoins();
             StateMachine.EnterBehavior<SearchTargetState>();
         }
 

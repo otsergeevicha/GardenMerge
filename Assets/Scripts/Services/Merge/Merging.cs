@@ -1,6 +1,7 @@
 using System;
 using Field.Plants;
 using Infrastructure.Factory;
+using Services.Sound;
 using UnityEngine;
 
 namespace Services.Merge
@@ -8,6 +9,7 @@ namespace Services.Merge
     public class Merging : MonoBehaviour
     {
         [SerializeField] private OperatorFactory _plantsFactory;
+        [SerializeField] private FXOperator _fxOperator;
 
         public event Action<int> Merged;
         
@@ -30,6 +32,7 @@ namespace Services.Merge
                         plant.gameObject.transform.position = placeMerge;
                         plant.gameObject.SetActive(true);
                         plant.PlayParticleMerge();
+                        _fxOperator.PlaySoundMerge();
                         Merged?.Invoke(levelMerge);
                         return;
                     }

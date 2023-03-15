@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Field.Plants;
 
 namespace Infrastructure.SaveLoadLogic
@@ -8,12 +9,14 @@ namespace Infrastructure.SaveLoadLogic
     public class DataBase
     {
         public List<LevelData> LevelDatas = new ();
-        
-        public int Money { get; private set; } = 100;
-        public int CountSpins { get; private set; }
-        public int PriceSeed { get; private set; } = 1;
-        public int Score { get; private set; }
-        
+
+        public float ValueMusic;
+        public float ValueFX;
+        public int Money = 100;
+        public int CountSpins;
+        public int PriceSeed = 1;
+        public int Score;
+
         public void SpendMoney(int money)
         {
             if (money <= Money)
@@ -48,13 +51,8 @@ namespace Infrastructure.SaveLoadLogic
         {
             LevelDatas.Clear();
 
-            foreach (Vegetation vegetation in getAllPlants)
-            {
-                if (vegetation.isActiveAndEnabled)
-                {
-                    LevelDatas.Add(new LevelData(vegetation.GetLevel(), vegetation.transform.position));
-                }
-            }
+            foreach (var vegetation in getAllPlants.Where(vegetation => vegetation.isActiveAndEnabled))
+                LevelDatas.Add(new LevelData(vegetation.GetLevel(), vegetation.transform.position));
         }
 
         public void AddPoints(int amountPoints) => 
@@ -62,5 +60,11 @@ namespace Infrastructure.SaveLoadLogic
 
         public int GetScore() => 
             Score;
+
+        public void SaveValueFx(float value) => 
+            ValueFX = value;
+
+        public void SaveValueMusic(float value) => 
+            ValueMusic = value;
     }
 }

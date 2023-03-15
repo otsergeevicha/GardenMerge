@@ -72,9 +72,32 @@ namespace Infrastructure.SaveLoadLogic
             Save();
         }
 
+        public void SaveNewPriceSeed(int currentPrice)
+        {
+            _dataBase.ChangePriceSeed(currentPrice);
+            Save();
+        }
+
+        public void SaveCountSpins(int counterSpins) => 
+            _dataBase.ChangeCountSpins(counterSpins);
+
+        public void SavePoint(int amountPoints) => 
+            _dataBase.AddPoints(amountPoints);
+
+        public void SaveValueFxSound(float value)
+        {
+            _dataBase.SaveValueFx(value);
+            Save();
+        }
+
+        public void SaveValueMusic(float value)
+        {
+            _dataBase.SaveValueMusic(value);
+            Save();
+        }
+
         public bool CheckAmountMoney(int scaleBuying) => 
             _dataBase.GetPrice() > scaleBuying;
-
 
         public int ReadAmountWallet() => 
             _dataBase.GetAmountWallet();
@@ -82,29 +105,23 @@ namespace Infrastructure.SaveLoadLogic
         public int ReadPriceSeed() => 
             _dataBase.GetPriceSeed();
 
-        public void SaveNewPriceSeed(int currentPrice)
-        {
-            _dataBase.ChangePriceSeed(currentPrice);
-            Save();
-        }
-
         public int GetCountSpins() => 
             _dataBase.ReadCountSpins();
 
-        public void SaveCountSpins(int counterSpins) => 
-            _dataBase.ChangeCountSpins(counterSpins);
+        public int ReadScore() => 
+            _dataBase.GetScore();
+
+        public float ReadValueFxSound() => 
+            _dataBase.ValueFX;
+
+        public float ReadValueMusic() => 
+            _dataBase.ValueMusic;
 
         public void Save()
         {
             PlayerPrefs.SetString(Key, JsonUtility.ToJson(_dataBase));
             PlayerPrefs.Save();
         }
-
-        public void SavePoint(int amountPoints) => 
-            _dataBase.AddPoints(amountPoints);
-
-        public int ReadScore() => 
-            _dataBase.GetScore();
 
         private IEnumerator AutoSaveVegetation()
         {
