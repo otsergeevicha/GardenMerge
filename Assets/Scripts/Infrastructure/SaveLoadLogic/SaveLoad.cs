@@ -62,7 +62,12 @@ namespace Infrastructure.SaveLoadLogic
 
         public void ApplyMoney(int money)
         {
-            _dataBase.Add(money);
+            if (_dataBase.IsSubscribe) 
+                _dataBase.Add(money * 2);
+
+            if (_dataBase.IsSubscribe == false) 
+                _dataBase.Add(money);
+
             Save();
         }
 
@@ -101,6 +106,9 @@ namespace Infrastructure.SaveLoadLogic
 
         public int ReadAmountWallet() => 
             _dataBase.GetAmountWallet();
+
+        public void ChangeStatusSubscribe(bool status) => 
+            _dataBase.ChangeSubscribeStatus(status);
 
         public int ReadPriceSeed() => 
             _dataBase.GetPriceSeed();

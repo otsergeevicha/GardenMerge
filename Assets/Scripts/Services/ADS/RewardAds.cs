@@ -26,5 +26,11 @@ namespace Services.ADS
             print("тут обработка reward рекламы");
             return true;
         }
+
+        public bool TryCanPurchase()
+        {
+            print("здесь обработка покупки (инапы)");
+            return true;
+        }
     }
 }

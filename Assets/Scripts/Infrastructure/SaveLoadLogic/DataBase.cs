@@ -10,6 +10,7 @@ namespace Infrastructure.SaveLoadLogic
     {
         public List<LevelData> LevelDatas = new ();
 
+        public bool IsSubscribe;
         public float ValueMusic;
         public float ValueFX;
         public int Money = 100;
@@ -66,5 +67,8 @@ namespace Infrastructure.SaveLoadLogic
 
         public void SaveValueMusic(float value) => 
             ValueMusic = value;
+
+        public void ChangeSubscribeStatus(bool status) => 
+            IsSubscribe = status;
     }
 }
