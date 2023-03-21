@@ -15,6 +15,8 @@ namespace Services.HUD.Buttons
         
         [SerializeField] private SaveLoad _saveLoad;
         
+        [SerializeField] private VibrationService _vibrationService;
+        
         private const int LevelBuying = 1;
         
         private int _currentPrice = 5;
@@ -33,6 +35,7 @@ namespace Services.HUD.Buttons
                 _saveLoad.SaveNewPriceSeed(_currentPrice);
                 _saveLoad.BuySeed(_currentPrice);
                 _tmp.text = _currentPrice.ToString();
+                _vibrationService.OnTick();
             }
         }
 

@@ -86,7 +86,7 @@ namespace Infrastructure.SaveLoadLogic
         public void SaveCountSpins(int counterSpins) => 
             _dataBase.ChangeCountSpins(counterSpins);
 
-        public void SavePoint(int amountPoints) => 
+        public void ApplyPoint(int amountPoints) => 
             _dataBase.AddPoints(amountPoints);
 
         public void SaveValueFxSound(float value)
@@ -124,6 +124,9 @@ namespace Infrastructure.SaveLoadLogic
 
         public float ReadValueMusic() => 
             _dataBase.ValueMusic;
+
+        public void SaveStatusVibration(bool isVibration) => 
+            _dataBase.ChangeStatusVibration(isVibration);
 
         public void Save()
         {

@@ -10,6 +10,8 @@ namespace Services.Merge
     {
         [SerializeField] private OperatorFactory _plantsFactory;
         [SerializeField] private FXOperator _fxOperator;
+        
+        [SerializeField] private VibrationService _vibrationService;
 
         public event Action<int> Merged;
         
@@ -33,6 +35,7 @@ namespace Services.Merge
                         plant.gameObject.SetActive(true);
                         plant.PlayParticleMerge();
                         _fxOperator.PlaySoundMerge();
+                        _vibrationService.OnTick();
                         Merged?.Invoke(levelMerge);
                         return;
                     }

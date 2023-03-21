@@ -1,4 +1,5 @@
-using Services.HUD.Canvases.Gift;
+using Infrastructure.SaveLoadLogic;
+using Lean.Localization;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -11,10 +12,8 @@ namespace Services.HUD.Canvases
 
         private void Start()
         {
-            foreach (GameObject holder in _canvasHolders)
-            {
+            foreach (GameObject holder in _canvasHolders) 
                 holder.SetActive(false);
-            }
 
             Time.timeScale = 0;
             

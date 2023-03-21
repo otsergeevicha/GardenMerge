@@ -19,7 +19,7 @@ namespace Services.ScorePlayer
 
         private void SavePoint(int amountPoints)
         {
-            _saveLoad.SavePoint(amountPoints);
+            _saveLoad.ApplyPoint(amountPoints);
 
           //  if (PlayerAccount.IsAuthorized) Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
         }

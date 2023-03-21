@@ -31,6 +31,8 @@ namespace Services.HUD.Canvases
         [SerializeField] private CanvasHud _canvasHud;
         [SerializeField] private CanvasGiftUp _canvasGiftUp;
 
+        [SerializeField] private VibrationService _vibrationService;
+        
         private const int GiftMoney = 50;
 
         private int _randomValue;
@@ -85,8 +87,6 @@ namespace Services.HUD.Canvases
                     }
                 }
             }
-            
-            
         }
 
         private IEnumerator RotationRoulette()
@@ -101,7 +101,10 @@ namespace Services.HUD.Canvases
                 _roulette.Rotate(0, 0, Mathf.Lerp(zAngle, 22.5f, .8f));
 
                 if (i > Mathf.RoundToInt(_randomValue * .55f))
+                {
+                    _vibrationService.OnTick();
                     _timeInterval *= .15f;
+                }
                 
                 yield return new WaitForSeconds(_timeInterval);
             }
