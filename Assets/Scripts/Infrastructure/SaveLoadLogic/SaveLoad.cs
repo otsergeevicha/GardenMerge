@@ -128,6 +128,9 @@ namespace Infrastructure.SaveLoadLogic
         public void SaveStatusVibration(bool isVibration) => 
             _dataBase.ChangeStatusVibration(isVibration);
 
+        public bool ReadStatusVibration() => 
+            _dataBase.IsVibration;
+
         public void Save()
         {
             PlayerPrefs.SetString(Key, JsonUtility.ToJson(_dataBase));

@@ -1,3 +1,4 @@
+using System;
 using Infrastructure.SaveLoadLogic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,22 @@ namespace Services
         [SerializeField] private Image _background;
         
         [SerializeField] private SaveLoad _saveLoad;
-        
+
+        private void Start()
+        {
+            if (_saveLoad.ReadStatusVibration())
+            {
+                _transformToggle.anchoredPosition = new Vector2(43.1f, -5.4f);
+                _background.color = Color.white;
+            }
+
+            if (_saveLoad.ReadStatusVibration() == false)
+            {
+                _transformToggle.anchoredPosition = new Vector2(-43.1f, -5.4f);
+                _background.color = Color.red;
+            }
+        }
+
         public void SwitcherVibration()
         {
             switch (_toggle.isOn)
