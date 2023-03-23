@@ -48,8 +48,7 @@ namespace Services
 
         public void OnTick()
         {
-            if (_toggle.isOn) 
-                Handheld.Vibrate();
+            // if (_toggle.isOn) Handheld.Vibrate();
         }
     }
 }
