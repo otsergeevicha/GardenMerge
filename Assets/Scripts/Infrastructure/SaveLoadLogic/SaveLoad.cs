@@ -9,13 +9,15 @@ namespace Infrastructure.SaveLoadLogic
     public class SaveLoad : MonoBehaviour
     {
         [SerializeField] private OperatorFactory _factory;
-        
+
         private const string Key = "Key";
-        
+
         private readonly WaitForSeconds _waitForSeconds = new (5f);
-        
+
         private DataBase _dataBase;
+
         private Coroutine _coroutine;
+
         private bool _isOnApplication;
 
         private void OnEnable()
@@ -130,6 +132,9 @@ namespace Infrastructure.SaveLoadLogic
 
         public bool ReadStatusVibration() => 
             _dataBase.IsVibration;
+
+        public bool CheckStatusSubscribe() => 
+            _dataBase.IsSubscribe;
 
         public void Save()
         {

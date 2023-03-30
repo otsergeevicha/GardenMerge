@@ -1,39 +1,48 @@
+using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
-using Services.ADS;
+using Services.Sound;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
 {
     public class CanvasSubscribe : MonoBehaviour
     {
-        [SerializeField] private RewardAds _ads;
         [SerializeField] private SaveLoad _saveLoad;
-
-        private const int BonusLeaderboardPoints = 1000;
-        private const int BonusCoins = 500;
         
+        [SerializeField] private SoundOperator _soundOperator;
+
         public bool TemporarySubscription;
         
-        public void BuySubscribe()
-        {
-            if (_ads.TryCanPurchase())
-            {
-                _saveLoad.ApplyPoint(BonusLeaderboardPoints);
-                _saveLoad.ApplyMoney(BonusCoins);
-                _saveLoad.ChangeStatusSubscribe(true);
-            }
+        public void See() => 
+            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
 
-            if (_ads.TryCanPurchase() == false)
-                _saveLoad.ChangeStatusSubscribe(false);
+        private void OnOpenCallback()
+        {
+            Time.timeScale = 0;
+            _soundOperator.Mute();
         }
 
-        public void SubscribeAdvertising()
+        private void OnRewardedCallback()
+        { 
+            _saveLoad.ChangeStatusSubscribe(true);
+            TemporarySubscription = true;
+            
+            UnLockGame();
+        }
+
+        private void OnCloseCallback() => 
+            UnLockGame();
+
+        private void OnErrorCallback(string obj)
         {
-            if (_ads.TryCanADS())
-            {
-                _saveLoad.ChangeStatusSubscribe(true);
-                TemporarySubscription = true;
-            }
+            Debug.Log(obj);
+            UnLockGame();
+        }
+
+        private void UnLockGame()
+        {
+            Time.timeScale = 1;
+            _soundOperator.UnMute();
         }
     }
 }

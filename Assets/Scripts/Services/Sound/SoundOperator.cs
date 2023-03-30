@@ -44,5 +44,17 @@ namespace Services.Sound
             _mainMusic.volume = _sliderMusic.value;
             _saveLoad.SaveValueMusic(_sliderMusic.value);
         }
+
+        public void Mute()
+        {
+            _fxSound.SetVolume(0);
+            _mainMusic.volume = 0;
+        }
+
+        public void UnMute()
+        {
+            _fxSound.SetVolume(_sliderFxSound.value);
+            _mainMusic.volume = _sliderMusic.value;
+        }
     }
 }

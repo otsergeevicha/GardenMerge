@@ -20,7 +20,7 @@ namespace Services.HUD
 
         [SerializeField] private float _flashDuration = 1f;
 
-        private readonly float _timerDuration = 9f * 60f;
+        private readonly float _timerDuration = 90f * 60f;
         
         public TextMeshProUGUI TimerText;
 
@@ -63,9 +63,9 @@ namespace Services.HUD
         {
             if (time < 0)
             {
+                time = 0;
                 _canvasSubscribe.TemporarySubscription = false;
                 _saveLoad.ChangeStatusSubscribe(false);
-                time = 0;
             }
 
             if (time > 3660)

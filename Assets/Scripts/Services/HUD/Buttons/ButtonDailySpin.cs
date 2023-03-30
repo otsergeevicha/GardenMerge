@@ -1,5 +1,6 @@
+using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
-using Services.ADS;
+using Services.Sound;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ namespace Services.HUD.Buttons
         [SerializeField] private SaveLoad _saveLoad;
         [SerializeField] private Image _iconReward;
 
-        [SerializeField] private RewardAds _rewardAds;
+        [SerializeField] private SoundOperator _soundOperator;
 
         private const int RewardSpinsADS = 3;
         private const int MaxCountSpins = 3;
@@ -51,18 +52,38 @@ namespace Services.HUD.Buttons
             return false;
         }
 
-        public void GetSpin()
-        {
-            //Сейчас всегда +3, далее только через рекламу
-            print("Место где должен быть Reward за спины");
+        public void See() => 
+            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
 
-            if (_rewardAds.TryCanADS())
-            {
-                _counterSpins += RewardSpinsADS;
+        private void OnOpenCallback()
+        {
+            Time.timeScale = 0;
+            _soundOperator.Mute();
+        }
+
+        private void OnRewardedCallback()
+        { 
+            _counterSpins += RewardSpinsADS;
             
-                if (_counterSpins > MaxCountSpins)
-                    _counterSpins = MaxCountSpins;
-            }
+            if (_counterSpins > MaxCountSpins) 
+                _counterSpins = MaxCountSpins;
+            
+            UnLockGame();
+        }
+
+        private void OnCloseCallback() => 
+            UnLockGame();
+
+        private void OnErrorCallback(string obj)
+        {
+            Debug.Log(obj);
+            UnLockGame();
+        }
+
+        private void UnLockGame()
+        {
+            Time.timeScale = 1;
+            _soundOperator.UnMute();
         }
 
         private void Draw() =>

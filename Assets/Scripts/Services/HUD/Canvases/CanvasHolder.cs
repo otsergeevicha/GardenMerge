@@ -1,5 +1,3 @@
-using Infrastructure.SaveLoadLogic;
-using Lean.Localization;
 using UnityEngine;
 
 namespace Services.HUD.Canvases

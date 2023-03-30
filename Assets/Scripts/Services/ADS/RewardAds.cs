@@ -1,36 +1,45 @@
+using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
+using Services.Sound;
 using UnityEngine;
 
 namespace Services.ADS
 {
     public class RewardAds : MonoBehaviour
     {
+        [SerializeField] private SoundOperator _soundOperator;
         [SerializeField] private SaveLoad _saveLoad;
 
         private const int BonusCoins = 25;
 
-        private bool _isSeeADS;
-        private bool _tryGetReward = false;
+        public void See() => 
+            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
 
-        public bool TryCanADS() =>
-            SeeReward();
-
-        public void GetCoinsADS()
+        private void OnOpenCallback()
         {
-            if (SeeReward())
-                _saveLoad.ApplyMoney(BonusCoins);
+            Time.timeScale = 0;
+            _soundOperator.Mute();
         }
 
-        private bool SeeReward()
-        {
-            print("тут обработка reward рекламы");
-            return true;
+        private void OnRewardedCallback()
+        { 
+            _saveLoad.ApplyMoney(BonusCoins);
+            UnLockGame();
         }
 
-        public bool TryCanPurchase()
+        private void OnCloseCallback() => 
+            UnLockGame();
+
+        private void OnErrorCallback(string obj)
         {
-            print("здесь обработка покупки (инапы)");
-            return true;
+            Debug.Log(obj);
+            UnLockGame();
+        }
+
+        private void UnLockGame()
+        {
+            Time.timeScale = 1;
+            _soundOperator.UnMute();
         }
     }
 }
