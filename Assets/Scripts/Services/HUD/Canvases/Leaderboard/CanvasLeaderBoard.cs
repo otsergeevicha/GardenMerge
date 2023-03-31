@@ -1,3 +1,5 @@
+using Agava.YandexGames;
+using Infrastructure.SaveLoadLogic;
 using Services.HUD.Buttons;
 using UnityEngine;
 
@@ -9,9 +11,11 @@ namespace Services.HUD.Canvases.Leaderboard
         TwoPlace = 2,
         ThreePlace = 3
     }
-    
+
     public class CanvasLeaderBoard : MonoBehaviour
     {
+        [SerializeField] private SaveLoad _saveLoad;
+
         [SerializeField] private ButtonHolderMenu _buttonHolderMenu;
         [SerializeField] private PlayerRank[] _playerRanks;
 
@@ -19,6 +23,14 @@ namespace Services.HUD.Canvases.Leaderboard
         private const string Anonymous = "Anonymous";
 
         private readonly int _topPlayersCount = 4;
+
+        private void Start()
+        {
+            if (PlayerAccount.IsAuthorized)
+            {
+                Agava.YandexGames.Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
+            }
+        }
 
         public void ToggleVisible(bool flag)
         {
@@ -32,20 +44,37 @@ namespace Services.HUD.Canvases.Leaderboard
 
         private void Show()
         {
-            ShowPlayer();
-            ShowOtherPlayers();
+            if (PlayerAccount.IsAuthorized)
+            {
+                PlayerAccount.RequestPersonalProfileDataPermission();
+                ShowPlayer();
+                ShowOtherPlayers();
+            }
+
+            if (PlayerAccount.IsAuthorized == false)
+            {
+#if !UNITY_EDITOR
+        PlayerAccount.Authorize();
+#endif
+            }
         }
 
         private void ShowPlayer()
         {
-          //  Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, (result) => { if (result != null) SetPlace(result); });
+            Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, (result) =>
+            {
+                if (result != null) SetPlace(result);
+            });
         }
 
         private void ShowOtherPlayers()
         {
-            //Agava.YandexGames.Leaderboard.GetEntries(LeaderboardName, (result) => { foreach (LeaderboardEntryResponse entry in result.entries) SetPlace(entry); }, null, _topPlayersCount, 0);
+            Agava.YandexGames.Leaderboard.GetEntries(LeaderboardName, (result) =>
+            {
+                foreach (LeaderboardEntryResponse entry in result.entries) SetPlace(entry);
+            }, null, _topPlayersCount, 0);
         }
-        
+
         private string NameCorrector(string name)
         {
             if (string.IsNullOrEmpty(name))
@@ -54,27 +83,27 @@ namespace Services.HUD.Canvases.Leaderboard
             return name;
         }
 
-       // private void SetPlace(LeaderboardEntryResponse result)
-       // {
-       //     switch (result.rank)
-       //     {
-       //         case (int)RankPosition.FirstPlace:
-       //             _playerRanks[0].Init(result.rank, 
-       //                 NameCorrector(result.player.publicName), result.score);
-       //             break;
-       //         case (int)RankPosition.TwoPlace:
-       //             _playerRanks[1].Init(result.rank, 
-       //                 NameCorrector(result.player.publicName), result.score);
-       //             break;
-       //         case (int)RankPosition.ThreePlace:
-       //            _playerRanks[2].Init(result.rank, 
-       //                 NameCorrector(result.player.publicName), result.score);
-       //             break;
-       //         case > (int)RankPosition.ThreePlace:
-       //             _playerRanks[3].Init(result.rank, 
-       //                 NameCorrector(result.player.publicName), result.score);
-       //             break;
-       //     }
-       // }
+        private void SetPlace(LeaderboardEntryResponse result)
+        {
+            switch (result.rank)
+            {
+                case (int)RankPosition.FirstPlace:
+                    _playerRanks[0].Init(result.rank,
+                        NameCorrector(result.player.publicName), result.score);
+                    break;
+                case (int)RankPosition.TwoPlace:
+                    _playerRanks[1].Init(result.rank,
+                        NameCorrector(result.player.publicName), result.score);
+                    break;
+                case (int)RankPosition.ThreePlace:
+                    _playerRanks[2].Init(result.rank,
+                        NameCorrector(result.player.publicName), result.score);
+                    break;
+                case > (int)RankPosition.ThreePlace:
+                    _playerRanks[3].Init(result.rank,
+                        NameCorrector(result.player.publicName), result.score);
+                    break;
+            }
+        }
     }
 }

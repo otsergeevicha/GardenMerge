@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5821825459019574028}
   - component: {fileID: 5821825459019574029}
   - component: {fileID: 5821825459019574027}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SeedBronze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8819306747889176026}
   - component: {fileID: 5726746593866509928}
   - component: {fileID: 7118640789826586447}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bronze_SunFLowerSeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}

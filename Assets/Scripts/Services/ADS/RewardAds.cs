@@ -10,7 +10,7 @@ namespace Services.ADS
         [SerializeField] private SoundOperator _soundOperator;
         [SerializeField] private SaveLoad _saveLoad;
 
-        private const int BonusCoins = 25;
+        private const int BonusCoins = 100;
 
         public void See() => 
             VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);

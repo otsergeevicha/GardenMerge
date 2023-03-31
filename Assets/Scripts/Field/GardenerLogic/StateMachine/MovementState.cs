@@ -34,6 +34,9 @@ namespace Field.GardenerLogic.StateMachine
             Vector3 ourPosition = transform.position;
             Vector3 positionVegetation = _currentVegetation.transform.position;
 
+            if (ourPosition.x != 0) 
+                transform.Rotate(0, ourPosition.y, ourPosition.z);
+
             transform.position = new Vector3(MovementAxis(ourPosition.x, positionVegetation.x),
                 MovementAxis(ourPosition.y, positionVegetation.y),
                 MovementAxis(ourPosition.z, positionVegetation.z));

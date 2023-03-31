@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3330344461693300344}
   - component: {fileID: 2431149057949734255}
   - component: {fileID: 8741708889787975709}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: 'Platin_AcornSeed '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 4591168542138512838}
   - component: {fileID: 4833377420462994372}
   - component: {fileID: 6051974350652592679}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SeedEpic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5779177131696221479}
   - component: {fileID: 5779177131696221478}
   - component: {fileID: 5779177131696221497}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SeedGold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4628326461958155949}
   - component: {fileID: 7818796548205227872}
   - component: {fileID: 5621244705772058909}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Golden_pumpkin seed
   m_TagString: Untagged
   m_Icon: {fileID: 0}

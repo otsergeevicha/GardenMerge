@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5885271463327432944}
   - component: {fileID: 2181585831354603214}
   - component: {fileID: 8650101494362586379}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4803,7 +4803,7 @@ GameObject:
   - component: {fileID: 5802933903015926414}
   - component: {fileID: 7251745777664390818}
   - component: {fileID: 454785780597071684}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4886,7 +4886,7 @@ GameObject:
   - component: {fileID: 492088921998139850}
   - component: {fileID: 8099852440654846293}
   - component: {fileID: 7395657413205085908}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sparkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9723,7 +9723,7 @@ GameObject:
   - component: {fileID: 512451885973701079}
   - component: {fileID: 4735992578827812535}
   - component: {fileID: 1465788246680388160}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FXMerge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14604,7 +14604,7 @@ GameObject:
   - component: {fileID: 1617404627420727930}
   - component: {fileID: 2716069222036124754}
   - component: {fileID: 3118470699714979868}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FXCoins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19309,7 +19309,7 @@ GameObject:
   - component: {fileID: 6977852407428238246}
   - component: {fileID: 4706088521715529584}
   - component: {fileID: 5232931942888044846}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground.008 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19394,7 +19394,7 @@ GameObject:
   - component: {fileID: -1187787758952618139}
   - component: {fileID: 6051028083833778170}
   - component: {fileID: 1210979756442268163}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShrubGold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19491,7 +19491,7 @@ GameObject:
   - component: {fileID: 6581532040560837845}
   - component: {fileID: 6581532040541462157}
   - component: {fileID: 6581532040541069413}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: StormMuzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24340,7 +24340,7 @@ GameObject:
   - component: {fileID: 6581532040560836589}
   - component: {fileID: 6581532040541422573}
   - component: {fileID: 6581532040541059495}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cutters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29087,7 +29087,7 @@ GameObject:
   - component: {fileID: 6581532040560854959}
   - component: {fileID: 6581532040541388097}
   - component: {fileID: 6581532040541066035}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33916,7 +33916,7 @@ GameObject:
   - component: {fileID: 6581532040541496031}
   - component: {fileID: 6581532040541089177}
   - component: {fileID: 6581532040566580521}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CloudBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38750,7 +38750,7 @@ GameObject:
   - component: {fileID: 464812753464093456}
   - component: {fileID: 5246213887932964809}
   - component: {fileID: 3421540791782691298}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Golden_GoldenBush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38847,7 +38847,7 @@ GameObject:
   - component: {fileID: 7751291540846313574}
   - component: {fileID: 5017389072678364582}
   - component: {fileID: 4320752508874617643}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Blur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43717,7 +43717,7 @@ GameObject:
   - component: {fileID: 4674370207461814353}
   - component: {fileID: 1633339341094497213}
   - component: {fileID: 2479181621982302761}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48527,7 +48527,7 @@ GameObject:
   - component: {fileID: 8068362841285387198}
   - component: {fileID: 6942100274995097925}
   - component: {fileID: 9025411972748637019}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53398,7 +53398,7 @@ GameObject:
   - component: {fileID: 9019919815858089618}
   - component: {fileID: 9222257136314492866}
   - component: {fileID: 9222930396695623334}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58226,7 +58226,7 @@ GameObject:
   - component: {fileID: 9021458461623170852}
   - component: {fileID: 9222555433958869878}
   - component: {fileID: 9221499183484836068}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeafExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62993,7 +62993,7 @@ GameObject:
   - component: {fileID: 9021790329731677356}
   - component: {fileID: 9223176481690231132}
   - component: {fileID: 9221201796806231856}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
