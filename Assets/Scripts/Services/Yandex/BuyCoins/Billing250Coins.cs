@@ -1,3 +1,4 @@
+using System;
 using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
 using UnityEngine;
@@ -8,13 +9,19 @@ namespace Services.Yandex.BuyCoins
     {
         [SerializeField] private SaveLoad _saveLoad;
 
-        public void Buy250Coins() =>
-            Billing.PurchaseProduct("250coins", OnSuccessCallback, OnErrorCallback);
+        public void Buy250Coins()
+        {
+            if (PlayerAccount.IsAuthorized == false)
+                PlayerAccount.Authorize();
 
-        private void OnSuccessCallback(PurchaseProductResponse obj) => 
+            if (PlayerAccount.IsAuthorized)
+                Billing.PurchaseProduct("250coins", OnSuccessCallback, OnErrorCallback);
+        }
+
+        private void OnSuccessCallback(PurchaseProductResponse obj) =>
             _saveLoad.ApplyMoney(250);
 
-        private void OnErrorCallback(string obj) => 
-            throw new System.NotImplementedException();
+        private void OnErrorCallback(string obj) =>
+            throw new NotImplementedException();
     }
 }

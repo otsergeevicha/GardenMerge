@@ -10,10 +10,15 @@ namespace Services.Yandex
 
         private const int BonusLeaderboardPoints = 1000;
         private const int BonusCoins = 500;
+        
+        public void BuySubscribe()
+        {
+            if (PlayerAccount.IsAuthorized == false)
+                PlayerAccount.Authorize();
 
-
-        public void BuySubscribe() =>
-            Billing.PurchaseProduct("subscribe", OnSuccessCallback, OnErrorCallback);
+            if (PlayerAccount.IsAuthorized)
+                Billing.PurchaseProduct("subscribe", OnSuccessCallback, OnErrorCallback);
+        }
 
         private void OnSuccessCallback(PurchaseProductResponse obj)
         {

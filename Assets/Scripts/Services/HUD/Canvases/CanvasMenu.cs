@@ -1,4 +1,5 @@
 using System;
+using Agava.YandexGames;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -15,13 +16,25 @@ namespace Services.HUD.Canvases
             Time.timeScale = 0;
         }
 
-        public void ContinueGame()
+        public void ContinueGame() => 
+            InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+
+        public void OnVisibleSettingCanvas() => 
+            _canvasSetting.gameObject.SetActive(true);
+
+        private void OnErrorCallback(string obj)
         {
             gameObject.SetActive(false);
             Time.timeScale = 1;
         }
-        
-        public void OnVisibleSettingCanvas() => 
-            _canvasSetting.gameObject.SetActive(true);
+
+        private void OnCloseCallback(bool obj)
+        {
+            gameObject.SetActive(false);
+            Time.timeScale = 1;
+        }
+
+        private void OnOpenCallback() => 
+            throw new NotImplementedException();
     }
 }

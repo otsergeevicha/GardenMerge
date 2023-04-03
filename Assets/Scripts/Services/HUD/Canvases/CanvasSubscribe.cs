@@ -23,9 +23,12 @@ namespace Services.HUD.Canvases
         }
 
         private void OnRewardedCallback()
-        { 
-            _saveLoad.ChangeStatusSubscribe(true);
-            TemporarySubscription = true;
+        {
+            if (_saveLoad.CheckStatusSubscribe() == false)
+            {
+                _saveLoad.ChangeStatusSubscribe(true);
+                TemporarySubscription = true;
+            }
             
             UnLockGame();
         }

@@ -8,13 +8,19 @@ namespace Services.Yandex.BuyCoins
     {
         [SerializeField] private SaveLoad _saveLoad;
 
-        public void Buy750Coins() =>
-            Billing.PurchaseProduct("750coins", OnSuccessCallback, OnErrorCallback);
+        public void Buy750Coins()
+        {
+            if (PlayerAccount.IsAuthorized == false)
+                PlayerAccount.Authorize();
 
-        private void OnSuccessCallback(PurchaseProductResponse obj) => 
+            if (PlayerAccount.IsAuthorized)
+                Billing.PurchaseProduct("750coins", OnSuccessCallback, OnErrorCallback);
+        }
+
+        private void OnSuccessCallback(PurchaseProductResponse obj) =>
             _saveLoad.ApplyMoney(750);
 
-        private void OnErrorCallback(string obj) => 
+        private void OnErrorCallback(string obj) =>
             throw new System.NotImplementedException();
     }
 }
