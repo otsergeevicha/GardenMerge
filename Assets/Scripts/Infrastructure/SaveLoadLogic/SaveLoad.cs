@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Agava.YandexGames;
 using Field.Plants;
 using Infrastructure.Factory;
 using UnityEngine;
@@ -12,19 +13,30 @@ namespace Infrastructure.SaveLoadLogic
 
         private const string Key = "Key";
 
-        private readonly WaitForSeconds _waitForSeconds = new (5f);
-
-        private DataBase _dataBase;
-
-        private Coroutine _coroutine;
+        private readonly WaitForSeconds _waitForSeconds = new(5f);
 
         private bool _isOnApplication;
+
+        private DataBase _dataBase;
+        private Coroutine _coroutine;
 
         private void OnEnable()
         {
             _dataBase = PlayerPrefs.HasKey(Key)
-                ? JsonUtility.FromJson<DataBase>(PlayerPrefs.GetString(Key))
-                : new DataBase();
+                    ? JsonUtility.FromJson<DataBase>(PlayerPrefs.GetString(Key))
+                    : new DataBase();
+        }
+
+        private void OnDisable()
+        {
+            if (_coroutine != null)
+            {
+                _isOnApplication = false;
+                StopCoroutine(_coroutine);
+                _coroutine = null;
+            }
+
+            Save();
         }
 
         private void Start()
@@ -50,24 +62,12 @@ namespace Infrastructure.SaveLoadLogic
             }
         }
 
-        private void OnDisable()
-        {
-            if (_coroutine != null)
-            {
-                _isOnApplication = false;
-                StopCoroutine(_coroutine);
-                _coroutine = null;
-            }
-            
-            Save();
-        }
-
         public void ApplyMoney(int money)
         {
-            if (_dataBase.IsSubscribe) 
+            if (_dataBase.IsSubscribe)
                 _dataBase.Add(money * 2);
 
-            if (_dataBase.IsSubscribe == false) 
+            if (_dataBase.IsSubscribe == false)
                 _dataBase.Add(money);
 
             Save();
@@ -85,10 +85,10 @@ namespace Infrastructure.SaveLoadLogic
             Save();
         }
 
-        public void SaveCountSpins(int counterSpins) => 
+        public void SaveCountSpins(int counterSpins) =>
             _dataBase.ChangeCountSpins(counterSpins);
 
-        public void ApplyPoint(int amountPoints) => 
+        public void ApplyPoint(int amountPoints) =>
             _dataBase.AddPoints(amountPoints);
 
         public void SaveValueFxSound(float value)
@@ -103,49 +103,53 @@ namespace Infrastructure.SaveLoadLogic
             Save();
         }
 
-        public bool CheckAmountMoney(int scaleBuying) => 
+        public bool CheckAmountMoney(int scaleBuying) =>
             _dataBase.GetPrice() > scaleBuying;
 
-        public int ReadAmountWallet() => 
+        public int ReadAmountWallet() =>
             _dataBase.GetAmountWallet();
 
-        public void ChangeStatusSubscribe(bool status) => 
+        public void ChangeStatusSubscribe(bool status) =>
             _dataBase.ChangeSubscribeStatus(status);
 
-        public int ReadPriceSeed() => 
+        public int ReadPriceSeed() =>
             _dataBase.GetPriceSeed();
 
-        public int GetCountSpins() => 
+        public int GetCountSpins() =>
             _dataBase.ReadCountSpins();
 
-        public int ReadScore() => 
+        public int ReadScore() =>
             _dataBase.GetScore();
 
-        public float ReadValueFxSound() => 
+        public float ReadValueFxSound() =>
             _dataBase.ValueFX;
 
-        public float ReadValueMusic() => 
+        public float ReadValueMusic() =>
             _dataBase.ValueMusic;
 
-        public void SaveStatusVibration(bool isVibration) => 
+        public void SaveStatusVibration(bool isVibration) =>
             _dataBase.ChangeStatusVibration(isVibration);
 
-        public bool ReadStatusVibration() => 
+        public bool ReadStatusVibration() =>
             _dataBase.IsVibration;
 
-        public bool CheckStatusSubscribe() => 
+        public bool CheckStatusSubscribe() =>
             _dataBase.IsSubscribe;
 
         public void Save()
         {
-            PlayerPrefs.SetString(Key, JsonUtility.ToJson(_dataBase));
+            string data = JsonUtility.ToJson(_dataBase);
+            
+            PlayerPrefs.SetString(Key, data);
             PlayerPrefs.Save();
+         
+            PlayerAccount.SetPlayerData(data);
         }
 
         private IEnumerator AutoSaveVegetation()
         {
             _isOnApplication = true;
-            
+
             while (_isOnApplication)
             {
                 _dataBase.SaveVegetation(_factory.GetAllPlants());
