@@ -10,6 +10,7 @@ namespace Infrastructure.SaveLoadLogic
     {
         public List<LevelData> LevelDatas = new ();
 
+        public bool FirstTraining;
         public bool IsVibration;
         public bool IsSubscribe;
         public float ValueMusic;

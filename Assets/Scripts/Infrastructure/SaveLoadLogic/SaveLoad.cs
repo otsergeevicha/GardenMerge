@@ -136,6 +136,9 @@ namespace Infrastructure.SaveLoadLogic
         public bool CheckStatusSubscribe() =>
             _dataBase.IsSubscribe;
 
+        public bool ReadFirstTraining() => 
+            _dataBase.FirstTraining;
+
         public void Save()
         {
             string data = JsonUtility.ToJson(_dataBase);
@@ -156,5 +159,8 @@ namespace Infrastructure.SaveLoadLogic
                 yield return _waitForSeconds;
             }
         }
+
+        public void ChangeStatusFirstTraining(bool status) => 
+            _dataBase.FirstTraining = status;
     }
 }

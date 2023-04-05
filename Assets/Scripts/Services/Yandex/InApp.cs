@@ -9,14 +9,14 @@ namespace Services.Yandex
         [SerializeField] private SaveLoad _saveLoad;
 
         private const string Subscribe = "subscribe";
-        
+
         private void Awake()
         {
             Billing.GetPurchasedProducts(OnSuccessCallback);
-            
+
             if (_saveLoad.CheckStatusSubscribe())
                 return;
-            
+
             _saveLoad.ChangeStatusSubscribe(false);
         }
 

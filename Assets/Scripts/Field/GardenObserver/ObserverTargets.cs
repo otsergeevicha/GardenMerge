@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Field.Plants;
 using Infrastructure.Factory;
+using Services.HUD.Canvases.Training;
 using UnityEngine;
 
 namespace Field.GardenObserver
@@ -9,6 +11,8 @@ namespace Field.GardenObserver
     public class ObserverTargets : MonoBehaviour
     {
         [SerializeField] private OperatorFactory _factory;
+
+        [SerializeField] private TrainingScenario _trainingScenario;
 
         private const int LevelBronzeSeed = 1;
         private const int LevelGoldSeed = 5;
@@ -21,6 +25,12 @@ namespace Field.GardenObserver
 
         private void Update() => 
             CustomQueue();
+
+        private void OnTriggerEnter(Collider collision)
+        {
+            if (collision.TryGetComponent(out Vegetation _))
+                _trainingScenario.CompletedFourStep();
+        }
 
         private void CustomQueue()
         {

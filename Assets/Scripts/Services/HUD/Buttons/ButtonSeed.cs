@@ -1,6 +1,7 @@
 using Field.Tiles.Move;
 using Infrastructure.Factory;
 using Infrastructure.SaveLoadLogic;
+using Services.HUD.Canvases.Training;
 using TMPro;
 using UnityEngine;
 
@@ -16,10 +17,13 @@ namespace Services.HUD.Buttons
         [SerializeField] private SaveLoad _saveLoad;
         
         [SerializeField] private VibrationService _vibrationService;
+
+        [SerializeField] private TrainingScenario _trainingScenario;
         
         private const int LevelBuying = 1;
         
         private int _currentPrice = 5;
+        private int _counterBuy = 0;
 
         private void Start()
         {
@@ -36,6 +40,18 @@ namespace Services.HUD.Buttons
                 _saveLoad.BuySeed(_currentPrice);
                 _tmp.text = _currentPrice.ToString();
                 _vibrationService.OnTick();
+
+                if (_counterBuy == 0)
+                {
+                    _trainingScenario.CompletedOneStep();
+                    _counterBuy++;
+                }
+
+                if (_counterBuy == 1)
+                {
+                    _trainingScenario.CompletedTwoStep();
+                    _counterBuy++;
+                }
             }
         }
 

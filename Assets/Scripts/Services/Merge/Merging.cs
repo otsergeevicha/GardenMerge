@@ -1,6 +1,7 @@
 using System;
 using Field.Plants;
 using Infrastructure.Factory;
+using Services.HUD.Canvases.Training;
 using Services.Sound;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ namespace Services.Merge
         [SerializeField] private FXOperator _fxOperator;
         
         [SerializeField] private VibrationService _vibrationService;
+
+        [SerializeField] private TrainingScenario _trainingScenario;
+        private int _counterMerge;
 
         public event Action<int> Merged;
         
@@ -37,6 +41,13 @@ namespace Services.Merge
                         _fxOperator.PlaySoundMerge();
                         _vibrationService.OnTick();
                         Merged?.Invoke(levelMerge);
+
+                        if (_counterMerge == 0)
+                        {
+                            _trainingScenario.CompletedThreeStep();
+                            _counterMerge++;
+                        }
+
                         return;
                     }
                 }

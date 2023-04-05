@@ -22,8 +22,11 @@ namespace Services.Yandex
 
             YandexGamesSdk.CallbackLogging = true;
 
-            if (PlayerAccount.IsAuthorized) 
+            if (PlayerAccount.IsAuthorized)
                 PlayerAccount.GetPlayerData(OnSuccessCallback);
+            
+            if (PlayerAccount.IsAuthorized == false)
+                SceneManager.LoadScene(IndexMainScene);
         }
 
         private void OnSuccessCallback(string data)

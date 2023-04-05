@@ -9,19 +9,13 @@ namespace Services.ScorePlayer
         [SerializeField] private Merging _merging;
         [SerializeField] private SaveLoad _saveLoad;
 
-        private const string LeaderboardName = "Leaderboard";
-        
         private void OnEnable() => 
             _merging.Merged += SavePoint;
 
         private void OnDisable() => 
             _merging.Merged -= SavePoint;
 
-        private void SavePoint(int amountPoints)
-        {
+        private void SavePoint(int amountPoints) => 
             _saveLoad.ApplyPoint(amountPoints);
-
-          //  if (PlayerAccount.IsAuthorized) Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
-        }
     }
 }
