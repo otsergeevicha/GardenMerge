@@ -18,9 +18,10 @@ namespace Services.HUD.Canvases
 
         public void ContinueGame()
         {
-            gameObject.SetActive(false);
-            Time.timeScale = 1;
-            InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+            gameObject.SetActive(false); // - это удалить
+            Time.timeScale = 1; // - это удалить
+           // InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+           print("тут исправить");
         }
 
         public void OnVisibleSettingCanvas() => 

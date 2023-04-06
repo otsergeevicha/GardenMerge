@@ -1,4 +1,3 @@
-using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.Training.AI;
 
 namespace Services.HUD.Canvases.Training
@@ -7,7 +6,7 @@ namespace Services.HUD.Canvases.Training
     {
         public void EnterBehavior();
         public void ExitBehavior();
-        public void Init(TrainingStateMachine trainingStateMachineWarriors, SaveLoad saveLoad,
+        public void Init(TrainingStateMachine trainingStateMachine,
             TrainingScenario trainingScenario);
     }
 }

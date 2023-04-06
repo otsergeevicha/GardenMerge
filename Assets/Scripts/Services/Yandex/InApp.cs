@@ -11,8 +11,9 @@ namespace Services.Yandex
         private const string Subscribe = "subscribe";
 
         private void Awake()
-        {
-            Billing.GetPurchasedProducts(OnSuccessCallback);
+        { 
+            //Billing.GetPurchasedProducts(OnSuccessCallback);
+            print("тут исправить");
 
             if (_saveLoad.CheckStatusSubscribe())
                 return;

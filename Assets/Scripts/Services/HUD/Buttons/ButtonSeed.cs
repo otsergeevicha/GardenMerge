@@ -23,7 +23,8 @@ namespace Services.HUD.Buttons
         private const int LevelBuying = 1;
         
         private int _currentPrice = 5;
-        private int _counterBuy = 0;
+        private bool _firstBuy;
+        private bool _secondBuy = true;
 
         private void Start()
         {
@@ -41,16 +42,17 @@ namespace Services.HUD.Buttons
                 _tmp.text = _currentPrice.ToString();
                 _vibrationService.OnTick();
 
-                if (_counterBuy == 0)
-                {
-                    _trainingScenario.CompletedOneStep();
-                    _counterBuy++;
-                }
-
-                if (_counterBuy == 1)
+                if (_secondBuy == false)
                 {
                     _trainingScenario.CompletedTwoStep();
-                    _counterBuy++;
+                    _secondBuy = true;
+                }
+
+                if (_firstBuy == false)
+                {
+                    _trainingScenario.CompletedOneStep();
+                    _firstBuy = true;
+                    _secondBuy = false;
                 }
             }
         }

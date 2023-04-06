@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.Training.AI.BehaviorScenario;
 using UnityEngine;
 
@@ -17,8 +16,6 @@ namespace Services.HUD.Canvases.Training.AI
         private Dictionary<Type, ISwitcherStateTraining> _allBehaviors;
         private ISwitcherStateTraining _currentBehavior;
 
-        private SaveLoad _saveLoad;
-
         private void Start()
         {
             _allBehaviors = new Dictionary<Type, ISwitcherStateTraining>
@@ -31,7 +28,7 @@ namespace Services.HUD.Canvases.Training.AI
 
             foreach (var behavior in _allBehaviors)
             {
-                behavior.Value.Init(this, _saveLoad, _trainingScenario);
+                behavior.Value.Init(this, _trainingScenario);
                 behavior.Value.ExitBehavior();
             }
 
@@ -39,11 +36,8 @@ namespace Services.HUD.Canvases.Training.AI
             EnterBehavior<FirstBuySeed>();
         }
 
-        public void Init(SaveLoad saveLoad, TrainingScenario trainingScenario)
-        {
+        public void Init(TrainingScenario trainingScenario) => 
             _trainingScenario = trainingScenario;
-            _saveLoad = saveLoad;
-        }
 
         public void EnterBehavior<TState>() where TState : ISwitcherStateTraining
         {
