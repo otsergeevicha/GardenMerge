@@ -146,8 +146,7 @@ namespace Infrastructure.SaveLoadLogic
             PlayerPrefs.SetString(Key, data);
             PlayerPrefs.Save();
          
-            //PlayerAccount.SetPlayerData(data);
-            print("тут исправить");
+            PlayerAccount.SetPlayerData(data);
         }
 
         private IEnumerator AutoSaveVegetation()

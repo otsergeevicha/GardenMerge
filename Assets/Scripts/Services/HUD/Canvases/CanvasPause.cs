@@ -13,7 +13,6 @@ namespace Services.HUD.Canvases
         {
             _canvasHud.gameObject.SetActive(false);
             _canvasSetting.gameObject.SetActive(true);
-            gameObject.SetActive(false);
         }
         
         public void Visible(bool status) => 

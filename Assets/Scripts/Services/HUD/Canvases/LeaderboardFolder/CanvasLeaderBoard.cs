@@ -15,6 +15,8 @@ namespace Services.HUD.Canvases.LeaderboardFolder
     public class CanvasLeaderBoard : MonoBehaviour
     {
         [SerializeField] private SaveLoad _saveLoad;
+        [SerializeField] private CanvasHud _canvasHud;
+        [SerializeField] private CanvasMenu _canvasMenu;
         
         [SerializeField] private OnePlayerRank _onePlayer;
         [SerializeField] private TwoPlayerRank _twoPlayer;
@@ -48,8 +50,12 @@ namespace Services.HUD.Canvases.LeaderboardFolder
             }
         }
 
-        public void OffVisible() => 
+        public void OffVisible()
+        {
+            _canvasHud.gameObject.SetActive(true);
+            _canvasMenu.gameObject.SetActive(true);
             gameObject.SetActive(false);
+        }
 
         private void OnSuccessCallback()
         {
@@ -59,6 +65,8 @@ namespace Services.HUD.Canvases.LeaderboardFolder
 
         private void SetData()
         {
+            _canvasHud.gameObject.SetActive(false);
+            _canvasMenu.gameObject.SetActive(false);
             PlayerPlace();
             OtherPlayerPlace();
         }

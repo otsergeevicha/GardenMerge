@@ -14,7 +14,6 @@ namespace Services.HUD.Canvases.Training.AI.BehaviorScenario
 
             if (TrainingScenario.ReadFourStep())
             {
-                print("4");
                 TrainingScenario.OnVisibleCanvasTutorial();
                 gameObject.SetActive(false);
             }

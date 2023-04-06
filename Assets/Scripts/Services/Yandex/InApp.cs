@@ -12,8 +12,7 @@ namespace Services.Yandex
 
         private void Awake()
         { 
-            //Billing.GetPurchasedProducts(OnSuccessCallback);
-            print("тут исправить");
+            Billing.GetPurchasedProducts(OnSuccessCallback);
 
             if (_saveLoad.CheckStatusSubscribe())
                 return;

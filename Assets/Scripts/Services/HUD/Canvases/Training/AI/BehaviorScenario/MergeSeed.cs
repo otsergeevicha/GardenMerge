@@ -12,11 +12,8 @@ namespace Services.HUD.Canvases.Training.AI.BehaviorScenario
 
             gameObject.SetActive(true);
 
-            if (TrainingScenario.ReadThreeStep())
-            {
-                print("3");
+            if (TrainingScenario.ReadThreeStep()) 
                 TrainingStateMachine.EnterBehavior<MoveSeed>();
-            }
         }
     }
 }

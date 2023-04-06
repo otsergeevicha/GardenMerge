@@ -12,11 +12,8 @@ namespace Services.HUD.Canvases.Training.AI.BehaviorScenario
 
             gameObject.SetActive(true);
 
-            if (TrainingScenario.ReadOneStep())
-            {
-                print("1");
+            if (TrainingScenario.ReadOneStep()) 
                 TrainingStateMachine.EnterBehavior<SecondBuySeed>();
-            }
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Services.HUD.Canvases
     public class CanvasMenu : MonoBehaviour
     {
         [SerializeField] private CanvasSetting _canvasSetting;
+        [SerializeField] private CanvasHud _canvasHud;
 
         private void FixedUpdate()
         {
@@ -18,10 +19,8 @@ namespace Services.HUD.Canvases
 
         public void ContinueGame()
         {
-            gameObject.SetActive(false); // - это удалить
-            Time.timeScale = 1; // - это удалить
-           // InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
-           print("тут исправить");
+            _canvasHud.gameObject.SetActive(true);
+            InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
         }
 
         public void OnVisibleSettingCanvas() => 
@@ -30,12 +29,14 @@ namespace Services.HUD.Canvases
         private void OnErrorCallback(string obj)
         {
             gameObject.SetActive(false);
+            _canvasHud.gameObject.SetActive(true);
             Time.timeScale = 1;
         }
 
         private void OnCloseCallback(bool obj)
         {
             gameObject.SetActive(false);
+            _canvasHud.gameObject.SetActive(true);
             Time.timeScale = 1;
         }
 

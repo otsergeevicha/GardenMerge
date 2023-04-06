@@ -42,18 +42,23 @@ namespace Services.HUD.Buttons
                 _tmp.text = _currentPrice.ToString();
                 _vibrationService.OnTick();
 
-                if (_secondBuy == false)
-                {
-                    _trainingScenario.CompletedTwoStep();
-                    _secondBuy = true;
-                }
+                WorkTrainingAI();
+            }
+        }
 
-                if (_firstBuy == false)
-                {
-                    _trainingScenario.CompletedOneStep();
-                    _firstBuy = true;
-                    _secondBuy = false;
-                }
+        private void WorkTrainingAI()
+        {
+            if (_secondBuy == false)
+            {
+                _trainingScenario.CompletedTwoStep();
+                _secondBuy = true;
+            }
+
+            if (_firstBuy == false)
+            {
+                _trainingScenario.CompletedOneStep();
+                _firstBuy = true;
+                _secondBuy = false;
             }
         }
 

@@ -12,11 +12,8 @@ namespace Services.HUD.Canvases.Training.AI.BehaviorScenario
 
             gameObject.SetActive(true);
 
-            if (TrainingScenario.ReadTwoStep())
-            {
-                print("2");
+            if (TrainingScenario.ReadTwoStep()) 
                 TrainingStateMachine.EnterBehavior<MergeSeed>();
-            }
         }
     }
 }
