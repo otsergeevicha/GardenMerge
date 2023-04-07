@@ -17,8 +17,10 @@ namespace Services.HUD.Buttons
         [SerializeField] private SaveLoad _saveLoad;
         
         [SerializeField] private VibrationService _vibrationService;
-
         [SerializeField] private TrainingScenario _trainingScenario;
+
+        [SerializeField] private IconShake _iconShakeStore;
+        [SerializeField] private IconShake _iconShakeButtonAdd;
         
         private const int LevelBuying = 1;
         
@@ -36,13 +38,18 @@ namespace Services.HUD.Buttons
         {
             if (_saveLoad.CheckAmountMoney(_currentPrice) && TryFreePlace())
             {
-                _currentPrice++;
                 _saveLoad.SaveNewPriceSeed(_currentPrice);
                 _saveLoad.BuySeed(_currentPrice);
+                _currentPrice++;
                 _tmp.text = _currentPrice.ToString();
                 _vibrationService.OnTick();
 
                 WorkTrainingAI();
+            }
+            else
+            {
+                _iconShakeStore.Shake();
+                _iconShakeButtonAdd.Shake();
             }
         }
 

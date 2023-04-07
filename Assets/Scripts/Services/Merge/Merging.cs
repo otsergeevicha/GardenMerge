@@ -37,7 +37,6 @@ namespace Services.Merge
                     {
                         plant.gameObject.transform.position = placeMerge;
                         plant.gameObject.SetActive(true);
-                        plant.PlayParticleMerge();
                         _fxOperator.PlaySoundMerge();
                         _vibrationService.OnTick();
                         Merged?.Invoke(levelMerge);

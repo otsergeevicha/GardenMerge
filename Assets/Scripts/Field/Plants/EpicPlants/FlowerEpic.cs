@@ -1,5 +1,4 @@
 using System.Collections;
-using Field.GardenerLogic;
 using Field.GardenObserver;
 using Field.Tiles.Move;
 using UnityEngine;
@@ -22,14 +21,35 @@ namespace Field.Plants.EpicPlants
 
         private bool _isRiped;
         private Coroutine _coroutine;
+        private Transform _ourTransformRotation;
+        private bool _isFirstMerge;
 
         private void Start()
         {
+            _ourTransformRotation = transform;
             _isRiped = false;
             _mergeParticle.Stop();
             _fxCoins.Stop();
         }
 
+        private void Update()
+        {
+            if (isActiveAndEnabled == false)
+            {
+                _isFirstMerge = false;
+                return;
+            }
+
+            if (_isFirstMerge == false)
+            {
+                _mergeParticle.Play();
+                _isFirstMerge = true;
+            }
+            
+            if (_ourTransformRotation.rotation.x != 0 || _ourTransformRotation.rotation.y != 0 || _ourTransformRotation.rotation.z != 0)
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        
         private void OnTriggerEnter(Collider collision)
         {
             if (collision.TryGetComponent(out ObserverTargets _))
@@ -53,15 +73,15 @@ namespace Field.Plants.EpicPlants
                 OffCoroutine();
                 _leaves.gameObject.SetActive(true);
                 _isRiped = false;
+                                
+                _leafExplosion.gameObject.SetActive(false);
+                _dustStorm.gameObject.SetActive(false);
             }
         }
 
         private void OnDisable() => 
             OffCoroutine();
 
-        public override void PlayParticleMerge() => 
-            _mergeParticle.Play();
-        
         private void OffCoroutine()
         {
             if (_coroutine != null)
@@ -98,7 +118,6 @@ namespace Field.Plants.EpicPlants
             _isRiped = true;
             _leaves.gameObject.SetActive(true);
             _dustStorm.gameObject.SetActive(false);
-            
         }
     }
 }

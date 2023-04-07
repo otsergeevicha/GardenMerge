@@ -22,6 +22,5 @@ namespace Field.Plants
         public abstract void Collect();
 
         public abstract int PriceCollect();
-        public abstract void PlayParticleMerge();
     }
 }

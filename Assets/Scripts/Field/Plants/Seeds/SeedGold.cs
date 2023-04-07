@@ -15,8 +15,5 @@ namespace Field.Plants.Seeds
 
         public override int PriceCollect() => 
             throw new System.NotImplementedException();
-
-        public override void PlayParticleMerge() => 
-            throw new System.NotImplementedException();
     }
 }

@@ -21,12 +21,33 @@ namespace Field.Plants.BronzePlants
 
         private bool _isRiped;
         private Coroutine _coroutine;
+        private Transform _ourTransformRotation;
+        private bool _isFirstMerge;
 
         private void Start()
         {
+            _ourTransformRotation = transform;
             _isRiped = false;
             _mergeParticle.Stop();
             _fxCoins.Stop();
+        }
+
+        private void Update()
+        {
+            if (isActiveAndEnabled == false)
+            {
+                _isFirstMerge = false;
+                return;
+            }
+
+            if (_isFirstMerge == false)
+            {
+                _mergeParticle.Play();
+                _isFirstMerge = true;
+            }
+            
+            if (_ourTransformRotation.rotation.x != 0 || _ourTransformRotation.rotation.y != 0 || _ourTransformRotation.rotation.z != 0)
+                transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
         private void OnTriggerEnter(Collider collision)
@@ -52,6 +73,9 @@ namespace Field.Plants.BronzePlants
                 OffCoroutine();
                 _leaves.gameObject.SetActive(true);
                 _isRiped = false;
+                
+                _leafExplosion.gameObject.SetActive(false);
+                _dustStorm.gameObject.SetActive(false);
             }
         }
 
@@ -66,9 +90,6 @@ namespace Field.Plants.BronzePlants
                 _coroutine = null;
             }
         }
-        
-        public override void PlayParticleMerge() => 
-            _mergeParticle.Play();
 
         public override void Collect() => 
             _coroutine = StartCoroutine(CollectingLeaves());
@@ -97,7 +118,6 @@ namespace Field.Plants.BronzePlants
             _isRiped = true;
             _leaves.gameObject.SetActive(true);
             _dustStorm.gameObject.SetActive(false);
-            
         }
     }
 }
