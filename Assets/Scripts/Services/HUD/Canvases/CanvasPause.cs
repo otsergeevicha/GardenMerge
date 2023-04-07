@@ -15,8 +15,11 @@ namespace Services.HUD.Canvases
             _canvasSetting.gameObject.SetActive(true);
         }
         
-        public void Visible(bool status) => 
+        public void Visible(bool status)
+        {
+            _canvasHud.gameObject.SetActive(true);
             gameObject.SetActive(status);
+        }
 
         public void OnMenu()
         {

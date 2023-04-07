@@ -15,7 +15,6 @@ namespace Services.HUD.Canvases.LeaderboardFolder
     public class CanvasLeaderBoard : MonoBehaviour
     {
         [SerializeField] private SaveLoad _saveLoad;
-        [SerializeField] private CanvasHud _canvasHud;
         [SerializeField] private CanvasMenu _canvasMenu;
         
         [SerializeField] private OnePlayerRank _onePlayer;
@@ -30,29 +29,28 @@ namespace Services.HUD.Canvases.LeaderboardFolder
 
         private void OnEnable()
         {
-            if (PlayerAccount.IsAuthorized) 
-                Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
+           // if (PlayerAccount.IsAuthorized) Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
         }
 
         public void OnVisible()
         {
-            if (PlayerAccount.IsAuthorized) 
-                Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
+            // if (PlayerAccount.IsAuthorized) Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
             
-            if (PlayerAccount.IsAuthorized) 
-                PlayerAccount.RequestPersonalProfileDataPermission(OnSuccessCallback);
+            //if (PlayerAccount.IsAuthorized) PlayerAccount.RequestPersonalProfileDataPermission(OnSuccessCallback);
 
-            if (PlayerAccount.IsAuthorized == false)
-            {
-                SetData();
-                gameObject.SetActive(true);
-                PlayerAccount.Authorize();
-            }
+            // if (PlayerAccount.IsAuthorized == false)
+            // {
+            //    SetData();
+            //    gameObject.SetActive(true);
+            //    PlayerAccount.Authorize();
+            //}
+            
+            gameObject.SetActive(true);
+            print("убрать тупое включение");
         }
 
         public void OffVisible()
         {
-            _canvasHud.gameObject.SetActive(true);
             _canvasMenu.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
@@ -65,8 +63,6 @@ namespace Services.HUD.Canvases.LeaderboardFolder
 
         private void SetData()
         {
-            _canvasHud.gameObject.SetActive(false);
-            _canvasMenu.gameObject.SetActive(false);
             PlayerPlace();
             OtherPlayerPlace();
         }

@@ -4,10 +4,18 @@ namespace Services.HUD.Canvases
 {
     public class CanvasKit : MonoBehaviour
     {
-        public void OnVisible() =>
+        [SerializeField] private CanvasHud _canvasHud;
+        
+        public void OnVisible()
+        {
+            _canvasHud.gameObject.SetActive(false);
             gameObject.SetActive(true);
+        }
 
-        public void OffVisible() =>
+        public void OffVisible()
+        {
             gameObject.SetActive(false);
+            _canvasHud.gameObject.SetActive(true);
+        }
     }
 }

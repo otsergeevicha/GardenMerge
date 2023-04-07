@@ -145,8 +145,9 @@ namespace Infrastructure.SaveLoadLogic
             
             PlayerPrefs.SetString(Key, data);
             PlayerPrefs.Save();
-         
-            PlayerAccount.SetPlayerData(data);
+            
+            //PlayerAccount.SetPlayerData(data);
+            print("залочено облачное сохранение");
         }
 
         private IEnumerator AutoSaveVegetation()

@@ -11,10 +11,7 @@ namespace Services.HUD.Canvases
         public void SetLanguage(string currentLanguage) => 
             LeanLocalization.SetCurrentLanguageAll(currentLanguage);
 
-        public void OffVisible()
-        {
-            _canvasHud.gameObject.SetActive(true);
+        public void OffVisible() => 
             gameObject.SetActive(false);
-        }
     }
 }
