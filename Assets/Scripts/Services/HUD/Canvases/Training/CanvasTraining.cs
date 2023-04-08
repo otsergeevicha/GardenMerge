@@ -35,7 +35,7 @@ namespace Services.HUD.Canvases.Training
         
         public void ClickNext()
         {
-            if (_indexPage == 2)
+            if (_indexPage == 3)
             {
                 RestartPanels();
                 OnCanvasTraining(false);

@@ -13,8 +13,8 @@ namespace Infrastructure.SaveLoadLogic
         public bool FirstTraining;
         public bool IsVibration;
         public bool IsSubscribe;
-        public float ValueMusic;
-        public float ValueFX;
+        public float ValueMusic = .2f;
+        public float ValueFX = .2f;
         public int Money = 100;
         public int CountSpins;
         public int PriceSeed = 1;
