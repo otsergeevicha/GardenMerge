@@ -1,6 +1,7 @@
 using System.Collections;
 using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
+using Lean.Localization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,6 +32,8 @@ namespace Services.Yandex
 
         private void OnSuccessCallback(string data)
         {
+            LeanLocalization.SetCurrentLanguageAll(YandexGamesSdk.Environment.i18n.lang);
+            
             PlayerPrefs.SetString(Key, data);
             PlayerPrefs.Save();
 
