@@ -13,6 +13,7 @@ namespace Infrastructure.SaveLoadLogic
         public bool FirstTraining;
         public bool IsVibration;
         public bool IsSubscribe;
+        public bool IsTempSubscribe;
         public float ValueMusic = .2f;
         public float ValueFX = .2f;
         public int Money = 100;
@@ -79,6 +80,9 @@ namespace Infrastructure.SaveLoadLogic
 
         public void ChangeSubscribeStatus(bool status) => 
             IsSubscribe = status;
+
+        public void ChangeTempSubscribeStatus(bool status) =>
+            IsTempSubscribe = status;
 
         public void ChangeStatusVibration(bool isVibration) => 
             IsVibration = isVibration;

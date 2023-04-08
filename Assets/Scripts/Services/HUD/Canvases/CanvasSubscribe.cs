@@ -1,3 +1,4 @@
+using System;
 using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
 using Services.Sound;
@@ -11,8 +12,6 @@ namespace Services.HUD.Canvases
         
         [SerializeField] private SoundOperator _soundOperator;
 
-        public bool TemporarySubscription;
-        
         public void See() => 
             VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
 
@@ -24,10 +23,10 @@ namespace Services.HUD.Canvases
 
         private void OnRewardedCallback()
         {
-            if (_saveLoad.CheckStatusSubscribe() == false)
+            if (_saveLoad.ReadStatusSubscribe() == false)
             {
                 _saveLoad.ChangeStatusSubscribe(true);
-                TemporarySubscription = true;
+                _saveLoad.ChangeStatusTempSubscribe(true);
             }
             
             UnLockGame();

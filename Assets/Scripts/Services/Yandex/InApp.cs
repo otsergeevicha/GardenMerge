@@ -14,7 +14,7 @@ namespace Services.Yandex
         { 
             //Billing.GetPurchasedProducts(OnSuccessCallback);
             print("залочена проверка покупок");
-            if (_saveLoad.CheckStatusSubscribe())
+            if (_saveLoad.ReadStatusSubscribe())
                 return;
 
             _saveLoad.ChangeStatusSubscribe(false);

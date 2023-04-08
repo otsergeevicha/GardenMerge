@@ -20,23 +20,34 @@ namespace Services.HUD
 
         [SerializeField] private float _flashDuration = 1f;
 
-        private readonly float _timerDuration = 90f * 60f;
+        private readonly float _timerDuration = 9f * 60f;
         
         public TextMeshProUGUI TimerText;
 
+        public bool Status;
+        
         private float _flashTimer;
         private float _timer;
 
-        private void Start() =>
-            ResetTimer();
+        private void Start()
+        {
+            if (_saveLoad.ReadTempStatusSubscribe()) 
+                ResetTimer(60f);
+
+            ResetTimer(_timerDuration);
+        }
 
         private void Update()
         {
-            if (_canvasSubscribe.TemporarySubscription == false)
+            if (_saveLoad.ReadTempStatusSubscribe() == false)
+            {
+                Status = false;
                 return;
+            }
 
             if (_countDown && _timer > 0)
             {
+                Status = true;
                 _timer -= Time.deltaTime;
                 UpdateTimerDisplay(_timer);
             }
@@ -49,10 +60,10 @@ namespace Services.HUD
                 FlashTimer();
         }
 
-        private void ResetTimer()
+        private void ResetTimer(float timeDuration)
         {
             if (_countDown)
-                _timer = _timerDuration;
+                _timer = timeDuration;
             else
                 _timer = 0;
 
@@ -64,13 +75,13 @@ namespace Services.HUD
             if (time < 0)
             {
                 time = 0;
-                _canvasSubscribe.TemporarySubscription = false;
+                _saveLoad.ChangeStatusTempSubscribe(false);
                 _saveLoad.ChangeStatusSubscribe(false);
             }
 
-            if (time > 3660)
+            if (time > 5400)
             {
-                Debug.LogError("Timer cannot display values above 3660 seconds");
+                Debug.LogError("Timer cannot display values above 5400 seconds");
                 ErrorDisplay();
                 return;
             }

@@ -93,7 +93,7 @@ namespace Infrastructure.SaveLoadLogic
 
         public int ReadScoreMerge() =>
             _dataBase.GetScoreMerge();
-        
+
         public void ApplyPointCollect(int amountPoints) =>
             _dataBase.AddPointsCollect(amountPoints);
 
@@ -121,6 +121,9 @@ namespace Infrastructure.SaveLoadLogic
         public void ChangeStatusSubscribe(bool status) =>
             _dataBase.ChangeSubscribeStatus(status);
 
+        public void ChangeStatusTempSubscribe(bool status) => 
+            _dataBase.ChangeTempSubscribeStatus(status);
+
         public int ReadPriceSeed() =>
             _dataBase.GetPriceSeed();
 
@@ -139,8 +142,11 @@ namespace Infrastructure.SaveLoadLogic
         public bool ReadStatusVibration() =>
             _dataBase.IsVibration;
 
-        public bool CheckStatusSubscribe() =>
+        public bool ReadStatusSubscribe() =>
             _dataBase.IsSubscribe;
+        
+        public bool ReadTempStatusSubscribe() =>
+            _dataBase.IsTempSubscribe;
 
         public bool ReadFirstTraining() => 
             _dataBase.FirstTraining;
@@ -156,6 +162,9 @@ namespace Infrastructure.SaveLoadLogic
             print("залочено облачное сохранение");
         }
 
+        public void ChangeStatusFirstTraining(bool status) => 
+            _dataBase.FirstTraining = status;
+
         private IEnumerator AutoSaveVegetation()
         {
             _isOnApplication = true;
@@ -166,8 +175,5 @@ namespace Infrastructure.SaveLoadLogic
                 yield return _waitForSeconds;
             }
         }
-
-        public void ChangeStatusFirstTraining(bool status) => 
-            _dataBase.FirstTraining = status;
     }
 }

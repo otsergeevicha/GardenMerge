@@ -1,12 +1,15 @@
 using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
+using Services.HUD.Buttons;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Services.Yandex
 {
     public class BillingSubscribe : MonoBehaviour
     {
         [SerializeField] private SaveLoad _saveLoad;
+        [SerializeField] private Button _buttonSubscribe;
 
         private const int BonusLeaderboardPoints = 1000;
         private const int BonusCoins = 500;
@@ -26,6 +29,7 @@ namespace Services.Yandex
             _saveLoad.ApplyPointCollect(BonusLeaderboardPoints);
             _saveLoad.ApplyMoney(BonusCoins);
             _saveLoad.ChangeStatusSubscribe(true);
+            _buttonSubscribe.interactable = false;
         }
 
         private void OnErrorCallback(string obj) =>
