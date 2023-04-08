@@ -88,8 +88,17 @@ namespace Infrastructure.SaveLoadLogic
         public void SaveCountSpins(int counterSpins) =>
             _dataBase.ChangeCountSpins(counterSpins);
 
-        public void ApplyPoint(int amountPoints) =>
-            _dataBase.AddPoints(amountPoints);
+        public void ApplyPointMerge(int amountPoints) =>
+            _dataBase.AddPointsMerge(amountPoints);
+
+        public int ReadScoreMerge() =>
+            _dataBase.GetScoreMerge();
+        
+        public void ApplyPointCollect(int amountPoints) =>
+            _dataBase.AddPointsCollect(amountPoints);
+
+        public int ReadScoreCollect() =>
+            _dataBase.GetScoreCollect();
 
         public void SaveValueFxSound(float value)
         {
@@ -118,9 +127,6 @@ namespace Infrastructure.SaveLoadLogic
         public int GetCountSpins() =>
             _dataBase.ReadCountSpins();
 
-        public int ReadScore() =>
-            _dataBase.GetScore();
-
         public float ReadValueFxSound() =>
             _dataBase.ValueFX;
 
@@ -146,7 +152,7 @@ namespace Infrastructure.SaveLoadLogic
             PlayerPrefs.SetString(Key, data);
             PlayerPrefs.Save();
             
-            //PlayerAccount.SetPlayerData(data);
+           // PlayerAccount.SetPlayerData(data);
             print("залочено облачное сохранение");
         }
 

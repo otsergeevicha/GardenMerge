@@ -22,7 +22,8 @@ namespace Services.Yandex
 
         private void OnSuccessCallback(PurchaseProductResponse obj)
         {
-            _saveLoad.ApplyPoint(BonusLeaderboardPoints);
+            _saveLoad.ApplyPointMerge(BonusLeaderboardPoints);
+            _saveLoad.ApplyPointCollect(BonusLeaderboardPoints);
             _saveLoad.ApplyMoney(BonusCoins);
             _saveLoad.ChangeStatusSubscribe(true);
         }

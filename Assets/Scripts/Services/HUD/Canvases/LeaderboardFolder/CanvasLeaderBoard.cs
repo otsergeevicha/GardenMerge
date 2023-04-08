@@ -2,6 +2,7 @@ using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.LeaderboardFolder.PlayerRank;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Services.HUD.Canvases.LeaderboardFolder
 {
@@ -16,37 +17,86 @@ namespace Services.HUD.Canvases.LeaderboardFolder
     {
         [SerializeField] private SaveLoad _saveLoad;
         [SerializeField] private CanvasMenu _canvasMenu;
+
+        [SerializeField] private Image _imageBgL;
+        [SerializeField] private Image _imageBgR;
         
         [SerializeField] private OnePlayerRank _onePlayer;
         [SerializeField] private TwoPlayerRank _twoPlayer;
         [SerializeField] private ThreePlayerRank _threePlayer;
         [SerializeField] private FourPlayerRank _fourPlayer;
         
-        private const string LeaderboardName = "Leaderboard";
+        private const string LeaderboardMerge = "LeaderboardMerge";
+        private const string LeaderboardCollect = "LeaderboardCollect";
         private const string Anonymous = "Anonymous";
         
         private readonly int _topPlayersCount = 4;
 
         private void OnEnable()
         {
-           // if (PlayerAccount.IsAuthorized) Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
+           // if (PlayerAccount.IsAuthorized)
+           // {
+           //     Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
+           //     Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
+           // }
+           
+           print("тут тоже лок");
         }
 
-        public void OnVisible()
+        public void OnMergeBoard()
         {
-            // if (PlayerAccount.IsAuthorized) Leaderboard.SetScore(LeaderboardName, _saveLoad.ReadScore());
-            
-            //if (PlayerAccount.IsAuthorized) PlayerAccount.RequestPersonalProfileDataPermission(OnSuccessCallback);
-
-            // if (PlayerAccount.IsAuthorized == false)
-            // {
-            //    SetData();
-            //    gameObject.SetActive(true);
-            //    PlayerAccount.Authorize();
-            //}
-            
             gameObject.SetActive(true);
-            print("убрать тупое включение");
+            print("тут лок на доску мержа");
+
+            //все что выше удалить, ниже только ретерн
+            _imageBgL.enabled = true;
+            _imageBgR.enabled = false;
+            return;
+            
+            if (PlayerAccount.IsAuthorized) 
+                Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
+            
+            if (PlayerAccount.IsAuthorized) 
+                PlayerAccount.RequestPersonalProfileDataPermission(delegate
+            {
+                SetData(LeaderboardMerge);
+                gameObject.SetActive(true);
+            });
+
+            if (PlayerAccount.IsAuthorized == false)
+            {
+                SetData(LeaderboardMerge);
+                gameObject.SetActive(true);
+                PlayerAccount.Authorize();
+            }
+        }
+        
+        public void OnCollectBoard()
+        {
+            gameObject.SetActive(true);
+            print("тут лок на доску сбора");
+            
+            //все что выше удалить, ниже только ретерн
+            _imageBgL.enabled = false;
+            _imageBgR.enabled = true;
+            return;
+            
+            if (PlayerAccount.IsAuthorized) 
+                Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
+
+            if (PlayerAccount.IsAuthorized)
+                PlayerAccount.RequestPersonalProfileDataPermission(delegate
+                {
+                    SetData(LeaderboardCollect);
+                    gameObject.SetActive(true);
+                });
+
+            if (PlayerAccount.IsAuthorized == false)
+            {
+                SetData(LeaderboardCollect);
+                gameObject.SetActive(true);
+                PlayerAccount.Authorize();
+            }
         }
 
         public void OffVisible()
@@ -55,21 +105,15 @@ namespace Services.HUD.Canvases.LeaderboardFolder
             gameObject.SetActive(false);
         }
 
-        private void OnSuccessCallback()
+        private void SetData(string nameBoard)
         {
-            SetData();
-            gameObject.SetActive(true);
+            PlayerPlace(nameBoard);
+            OtherPlayerPlace(nameBoard);
         }
 
-        private void SetData()
+        private void PlayerPlace(string nameBoard)
         {
-            PlayerPlace();
-            OtherPlayerPlace();
-        }
-
-        private void PlayerPlace()
-        {
-            Leaderboard.GetPlayerEntry(LeaderboardName, (player) =>
+            Leaderboard.GetPlayerEntry(nameBoard, (player) =>
             {
                 if (player != null)
                     SetPlace(player);
@@ -96,9 +140,9 @@ namespace Services.HUD.Canvases.LeaderboardFolder
             }
         }
 
-        private void OtherPlayerPlace()
+        private void OtherPlayerPlace(string nameBoard)
         {
-            Leaderboard.GetEntries(LeaderboardName, (arrayLeaderboardPlayers) =>
+            Leaderboard.GetEntries(nameBoard, (arrayLeaderboardPlayers) =>
             {
                 foreach (LeaderboardEntryResponse otherPlayer in arrayLeaderboardPlayers.entries) 
                     SetPlace(otherPlayer);

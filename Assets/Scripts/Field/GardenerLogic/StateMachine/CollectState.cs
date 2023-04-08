@@ -42,6 +42,7 @@ namespace Field.GardenerLogic.StateMachine
             Animator.SetBool(IsCollect, false);
             _counter = 0;
             SaveLoad.ApplyMoney(_vegetation.PriceCollect());
+            SaveLoad.ApplyPointCollect(_vegetation.PriceCollect());
             _iconEnlarger.EnlargeIcon();
             _fxOperator.PlaySoundCoins();
             StateMachine.EnterBehavior<SearchTargetState>();

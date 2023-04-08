@@ -18,7 +18,8 @@ namespace Infrastructure.SaveLoadLogic
         public int Money = 100;
         public int CountSpins;
         public int PriceSeed = 1;
-        public int Score;
+        public int ScoreMerge;
+        public int ScoreCollect;
 
         public void SpendMoney(int money)
         {
@@ -58,11 +59,17 @@ namespace Infrastructure.SaveLoadLogic
                 LevelDatas.Add(new LevelData(vegetation.GetLevel(), vegetation.transform.position));
         }
 
-        public void AddPoints(int amountPoints) => 
-            Score += amountPoints;
+        public void AddPointsMerge(int amountPoints) => 
+            ScoreMerge += amountPoints;
 
-        public int GetScore() => 
-            Score;
+        public int GetScoreMerge() => 
+            ScoreMerge;
+        
+        public void AddPointsCollect(int amountPoints) => 
+            ScoreCollect += amountPoints;
+
+        public int GetScoreCollect() => 
+            ScoreCollect;
 
         public void SaveValueFx(float value) => 
             ValueFX = value;
