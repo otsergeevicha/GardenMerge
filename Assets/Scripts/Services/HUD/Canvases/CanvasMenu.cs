@@ -20,7 +20,7 @@ namespace Services.HUD.Canvases
         public void ContinueGame()
         {
             _canvasHud.gameObject.SetActive(true);
-            //InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+           // InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
             print("залочена межстраничная реклама, убрать все снизу");
             gameObject.SetActive(false);
             _canvasHud.gameObject.SetActive(true);

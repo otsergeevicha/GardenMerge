@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Services.HUD.Canvases.Training.AI.BehaviorScenario
 {
     public class MoveSeed : StateTraining
@@ -14,6 +16,7 @@ namespace Services.HUD.Canvases.Training.AI.BehaviorScenario
 
             if (TrainingScenario.ReadFourStep())
             {
+                Time.timeScale = 0;
                 TrainingScenario.OnVisibleCanvasTutorial();
                 gameObject.SetActive(false);
             }

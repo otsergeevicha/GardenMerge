@@ -34,18 +34,18 @@ namespace Services.HUD.Canvases.LeaderboardFolder
 
         private void OnEnable()
         {
-           // if (PlayerAccount.IsAuthorized)
-           // {
-           //     Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
-           //     Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
-           // }
+          //  if (PlayerAccount.IsAuthorized)
+          //  {
+          //      Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
+          //      Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
+          //  }
            
            print("тут тоже лок");
         }
 
         public void OnMergeBoard()
         {
-            gameObject.SetActive(true);
+           // gameObject.SetActive(true);
             print("тут лок на доску мержа");
 
             //все что выше удалить, ниже только ретерн

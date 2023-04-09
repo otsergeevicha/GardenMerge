@@ -20,7 +20,8 @@ namespace Services.HUD
             if (_enlargeCoroutine != null) 
                 StopCoroutine(_enlargeCoroutine);
 
-            _enlargeCoroutine = StartCoroutine(EnlargeIconCoroutine());
+            if (isActiveAndEnabled) 
+                _enlargeCoroutine = StartCoroutine(EnlargeIconCoroutine());
         }
 
         private IEnumerator EnlargeIconCoroutine()

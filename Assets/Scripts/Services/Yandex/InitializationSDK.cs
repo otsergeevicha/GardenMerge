@@ -34,10 +34,10 @@ namespace Services.Yandex
         {
             LeanLocalization.SetCurrentLanguageAll(YandexGamesSdk.Environment.i18n.lang);
             
-            PlayerPrefs.SetString(Key, data);
-            PlayerPrefs.Save();
+           PlayerPrefs.SetString(Key, data);
+           PlayerPrefs.Save();
 
-            SceneManager.LoadScene(IndexMainScene);
+           SceneManager.LoadScene(IndexMainScene);
         }
     }
 }
