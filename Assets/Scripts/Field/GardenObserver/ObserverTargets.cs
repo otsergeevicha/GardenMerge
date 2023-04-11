@@ -5,6 +5,7 @@ using Field.Plants;
 using Infrastructure.Factory;
 using Services.HUD.Canvases.Training;
 using UnityEngine;
+using Services.HUD.Canvases.Training.AI;
 
 namespace Field.GardenObserver
 {
