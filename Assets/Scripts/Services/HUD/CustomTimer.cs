@@ -32,6 +32,7 @@ namespace Services.HUD
             if (_saveLoad.ReadTempStatusSubscribe() == false)
             {
                 _timer = _timerDuration;
+                Status = false;
                 return;
             }
 
@@ -65,6 +66,7 @@ namespace Services.HUD
             if (time < 0)
             {
                 time = 0;
+                Status = false;
                 _saveLoad.ChangeStatusTempSubscribe(false);
                 _saveLoad.ChangeStatusSubscribe(false);
             }
