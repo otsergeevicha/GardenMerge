@@ -16,16 +16,19 @@ namespace Services
 
         private void Start()
         {
-            if (_saveLoad.ReadStatusVibration())
+            if (false)
             {
-                _transformToggle.anchoredPosition = new Vector2(43.1f, -5.4f);
-                _background.color = Color.white;
-            }
+                if (_saveLoad.ReadStatusVibration())
+                {
+                    _transformToggle.anchoredPosition = new Vector2(43.1f, -5.4f);
+                    _background.color = Color.white;
+                }
 
-            if (_saveLoad.ReadStatusVibration() == false)
-            {
-                _transformToggle.anchoredPosition = new Vector2(-43.1f, -5.4f);
-                _background.color = Color.red;
+                if (_saveLoad.ReadStatusVibration() == false)
+                {
+                    _transformToggle.anchoredPosition = new Vector2(-43.1f, -5.4f);
+                    _background.color = Color.red;
+                }
             }
         }
 

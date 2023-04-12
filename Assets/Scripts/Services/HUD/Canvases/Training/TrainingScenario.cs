@@ -1,5 +1,4 @@
 using Infrastructure.SaveLoadLogic;
-using Lean.Localization;
 using Services.HUD.Canvases.Training.AI;
 using UnityEngine;
 
@@ -11,9 +10,16 @@ namespace Services.HUD.Canvases.Training
         [SerializeField] private TrainingStateMachine _prefab;
         [SerializeField] private CanvasTraining _canvasTraining;
 
-        [SerializeField] private GameObject _storeIcon;
-        [SerializeField] private GameObject _giftIcon;
-        [SerializeField] private GameObject _subscribeIcon;
+        [SerializeField] private GameObject _handMerge;
+        [SerializeField] private GameObject _handMove;
+        
+        [SerializeField] private GameObject _iconStore;
+        [SerializeField] private GameObject _iconSubscribe;
+        [SerializeField] private GameObject _iconMoney;
+        [SerializeField] private GameObject _iconGift;
+        [SerializeField] private GameObject _iconPause;
+        
+        [SerializeField] private GameObject _fxTutorial;
 
         private bool _stepOne = false;
         private bool _stepTwo = false;
@@ -28,11 +34,13 @@ namespace Services.HUD.Canvases.Training
             {
                 var aiTraining = Instantiate(_prefab, transform.parent);
                 aiTraining.Init(this);
-                LeanLocalization.UpdateTranslations();
                 
-                _storeIcon.SetActive(false);
-                _giftIcon.SetActive(false);
-                _subscribeIcon.SetActive(false);
+                _iconGift.gameObject.SetActive(false);
+                _iconStore.gameObject.SetActive(false);
+                _iconSubscribe.gameObject.SetActive(false);
+                _iconMoney.gameObject.SetActive(false);
+                _iconPause.gameObject.SetActive(false);
+                _fxTutorial.gameObject.SetActive(true);
             }
 
             OffSteps();
@@ -61,23 +69,36 @@ namespace Services.HUD.Canvases.Training
         public void CompletedOneStep() =>
             _stepOne = true;
 
-        public void CompletedTwoStep() =>
+        public void CompletedTwoStep()
+        {
+            _handMerge.SetActive(true);
             _stepTwo = true;
+        }
 
-        public void CompletedThreeStep() =>
+        public void CompletedThreeStep()
+        {
+            _handMerge.SetActive(false);
+            _handMove.SetActive(true);
             _stepThree = true;
+        }
 
-        public void CompletedFourStep() =>
+        public void CompletedFourStep()
+        {
+            _handMove.SetActive(false);
             _stepFour = true;
+        }
 
         public void OnVisibleCanvasTutorial()
         {
+            _iconGift.gameObject.SetActive(true);
+            _iconStore.gameObject.SetActive(true);
+            _iconSubscribe.gameObject.SetActive(true);
+            _iconMoney.gameObject.SetActive(true);
+            _iconPause.gameObject.SetActive(true);
+            _fxTutorial.gameObject.SetActive(false);
+            
             _canvasTraining.OnCanvasTraining(true);
             _saveLoad.ChangeStatusFirstTraining(true);
-            
-            _storeIcon.SetActive(true);
-            _giftIcon.SetActive(true);
-            _subscribeIcon.SetActive(true);
         }
     }
 }

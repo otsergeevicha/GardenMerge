@@ -109,6 +109,8 @@ namespace Services.HUD.Canvases.LeaderboardFolder
         {
             PlayerPlace(nameBoard);
             OtherPlayerPlace(nameBoard);
+            
+            ReRenderCanvas();
         }
 
         private void PlayerPlace(string nameBoard)
@@ -155,6 +157,12 @@ namespace Services.HUD.Canvases.LeaderboardFolder
                 name = Anonymous;
 
             return name;
+        }
+
+        private void ReRenderCanvas()
+        {
+            gameObject.SetActive(false);
+            gameObject.SetActive(true);
         }
     }
 }
