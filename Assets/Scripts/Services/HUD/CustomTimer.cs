@@ -1,5 +1,4 @@
 using Infrastructure.SaveLoadLogic;
-using Services.HUD.Canvases;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +6,6 @@ namespace Services.HUD
 {
     public class CustomTimer : MonoBehaviour
     {
-        [SerializeField] private CanvasSubscribe _canvasSubscribe;
         [SerializeField] private SaveLoad _saveLoad;
         
         [SerializeField] private bool _countDown = true;
@@ -29,19 +27,11 @@ namespace Services.HUD
         private float _flashTimer;
         private float _timer;
 
-        private void Start()
-        {
-            if (_saveLoad.ReadTempStatusSubscribe()) 
-                ResetTimer(60f);
-
-            ResetTimer(_timerDuration);
-        }
-
         private void Update()
         {
             if (_saveLoad.ReadTempStatusSubscribe() == false)
             {
-                Status = false;
+                _timer = _timerDuration;
                 return;
             }
 

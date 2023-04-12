@@ -1,3 +1,4 @@
+using System;
 using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.LeaderboardFolder.PlayerRank;
@@ -18,85 +19,65 @@ namespace Services.HUD.Canvases.LeaderboardFolder
         [SerializeField] private SaveLoad _saveLoad;
         [SerializeField] private CanvasMenu _canvasMenu;
 
+        [SerializeField] private CanvasAuthorization _canvasAuthorization;
+
         [SerializeField] private Image _imageBgL;
         [SerializeField] private Image _imageBgR;
-        
+
         [SerializeField] private OnePlayerRank _onePlayer;
         [SerializeField] private TwoPlayerRank _twoPlayer;
         [SerializeField] private ThreePlayerRank _threePlayer;
         [SerializeField] private FourPlayerRank _fourPlayer;
-        
+
         private const string LeaderboardMerge = "LeaderboardMerge";
         private const string LeaderboardCollect = "LeaderboardCollect";
         private const string Anonymous = "Anonymous";
-        
+
         private readonly int _topPlayersCount = 4;
 
-        private void OnEnable()
+        private void Start() => 
+            SetScore();
+
+        private void OnDisable() => 
+            SetScore();
+
+        private void SetScore()
         {
-          //  if (PlayerAccount.IsAuthorized)
-          //  {
-          //      Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
-          //      Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
-          //  }
-           
-           print("тут тоже лок");
+            if (PlayerAccount.IsAuthorized)
+            {
+                Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
+                Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
+            }
         }
 
         public void OnMergeBoard()
         {
-           // gameObject.SetActive(true);
-            print("тут лок на доску мержа");
-
-            //все что выше удалить, ниже только ретерн
             _imageBgL.enabled = true;
             _imageBgR.enabled = false;
-            return;
-            
-            if (PlayerAccount.IsAuthorized) 
-                Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
-            
-            if (PlayerAccount.IsAuthorized) 
-                PlayerAccount.RequestPersonalProfileDataPermission(delegate
-            {
-                SetData(LeaderboardMerge);
-                gameObject.SetActive(true);
-            });
-
-            if (PlayerAccount.IsAuthorized == false)
-            {
-                SetData(LeaderboardMerge);
-                gameObject.SetActive(true);
-                PlayerAccount.Authorize();
-            }
-        }
-        
-        public void OnCollectBoard()
-        {
-            gameObject.SetActive(true);
-            print("тут лок на доску сбора");
-            
-            //все что выше удалить, ниже только ретерн
-            _imageBgL.enabled = false;
-            _imageBgR.enabled = true;
-            return;
-            
-            if (PlayerAccount.IsAuthorized) 
-                Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
 
             if (PlayerAccount.IsAuthorized)
-                PlayerAccount.RequestPersonalProfileDataPermission(delegate
-                {
-                    SetData(LeaderboardCollect);
-                    gameObject.SetActive(true);
-                });
+            {
+                SetData(LeaderboardMerge);
+                gameObject.SetActive(true);
+            }
 
             if (PlayerAccount.IsAuthorized == false)
+                _canvasAuthorization.OnVisible();
+        }
+
+        public void OnCollectBoard()
+        {
+            _imageBgL.enabled = false;
+            _imageBgR.enabled = true;
+
+            if (PlayerAccount.IsAuthorized)
             {
                 SetData(LeaderboardCollect);
                 gameObject.SetActive(true);
-                PlayerAccount.Authorize();
             }
+            
+            if (PlayerAccount.IsAuthorized == false) 
+                _canvasAuthorization.OnVisible();
         }
 
         public void OffVisible()
@@ -109,7 +90,7 @@ namespace Services.HUD.Canvases.LeaderboardFolder
         {
             PlayerPlace(nameBoard);
             OtherPlayerPlace(nameBoard);
-            
+
             ReRenderCanvas();
         }
 
@@ -146,7 +127,7 @@ namespace Services.HUD.Canvases.LeaderboardFolder
         {
             Leaderboard.GetEntries(nameBoard, (arrayLeaderboardPlayers) =>
             {
-                foreach (LeaderboardEntryResponse otherPlayer in arrayLeaderboardPlayers.entries) 
+                foreach (LeaderboardEntryResponse otherPlayer in arrayLeaderboardPlayers.entries)
                     SetPlace(otherPlayer);
             }, null, _topPlayersCount, 0);
         }

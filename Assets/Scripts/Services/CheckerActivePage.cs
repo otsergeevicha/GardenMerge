@@ -25,12 +25,12 @@ namespace Services
             switch (inBackground)
             {
                 case true:
-                    Time.timeScale = 1;
-                    _soundOperator.UnMute();
-                    break;
-                case false:
                     Time.timeScale = 0;
                     _soundOperator.Mute();
+                    break;
+                case false:
+                    Time.timeScale = 1;
+                    _soundOperator.UnMute();
                     break;
             }
         }

@@ -18,7 +18,7 @@ namespace Services.Yandex.BuyCoins
         }
 
         private void OnSuccessCallback(PurchaseProductResponse obj) =>
-            _saveLoad.ApplyMoney(1000);
+            _saveLoad.ApplyMoneyGift(1000);
 
         private void OnErrorCallback(string obj) =>
             throw new System.NotImplementedException();

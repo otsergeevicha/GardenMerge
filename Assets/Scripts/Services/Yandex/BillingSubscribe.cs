@@ -1,6 +1,5 @@
 using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
-using Services.HUD.Buttons;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,12 +26,12 @@ namespace Services.Yandex
         {
             _saveLoad.ApplyPointMerge(BonusLeaderboardPoints);
             _saveLoad.ApplyPointCollect(BonusLeaderboardPoints);
-            _saveLoad.ApplyMoney(BonusCoins);
+            _saveLoad.ApplyMoneyGift(BonusCoins);
             _saveLoad.ChangeStatusSubscribe(true);
             _buttonSubscribe.interactable = false;
         }
 
-        private void OnErrorCallback(string obj) =>
+        private void OnErrorCallback(string obj) => 
             _saveLoad.ChangeStatusSubscribe(false);
     }
 }

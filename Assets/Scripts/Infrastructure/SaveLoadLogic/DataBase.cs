@@ -11,7 +11,6 @@ namespace Infrastructure.SaveLoadLogic
         public List<LevelData> LevelDatas = new ();
 
         public bool FirstTraining;
-        public bool IsVibration;
         public bool IsSubscribe;
         public bool IsTempSubscribe;
         public float ValueMusic = .2f;
@@ -83,8 +82,5 @@ namespace Infrastructure.SaveLoadLogic
 
         public void ChangeTempSubscribeStatus(bool status) =>
             IsTempSubscribe = status;
-
-        public void ChangeStatusVibration(bool isVibration) => 
-            IsVibration = isVibration;
     }
 }

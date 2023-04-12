@@ -13,12 +13,13 @@ namespace Infrastructure.SaveLoadLogic
 
         private const string Key = "Key";
 
-        private readonly WaitForSeconds _waitForSeconds = new(5f);
+        private readonly WaitForSeconds _waitForSeconds = new(3f);
 
         private bool _isOnApplication;
 
         private DataBase _dataBase;
         private Coroutine _coroutine;
+        private string _data;
 
         private void OnEnable()
         {
@@ -60,6 +61,13 @@ namespace Infrastructure.SaveLoadLogic
                     vegetation.InitPosition(levelData.PositionVegetation);
                 }
             }
+        }
+
+        public void ApplyMoneyGift(int money)
+        {
+            _dataBase.Add(money);
+
+            Save();
         }
 
         public void ApplyMoney(int money)
@@ -136,15 +144,9 @@ namespace Infrastructure.SaveLoadLogic
         public float ReadValueMusic() =>
             _dataBase.ValueMusic;
 
-        public void SaveStatusVibration(bool isVibration) =>
-            _dataBase.ChangeStatusVibration(isVibration);
-
-        public bool ReadStatusVibration() =>
-            _dataBase.IsVibration;
-
         public bool ReadStatusSubscribe() =>
             _dataBase.IsSubscribe;
-        
+
         public bool ReadTempStatusSubscribe() =>
             _dataBase.IsTempSubscribe;
 
@@ -153,13 +155,10 @@ namespace Infrastructure.SaveLoadLogic
 
         public void Save()
         {
-            string data = JsonUtility.ToJson(_dataBase);
+            _data = JsonUtility.ToJson(_dataBase);
             
-            PlayerPrefs.SetString(Key, data);
+            PlayerPrefs.SetString(Key, _data);
             PlayerPrefs.Save();
-            
-           // PlayerAccount.SetPlayerData(data);
-            print("залочено облачное сохранение");
         }
 
         public void ChangeStatusFirstTraining(bool status) => 
@@ -172,6 +171,8 @@ namespace Infrastructure.SaveLoadLogic
             while (_isOnApplication)
             {
                 _dataBase.SaveVegetation(_factory.GetAllPlants());
+                Save();
+                PlayerAccount.SetPlayerData(_data);
                 yield return _waitForSeconds;
             }
         }

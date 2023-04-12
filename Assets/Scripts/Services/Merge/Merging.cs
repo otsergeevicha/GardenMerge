@@ -1,6 +1,7 @@
 using System;
 using Field.Plants;
 using Infrastructure.Factory;
+using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.Training;
 using Services.Sound;
 using UnityEngine;
@@ -11,10 +12,9 @@ namespace Services.Merge
     {
         [SerializeField] private OperatorFactory _plantsFactory;
         [SerializeField] private FXOperator _fxOperator;
-        
-        [SerializeField] private VibrationService _vibrationService;
 
         [SerializeField] private TrainingScenario _trainingScenario;
+        [SerializeField] private SaveLoad _saveLoad;
         private int _counterMerge;
 
         public event Action<int> Merged;
@@ -38,10 +38,9 @@ namespace Services.Merge
                         plant.gameObject.transform.position = placeMerge;
                         plant.gameObject.SetActive(true);
                         _fxOperator.PlaySoundMerge();
-                        _vibrationService.OnTick();
                         Merged?.Invoke(levelMerge);
 
-                        if (_counterMerge == 0)
+                        if (_saveLoad.ReadFirstTraining() == false && _counterMerge == 0)
                         {
                             _trainingScenario.CompletedThreeStep();
                             _counterMerge++;

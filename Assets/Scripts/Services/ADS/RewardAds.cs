@@ -1,5 +1,6 @@
 using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
+using Services.HUD.Canvases;
 using Services.Sound;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Services.ADS
     {
         [SerializeField] private SoundOperator _soundOperator;
         [SerializeField] private SaveLoad _saveLoad;
+        [SerializeField] private CanvasKit _canvasKit;
 
         private const int BonusCoins = 100;
 
@@ -23,7 +25,7 @@ namespace Services.ADS
 
         private void OnRewardedCallback()
         { 
-            _saveLoad.ApplyMoney(BonusCoins);
+            _saveLoad.ApplyMoneyGift(BonusCoins);
             UnLockGame();
         }
 
@@ -40,6 +42,7 @@ namespace Services.ADS
         {
             Time.timeScale = 1;
             _soundOperator.UnMute();
+            _canvasKit.OffVisible();
         }
     }
 }

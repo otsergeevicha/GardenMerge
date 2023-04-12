@@ -17,15 +17,8 @@ namespace Services.HUD.Canvases
             Time.timeScale = 0;
         }
 
-        public void ContinueGame()
-        {
-            _canvasHud.gameObject.SetActive(true);
-           // InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
-            print("залочена межстраничная реклама, убрать все снизу");
-            gameObject.SetActive(false);
-            _canvasHud.gameObject.SetActive(true);
-            Time.timeScale = 1;
-        }
+        public void ContinueGame() => 
+            InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
 
         public void OnVisibleSettingCanvas() => 
             _canvasSetting.gameObject.SetActive(true);

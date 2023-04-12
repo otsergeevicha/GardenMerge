@@ -31,8 +31,6 @@ namespace Services.HUD.Canvases
         [SerializeField] private CanvasHud _canvasHud;
         [SerializeField] private CanvasGiftUp _canvasGiftUp;
 
-        [SerializeField] private VibrationService _vibrationService;
-        
         private const int GiftMoney = 50;
 
         private int _randomValue;
@@ -102,7 +100,6 @@ namespace Services.HUD.Canvases
 
                 if (i > Mathf.RoundToInt(_randomValue * .55f))
                 {
-                    _vibrationService.OnTick();
                     _timeInterval *= .15f;
                 }
                 
@@ -117,7 +114,7 @@ namespace Services.HUD.Canvases
                     Gift((int)GiftType.TreeBronze);
                     break;
                 case 1:
-                    _saveLoad.ApplyMoney(GiftMoney);
+                    _saveLoad.ApplyMoneyGift(GiftMoney);
                     _canvasGiftUp.ShowResult(0);
                     break;
                 case 2:
