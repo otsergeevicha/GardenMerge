@@ -1,4 +1,3 @@
-using System;
 using Agava.YandexGames;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.LeaderboardFolder.PlayerRank;
@@ -33,7 +32,7 @@ namespace Services.HUD.Canvases.LeaderboardFolder
         private const string LeaderboardCollect = "LeaderboardCollect";
         private const string Anonymous = "Anonymous";
 
-        private readonly int _topPlayersCount = 4;
+        private readonly int _topPlayersCount = 3;
 
         private void Start() => 
             SetScore();
@@ -41,6 +40,12 @@ namespace Services.HUD.Canvases.LeaderboardFolder
         private void OnDisable() => 
             SetScore();
 
+        public void OnVisible()
+        {
+            SetScore();
+            OnMergeBoard();
+        }
+        
         private void SetScore()
         {
             if (PlayerAccount.IsAuthorized)

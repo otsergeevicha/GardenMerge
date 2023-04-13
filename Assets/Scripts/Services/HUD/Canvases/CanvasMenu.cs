@@ -17,8 +17,14 @@ namespace Services.HUD.Canvases
             Time.timeScale = 0;
         }
 
-        public void ContinueGame() => 
-            InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+        public void ContinueGame()
+        {
+            //InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+            print("и здесь тоже, удали что ниже");
+            gameObject.SetActive(false);
+            _canvasHud.gameObject.SetActive(true);
+            Time.timeScale = 1;
+        }
 
         public void OnVisibleSettingCanvas() => 
             _canvasSetting.gameObject.SetActive(true);

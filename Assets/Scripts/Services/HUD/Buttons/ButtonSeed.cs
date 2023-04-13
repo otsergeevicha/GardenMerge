@@ -1,6 +1,7 @@
 using Field.Tiles.Move;
 using Infrastructure.Factory;
 using Infrastructure.SaveLoadLogic;
+using Services.HUD.Canvases;
 using Services.HUD.Canvases.Training;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace Services.HUD.Buttons
 
         [SerializeField] private IconShake _iconShakeStore;
         [SerializeField] private IconShake _iconShakeButtonAdd;
+
+        [SerializeField] private CanvasWarning _canvasWarning;
 
         private const int LevelBuying = 1;
 
@@ -94,6 +97,7 @@ namespace Services.HUD.Buttons
                 }
             }
 
+            _canvasWarning.OnWarning();
             return false;
         }
     }

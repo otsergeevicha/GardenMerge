@@ -9,7 +9,7 @@ namespace Services.Yandex.BuyCoins
     {
         [SerializeField] private SaveLoad _saveLoad;
 
-        public void Buy250Coins()
+        public void Buy2500Coins()
         {
             if (PlayerAccount.IsAuthorized == false)
                 PlayerAccount.Authorize();
@@ -19,7 +19,7 @@ namespace Services.Yandex.BuyCoins
         }
 
         private void OnSuccessCallback(PurchaseProductResponse obj) =>
-            _saveLoad.ApplyMoneyGift(250);
+            _saveLoad.ApplyMoneyGift(2500);
 
         private void OnErrorCallback(string obj) =>
             throw new NotImplementedException();

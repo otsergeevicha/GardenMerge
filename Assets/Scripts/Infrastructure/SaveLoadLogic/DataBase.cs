@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Field.Plants;
+using Services.HUD.Canvases.AlmanacLogic;
 
 namespace Infrastructure.SaveLoadLogic
 {
@@ -9,6 +10,7 @@ namespace Infrastructure.SaveLoadLogic
     public class DataBase
     {
         public List<LevelData> LevelDatas = new ();
+        public List<AlmanacType> Almanac = new ();
 
         public bool FirstTraining;
         public bool IsSubscribe;
@@ -82,5 +84,8 @@ namespace Infrastructure.SaveLoadLogic
 
         public void ChangeTempSubscribeStatus(bool status) =>
             IsTempSubscribe = status;
+
+        public void SaveAlmanac(List<AlmanacType> almanac) => 
+            Almanac = almanac;
     }
 }

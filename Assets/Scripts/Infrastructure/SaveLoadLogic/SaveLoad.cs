@@ -1,8 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using Agava.YandexGames;
 using Field.Plants;
 using Infrastructure.Factory;
+using Services.HUD.Canvases.AlmanacLogic;
 using UnityEngine;
 
 namespace Infrastructure.SaveLoadLogic
@@ -10,6 +11,7 @@ namespace Infrastructure.SaveLoadLogic
     public class SaveLoad : MonoBehaviour
     {
         [SerializeField] private OperatorFactory _factory;
+        [SerializeField] private AlmanacModule _almanac;
 
         private const string Key = "Key";
 
@@ -153,6 +155,12 @@ namespace Infrastructure.SaveLoadLogic
         public bool ReadFirstTraining() => 
             _dataBase.FirstTraining;
 
+        public void SaveAlmanac() => 
+            _dataBase.SaveAlmanac(_almanac.GetAlmanac());
+
+        public List<AlmanacType> ReadAlmanac() => 
+            _dataBase.Almanac;
+
         public void Save()
         {
             _data = JsonUtility.ToJson(_dataBase);
@@ -171,8 +179,10 @@ namespace Infrastructure.SaveLoadLogic
             while (_isOnApplication)
             {
                 _dataBase.SaveVegetation(_factory.GetAllPlants());
+                SaveAlmanac();
                 Save();
-                PlayerAccount.SetPlayerData(_data);
+               // PlayerAccount.SetPlayerData(_data);
+               print("здесь заглушка");
                 yield return _waitForSeconds;
             }
         }
