@@ -129,7 +129,7 @@ namespace Infrastructure.SaveLoadLogic
         }
 
         public bool CheckAmountMoney(int scaleBuying) =>
-            _dataBase.GetPrice() > scaleBuying;
+            _dataBase.GetPrice() >= scaleBuying;
 
         public int ReadAmountWallet() =>
             _dataBase.GetAmountWallet();

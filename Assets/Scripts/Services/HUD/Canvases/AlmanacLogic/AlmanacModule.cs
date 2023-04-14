@@ -13,8 +13,8 @@ namespace Services.HUD.Canvases.AlmanacLogic
         [SerializeField] private Merging _merging;
         [SerializeField] private SaveLoad _saveLoad;
 
-        private readonly float _maxScale = 120f;
-        private readonly float _defaultScale = 55f;
+        private readonly float _maxScale = 140f;
+        private readonly float _defaultScale = 75f;
         
         private void OnEnable()
         {

@@ -14,10 +14,10 @@ namespace Field.Plants.BronzePlants
         [SerializeField] private ParticleSystem _mergeParticle;
         [SerializeField] private ParticleSystem _fxCoins;
         
-        private const float RequiredTimeForCollect = 3.5f;
-        private const float RewardTimeToRipe = 5f;
+        private const float RequiredTimeForCollect = 2.2f;
+        private const float RewardTimeToRipe = 3.5f;
         private const int Level = 4;
-        private const int Price = 4;
+        private const int Price = 7;
 
         private bool _isRiped;
         private Coroutine _coroutine;

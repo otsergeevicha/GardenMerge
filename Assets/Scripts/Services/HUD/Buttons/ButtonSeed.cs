@@ -23,12 +23,14 @@ namespace Services.HUD.Buttons
         [SerializeField] private IconShake _iconShakeButtonAdd;
 
         [SerializeField] private CanvasWarning _canvasWarning;
+        [SerializeField] private CanvasProposal _canvasProposal;
 
         private const int LevelBuying = 1;
 
         private int _currentPrice = 5;
         private bool _firstBuy;
         private bool _secondBuy = true;
+        private int _counterEmptyWallet;
 
         private void Start()
         {
@@ -58,6 +60,14 @@ namespace Services.HUD.Buttons
             {
                 _iconShakeStore.Shake();
                 _iconShakeButtonAdd.Shake();
+
+                _counterEmptyWallet++;
+
+                if (_counterEmptyWallet == 3)
+                {
+                    _canvasProposal.OnVisible();
+                    _counterEmptyWallet = 0;
+                }
             }
         }
 
@@ -68,7 +78,7 @@ namespace Services.HUD.Buttons
                 _trainingScenario.CompletedTwoStep();
                 _secondBuy = true;
             }
-
+            
             if (_firstBuy == false)
             {
                 _trainingScenario.CompletedOneStep();

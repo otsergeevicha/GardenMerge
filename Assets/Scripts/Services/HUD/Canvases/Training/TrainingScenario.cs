@@ -18,6 +18,7 @@ namespace Services.HUD.Canvases.Training
         [SerializeField] private GameObject _iconMoney;
         [SerializeField] private GameObject _iconGift;
         [SerializeField] private GameObject _iconPause;
+        [SerializeField] private GameObject _iconBuySeed;
         [SerializeField] private GameObject _iconAlmanacSlider;
         
         [SerializeField] private GameObject _fxTutorial;
@@ -75,6 +76,7 @@ namespace Services.HUD.Canvases.Training
         {
             _handMerge.SetActive(true);
             _stepTwo = true;
+            _iconBuySeed.gameObject.SetActive(false);
         }
 
         public void CompletedThreeStep()
@@ -98,6 +100,7 @@ namespace Services.HUD.Canvases.Training
             _iconMoney.gameObject.SetActive(true);
             _iconPause.gameObject.SetActive(true);
             _iconAlmanacSlider.gameObject.SetActive(true);
+            _iconBuySeed.gameObject.SetActive(true);
             _fxTutorial.gameObject.SetActive(false);
             
             _canvasTraining.OnCanvasTraining(true);
