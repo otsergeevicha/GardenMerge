@@ -9,6 +9,8 @@ namespace Field.Plants
         public abstract bool IsRipe();
 
         public abstract int GetLevel();
+        public abstract float GetTimeCollect();
+        public abstract float GetFloweringPeriod();
 
         public Vector3 ReadFirstPosition() =>
             _firstPosition;

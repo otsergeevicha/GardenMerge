@@ -90,6 +90,12 @@ namespace Field.Plants.GoldPlants
                 _coroutine = null;
             }
         }
+        
+        public override float GetTimeCollect() => 
+            RequiredTimeForCollect;
+
+        public override float GetFloweringPeriod() => 
+            RewardTimeToRipe;
 
         public override void Collect() => 
             _coroutine = StartCoroutine(CollectingLeaves());

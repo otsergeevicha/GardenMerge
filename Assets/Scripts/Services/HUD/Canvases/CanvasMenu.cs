@@ -1,5 +1,6 @@
 using System;
 using Agava.YandexGames;
+using Services.HUD.Canvases.AlmanacLogic;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -8,12 +9,13 @@ namespace Services.HUD.Canvases
     {
         [SerializeField] private CanvasSetting _canvasSetting;
         [SerializeField] private CanvasHud _canvasHud;
+        [SerializeField] private AlmanacModule _almanacModule;
 
         private void FixedUpdate()
         {
             if (isActiveAndEnabled == false)
                 return;
-            
+
             Time.timeScale = 0;
         }
 
@@ -21,18 +23,17 @@ namespace Services.HUD.Canvases
         {
             //InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
             print("и здесь тоже, удали что ниже");
-            gameObject.SetActive(false);
-            _canvasHud.gameObject.SetActive(true);
-            Time.timeScale = 1;
+            OnCloseCallback(true);
         }
 
-        public void OnVisibleSettingCanvas() => 
+        public void OnVisibleSettingCanvas() =>
             _canvasSetting.gameObject.SetActive(true);
 
         private void OnErrorCallback(string obj)
         {
             gameObject.SetActive(false);
             _canvasHud.gameObject.SetActive(true);
+            _almanacModule.FirstSelection();
             Time.timeScale = 1;
         }
 
@@ -40,10 +41,11 @@ namespace Services.HUD.Canvases
         {
             gameObject.SetActive(false);
             _canvasHud.gameObject.SetActive(true);
+            _almanacModule.FirstSelection();
             Time.timeScale = 1;
         }
 
-        private void OnOpenCallback() => 
+        private void OnOpenCallback() =>
             throw new NotImplementedException();
     }
 }

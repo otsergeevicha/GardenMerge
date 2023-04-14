@@ -135,6 +135,9 @@ namespace Services.HUD.Canvases
                 case 7:
                     Gift((int)GiftType.ShrubBronze);
                     break;
+                default:
+                    _saveLoad.ApplyMoneyGift(GiftMoney);
+                    break;
             }
         }
     }

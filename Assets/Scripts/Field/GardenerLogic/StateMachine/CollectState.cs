@@ -1,5 +1,6 @@
 using Field.Plants;
 using Services.HUD;
+using Services.HUD.Canvases.AlmanacLogic;
 using Services.Sound;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ namespace Field.GardenerLogic.StateMachine
     {
         [SerializeField] private FXOperator _fxOperator;
         [SerializeField] private IconEnlarger _iconEnlarger;
+        [SerializeField] private AlmanacModule _almanac;
 
         private const string IsCollect = "IsCollect";
 
@@ -43,6 +45,7 @@ namespace Field.GardenerLogic.StateMachine
             _counter = 0;
             SaveLoad.ApplyMoney(_vegetation.PriceCollect());
             SaveLoad.ApplyPointCollect(_vegetation.PriceCollect());
+            _almanac.IncreaseTotalReceivedCoins(_vegetation.PriceCollect(), _vegetation.GetLevel());
             _iconEnlarger.EnlargeIcon();
             _fxOperator.PlaySoundCoins();
             StateMachine.EnterBehavior<SearchTargetState>();

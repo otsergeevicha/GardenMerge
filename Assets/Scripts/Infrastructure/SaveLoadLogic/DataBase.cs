@@ -10,7 +10,7 @@ namespace Infrastructure.SaveLoadLogic
     public class DataBase
     {
         public List<LevelData> LevelDatas = new ();
-        public List<AlmanacType> Almanac = new ();
+        public List<AlmanacDataType> Almanac = new ();
 
         public bool FirstTraining;
         public bool IsSubscribe;
@@ -61,12 +61,26 @@ namespace Infrastructure.SaveLoadLogic
                 LevelDatas.Add(new LevelData(vegetation.GetLevel(), vegetation.transform.position));
         }
 
+        public void SaveAlmanac(List<AlmanacType> almanacType)
+        {
+            Almanac.Clear();
+            
+            foreach (var type in almanacType)
+            {
+                Almanac.Add(new AlmanacDataType(
+                        type.LevelVegetation, 
+                        type.IsVisibleImage, 
+                        type.CountMerge, 
+                        type.TotalCountCoins));
+            }
+        }
+
         public void AddPointsMerge(int amountPoints) => 
             ScoreMerge += amountPoints;
 
         public int GetScoreMerge() => 
             ScoreMerge;
-        
+
         public void AddPointsCollect(int amountPoints) => 
             ScoreCollect += amountPoints;
 
@@ -84,8 +98,5 @@ namespace Infrastructure.SaveLoadLogic
 
         public void ChangeTempSubscribeStatus(bool status) =>
             IsTempSubscribe = status;
-
-        public void SaveAlmanac(List<AlmanacType> almanac) => 
-            Almanac = almanac;
     }
 }

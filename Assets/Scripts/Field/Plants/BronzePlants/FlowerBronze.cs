@@ -101,7 +101,13 @@ namespace Field.Plants.BronzePlants
 
         public override int GetLevel() =>
             Level;
-        
+
+        public override float GetTimeCollect() => 
+            RequiredTimeForCollect;
+
+        public override float GetFloweringPeriod() => 
+            RewardTimeToRipe;
+
         private IEnumerator CollectingLeaves()
         {
             _leafExplosion.gameObject.SetActive(true);

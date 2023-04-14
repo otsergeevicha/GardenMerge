@@ -95,6 +95,12 @@ namespace Infrastructure.SaveLoadLogic
             Save();
         }
 
+        public void SaveAlmanac()
+        {
+            _dataBase.SaveAlmanac(_almanac.GetAlmanac());
+            Save();
+        }
+
         public void SaveCountSpins(int counterSpins) =>
             _dataBase.ChangeCountSpins(counterSpins);
 
@@ -155,10 +161,7 @@ namespace Infrastructure.SaveLoadLogic
         public bool ReadFirstTraining() => 
             _dataBase.FirstTraining;
 
-        public void SaveAlmanac() => 
-            _dataBase.SaveAlmanac(_almanac.GetAlmanac());
-
-        public List<AlmanacType> ReadAlmanac() => 
+        public List<AlmanacDataType> ReadAlmanac() => 
             _dataBase.Almanac;
 
         public void Save()

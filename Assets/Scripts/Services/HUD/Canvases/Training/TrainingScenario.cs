@@ -18,6 +18,7 @@ namespace Services.HUD.Canvases.Training
         [SerializeField] private GameObject _iconMoney;
         [SerializeField] private GameObject _iconGift;
         [SerializeField] private GameObject _iconPause;
+        [SerializeField] private GameObject _iconAlmanacSlider;
         
         [SerializeField] private GameObject _fxTutorial;
 
@@ -40,6 +41,7 @@ namespace Services.HUD.Canvases.Training
                 _iconSubscribe.gameObject.SetActive(false);
                 _iconMoney.gameObject.SetActive(false);
                 _iconPause.gameObject.SetActive(false);
+                _iconAlmanacSlider.gameObject.SetActive(false);
                 _fxTutorial.gameObject.SetActive(true);
             }
 
@@ -95,6 +97,7 @@ namespace Services.HUD.Canvases.Training
             _iconSubscribe.gameObject.SetActive(true);
             _iconMoney.gameObject.SetActive(true);
             _iconPause.gameObject.SetActive(true);
+            _iconAlmanacSlider.gameObject.SetActive(true);
             _fxTutorial.gameObject.SetActive(false);
             
             _canvasTraining.OnCanvasTraining(true);
