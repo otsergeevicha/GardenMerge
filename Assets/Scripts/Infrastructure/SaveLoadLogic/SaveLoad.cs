@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Agava.YandexGames;
 using Field.Plants;
 using Infrastructure.Factory;
 using Services.HUD.Canvases.AlmanacLogic;
@@ -26,8 +27,8 @@ namespace Infrastructure.SaveLoadLogic
         private void OnEnable()
         {
             _dataBase = PlayerPrefs.HasKey(Key)
-                    ? JsonUtility.FromJson<DataBase>(PlayerPrefs.GetString(Key))
-                    : new DataBase();
+                ? JsonUtility.FromJson<DataBase>(PlayerPrefs.GetString(Key))
+                : new DataBase();
         }
 
         private void OnDisable()
@@ -137,7 +138,7 @@ namespace Infrastructure.SaveLoadLogic
         public void ChangeStatusSubscribe(bool status) =>
             _dataBase.ChangeSubscribeStatus(status);
 
-        public void ChangeStatusTempSubscribe(bool status) => 
+        public void ChangeStatusTempSubscribe(bool status) =>
             _dataBase.ChangeTempSubscribeStatus(status);
 
         public int ReadPriceSeed() =>
@@ -158,21 +159,21 @@ namespace Infrastructure.SaveLoadLogic
         public bool ReadTempStatusSubscribe() =>
             _dataBase.IsTempSubscribe;
 
-        public bool ReadFirstTraining() => 
+        public bool ReadFirstTraining() =>
             _dataBase.FirstTraining;
 
-        public List<AlmanacDataType> ReadAlmanac() => 
+        public List<AlmanacDataType> ReadAlmanac() =>
             _dataBase.Almanac;
 
         public void Save()
         {
             _data = JsonUtility.ToJson(_dataBase);
-            
+
             PlayerPrefs.SetString(Key, _data);
             PlayerPrefs.Save();
         }
 
-        public void ChangeStatusFirstTraining(bool status) => 
+        public void ChangeStatusFirstTraining(bool status) =>
             _dataBase.FirstTraining = status;
 
         private IEnumerator AutoSaveVegetation()
@@ -184,8 +185,7 @@ namespace Infrastructure.SaveLoadLogic
                 _dataBase.SaveVegetation(_factory.GetAllPlants());
                 SaveAlmanac();
                 Save();
-               // PlayerAccount.SetPlayerData(_data);
-               print("здесь заглушка");
+                PlayerAccount.SetPlayerData(_data);
                 yield return _waitForSeconds;
             }
         }

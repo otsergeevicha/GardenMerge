@@ -9,17 +9,13 @@ namespace Field.Plants.Seeds
 
         public override bool IsRipe() => 
             false;
-        
-        public override float GetTimeCollect() => 
-            throw new System.NotImplementedException();
 
-        public override float GetFloweringPeriod() => 
-            throw new System.NotImplementedException();
+        public override float GetTimeCollect() => 0;
 
-        public override void Collect() => 
-            throw new System.NotImplementedException();
+        public override float GetFloweringPeriod() => 0;
 
-        public override int PriceCollect() => 
-            throw new System.NotImplementedException();
+        public override void Collect() {}
+
+        public override int PriceCollect() => 0;
     }
 }

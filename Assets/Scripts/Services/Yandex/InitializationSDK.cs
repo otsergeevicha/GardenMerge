@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Agava.YandexGames;
 using GameAnalyticsSDK;
@@ -12,10 +13,10 @@ namespace Services.Yandex
 
         private const string Key = "Key";
 
-        private void Awake() =>
+        private void Awake() => 
             StartCoroutine(InitSDK());
 
-        private IEnumerator InitSDK()
+       private IEnumerator InitSDK()
         {
             GameAnalytics.Initialize();
             

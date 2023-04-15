@@ -15,12 +15,10 @@ namespace Services.Yandex
 
         private void Awake()
         { 
-            //Billing.GetPurchasedProducts(OnSuccessCallback, OnErrorCallback);
+            Billing.GetPurchasedProducts(OnSuccessCallback, OnErrorCallback);
 
-            print("и здесь");
-            
-           // LeanLocalization.SetCurrentLanguageAll(YandexGamesSdk.Environment.i18n.lang);
-            //LeanLocalization.UpdateTranslations();
+           LeanLocalization.SetCurrentLanguageAll(YandexGamesSdk.Environment.i18n.lang);
+           LeanLocalization.UpdateTranslations();
             
             if (_saveLoad.ReadStatusSubscribe() && _saveLoad.ReadTempStatusSubscribe() == false)
                 return;

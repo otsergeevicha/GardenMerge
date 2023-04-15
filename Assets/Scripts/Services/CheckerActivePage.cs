@@ -49,7 +49,6 @@ namespace Services
             _soundOperator.UnMute();
         }
 
-        private void OnOpenCallback() => 
-            throw new System.NotImplementedException();
+        private void OnOpenCallback(){}
     }
 }

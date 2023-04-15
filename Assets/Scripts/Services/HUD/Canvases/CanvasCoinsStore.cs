@@ -10,7 +10,7 @@ namespace Services.HUD.Canvases
         
         public void OnVisible()
         {
-            GameAnalytics.NewDesignEvent($"ButtonClick:CoinsStore");
+            GameAnalytics.NewDesignEvent($"ButtonClick:CoinsStore:Open");
             _canvasKit.OffVisible();
             _canvasHud.gameObject.SetActive(false);
             Time.timeScale = 0;

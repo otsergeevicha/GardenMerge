@@ -1,3 +1,4 @@
+using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.Training.AI;
 using UnityEngine;
@@ -34,6 +35,8 @@ namespace Services.HUD.Canvases.Training
         {
             if (_saveLoad.ReadFirstTraining() == false)
             {
+                GameAnalytics.NewDesignEvent($"TrainingScenario:Start");
+                
                 var aiTraining = Instantiate(_prefab, transform.parent);
                 aiTraining.Init(this);
                 
@@ -94,6 +97,8 @@ namespace Services.HUD.Canvases.Training
 
         public void OnVisibleCanvasTutorial()
         {
+            GameAnalytics.NewDesignEvent($"TrainingScenario:Finish");
+            
             _iconGift.gameObject.SetActive(true);
             _iconStore.gameObject.SetActive(true);
             _iconSubscribe.gameObject.SetActive(true);
