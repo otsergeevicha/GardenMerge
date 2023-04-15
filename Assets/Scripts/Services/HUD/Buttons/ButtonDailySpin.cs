@@ -1,4 +1,5 @@
 using Agava.YandexGames;
+using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.Sound;
 using TMPro;
@@ -57,12 +58,15 @@ namespace Services.HUD.Buttons
 
         private void OnOpenCallback()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Open");
             Time.timeScale = 0;
             _soundOperator.Mute();
         }
 
         private void OnRewardedCallback()
         { 
+            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Reward");
+            
             _counterSpins += RewardSpinsADS;
             
             if (_counterSpins > MaxCountSpins) 
@@ -71,12 +75,15 @@ namespace Services.HUD.Buttons
             UnLockGame();
         }
 
-        private void OnCloseCallback() => 
-            UnLockGame();
-
-        private void OnErrorCallback(string obj)
+        private void OnCloseCallback()
         {
-            Debug.Log(obj);
+            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Close");
+            UnLockGame();
+        }
+
+        private void OnErrorCallback(string description)
+        {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Error:{description}");
             UnLockGame();
         }
 

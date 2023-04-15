@@ -1,3 +1,4 @@
+using GameAnalyticsSDK;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +52,7 @@ namespace Services.HUD.Canvases.AlmanacLogic
             
             if (_isVisibleImage)
             {
+                GameAnalytics.NewDesignEvent($"ButtonClick:AlmanacType:{_levelVegetation}");
                 _almanacModule.Selected(_levelVegetation);
                 _canvasAlmanac.OnVisible(_levelVegetation, _countMerge, _totalCountCoins);
             }

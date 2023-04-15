@@ -1,4 +1,4 @@
-using System;
+using GameAnalyticsSDK;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -11,18 +11,21 @@ namespace Services.HUD.Canvases
 
         public void OnVisibleCanvasSetting()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Pause:SettingWindow");
             _canvasHud.gameObject.SetActive(false);
             _canvasSetting.gameObject.SetActive(true);
         }
         
         public void Visible(bool status)
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Pause");
             _canvasHud.gameObject.SetActive(true);
             gameObject.SetActive(status);
         }
 
         public void OnMenu()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Pause:OpenMenu");
             _canvasMenu.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }

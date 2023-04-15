@@ -1,5 +1,6 @@
 using System;
 using Agava.YandexGames;
+using GameAnalyticsSDK;
 using Services.HUD.Canvases.AlmanacLogic;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ namespace Services.HUD.Canvases
 
         public void ContinueGame()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart");
             //InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
             print("и здесь тоже, удали что ниже");
             OnCloseCallback(true);

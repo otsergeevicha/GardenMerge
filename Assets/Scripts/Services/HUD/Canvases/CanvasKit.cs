@@ -1,3 +1,4 @@
+using GameAnalyticsSDK;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -8,6 +9,7 @@ namespace Services.HUD.Canvases
         
         public void OnVisible()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit");
             _canvasHud.gameObject.SetActive(false);
             gameObject.SetActive(true);
         }

@@ -1,4 +1,5 @@
 using Field.Tiles.Move;
+using GameAnalyticsSDK;
 using Infrastructure.Factory;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases;
@@ -40,6 +41,8 @@ namespace Services.HUD.Buttons
 
         public void Buy()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:BuySeed");
+            
             if (_saveLoad.CheckAmountMoney(_currentPrice) && TryFreePlace())
             {
                 _saveLoad.BuySeed(_currentPrice);
@@ -56,7 +59,8 @@ namespace Services.HUD.Buttons
                 if (_saveLoad.ReadFirstTraining() == false)
                     WorkTrainingAI();
             }
-            else
+
+            if (_saveLoad.CheckAmountMoney(_currentPrice) == false)
             {
                 _iconShakeStore.Shake();
                 _iconShakeButtonAdd.Shake();

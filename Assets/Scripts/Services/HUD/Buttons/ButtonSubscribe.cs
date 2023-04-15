@@ -1,3 +1,4 @@
+using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases;
 using TMPro;
@@ -49,6 +50,7 @@ namespace Services.HUD.Buttons
 
         public void OnVisibleCanvas()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe");
             Time.timeScale = 0;
             _canvasSubscribe.gameObject.SetActive(true);
         }

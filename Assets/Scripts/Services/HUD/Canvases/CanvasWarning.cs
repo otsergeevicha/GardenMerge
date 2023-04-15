@@ -13,13 +13,18 @@ namespace Services.HUD.Canvases
         {
             gameObject.SetActive(true);
 
+            OffCoroutine();
+
+            _coroutine = StartCoroutine(TimerOffCanvas());
+        }
+
+        public void OffCoroutine()
+        {
             if (_coroutine != null)
             {
                 StopCoroutine(_coroutine);
                 _coroutine = null;
             }
-
-            _coroutine = StartCoroutine(TimerOffCanvas());
         }
 
         private IEnumerator TimerOffCanvas()

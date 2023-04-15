@@ -1,4 +1,5 @@
 using Agava.YandexGames;
+using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Buttons;
 using Services.Sound;
@@ -19,12 +20,16 @@ namespace Services.HUD.Canvases
 
         private void OnOpenCallback()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Open");
+            
             Time.timeScale = 0;
             _soundOperator.Mute();
         }
 
         private void OnRewardedCallback()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Reward");
+            
             _customTimer.Status = true;
             _saveLoad.ChangeStatusSubscribe(true);
             _saveLoad.ChangeStatusTempSubscribe(true);
@@ -34,12 +39,15 @@ namespace Services.HUD.Canvases
             _soundOperator.UnMute();
         }
 
-        private void OnCloseCallback() =>
-            UnLockGame();
-
-        private void OnErrorCallback(string obj)
+        private void OnCloseCallback()
         {
-            Debug.Log(obj);
+            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Close");
+            UnLockGame();
+        }
+
+        private void OnErrorCallback(string description)
+        {
+            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Error:{description}");
             UnLockGame();
         }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using Field.Tiles.Move;
+using GameAnalyticsSDK;
 using Infrastructure.Factory;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Buttons;
@@ -54,6 +55,8 @@ namespace Services.HUD.Canvases
 
         private void Twist()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist");
+            
             if (_coroutine != null)
             {
                 StopCoroutine(_coroutine);
@@ -112,31 +115,41 @@ namespace Services.HUD.Canvases
             {
                 case 0:
                     Gift((int)GiftType.TreeBronze);
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:{GiftType.TreeBronze}");
                     break;
                 case 1:
                     _saveLoad.ApplyMoneyGift(GiftMoney);
                     _canvasGiftUp.ShowResult(0);
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:Coins");
                     break;
                 case 2:
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:TryAgainTwist");
                     Twist();
                     break;
                 case 3:
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:{GiftType.SeedBronze}");
                     Gift((int)GiftType.SeedBronze);
                     break;
                 case 4:
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:{GiftType.SeedGold}");
                     Gift((int)GiftType.SeedGold);
                     break;
                 case 5:
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:{GiftType.SeedEpic}");
                     Gift((int)GiftType.SeedEpic);
                     break;
                 case 6:
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:{GiftType.FlowerBronze}");
                     Gift((int)GiftType.FlowerBronze);
                     break;
                 case 7:
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:{GiftType.ShrubBronze}");
                     Gift((int)GiftType.ShrubBronze);
                     break;
                 default:
                     _saveLoad.ApplyMoneyGift(GiftMoney);
+                    _canvasGiftUp.ShowResult(0);
+                    GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:Twist:GiftUp:Error");
                     break;
             }
         }

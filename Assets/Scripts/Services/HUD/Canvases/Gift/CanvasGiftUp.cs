@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using TMPro;
+using GameAnalyticsSDK;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,7 +56,6 @@ namespace Services.HUD.Canvases.Gift
             Init();
             _icon.sprite = _cards[level].IconVegetation;
 
-            
             _canvasGift.gameObject.SetActive(false);
             gameObject.SetActive(true);
 

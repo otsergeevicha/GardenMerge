@@ -1,4 +1,5 @@
 using Agava.YandexGames;
+using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.LeaderboardFolder.PlayerRank;
 using UnityEngine;
@@ -57,6 +58,8 @@ namespace Services.HUD.Canvases.LeaderboardFolder
 
         public void OnMergeBoard()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Leaderboard:MergeBoard");
+            
             _imageBgL.enabled = true;
             _imageBgR.enabled = false;
 
@@ -72,6 +75,8 @@ namespace Services.HUD.Canvases.LeaderboardFolder
 
         public void OnCollectBoard()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Leaderboard:CollectBoard");
+            
             _imageBgL.enabled = false;
             _imageBgR.enabled = true;
 

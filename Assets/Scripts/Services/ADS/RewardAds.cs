@@ -1,4 +1,5 @@
 using Agava.YandexGames;
+using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases;
 using Services.Sound;
@@ -19,22 +20,31 @@ namespace Services.ADS
 
         private void OnOpenCallback()
         {
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Open");
+            
             Time.timeScale = 0;
             _soundOperator.Mute();
         }
 
         private void OnRewardedCallback()
         { 
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Reward");
+            
             _saveLoad.ApplyMoneyGift(BonusCoins);
             UnLockGame();
         }
 
-        private void OnCloseCallback() => 
-            UnLockGame();
-
-        private void OnErrorCallback(string obj)
+        private void OnCloseCallback()
         {
-            Debug.Log(obj);
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Close");
+            
+            UnLockGame();
+        }
+
+        private void OnErrorCallback(string description)
+        {
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Error:{description}");
+            
             UnLockGame();
         }
 
