@@ -1,3 +1,4 @@
+using System;
 using Agava.YandexGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
@@ -29,32 +30,21 @@ namespace Services.HUD.Canvases.LeaderboardFolder
         [SerializeField] private ThreePlayerRank _threePlayer;
         [SerializeField] private FourPlayerRank _fourPlayer;
 
-        private const string LeaderboardMerge = "LeaderboardMerge";
-        private const string LeaderboardCollect = "LeaderboardCollect";
+        private const string LeaderboardMerge = "LBMerge";
+        private const string LeaderboardCollect = "LBCollect";
+        
         private const string Anonymous = "Anonymous";
 
-        private readonly int _topPlayersCount = 3;
-
-        private void Start() => 
-            SetScore();
-
-        private void OnDisable() => 
-            SetScore();
-
+        private readonly int _topPlayersCount = 4;
+        
         public void OnVisible()
         {
             SetScore();
             OnMergeBoard();
         }
-        
-        private void SetScore()
-        {
-            if (PlayerAccount.IsAuthorized)
-            {
-                Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
-                Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
-            }
-        }
+
+        private void OnDisable() => 
+            SetScore();
 
         public void OnMergeBoard()
         {
@@ -100,8 +90,6 @@ namespace Services.HUD.Canvases.LeaderboardFolder
         {
             PlayerPlace(nameBoard);
             OtherPlayerPlace(nameBoard);
-
-            ReRenderCanvas();
         }
 
         private void PlayerPlace(string nameBoard)
@@ -139,7 +127,16 @@ namespace Services.HUD.Canvases.LeaderboardFolder
             {
                 foreach (LeaderboardEntryResponse otherPlayer in arrayLeaderboardPlayers.entries)
                     SetPlace(otherPlayer);
-            }, null, _topPlayersCount, 0);
+            }, null, _topPlayersCount, 3);
+        }
+
+        private void SetScore()
+        {
+            if (PlayerAccount.IsAuthorized)
+            {
+                Leaderboard.SetScore(LeaderboardMerge, _saveLoad.ReadScoreMerge());
+                Leaderboard.SetScore(LeaderboardCollect, _saveLoad.ReadScoreCollect());
+            }
         }
 
         private string NameCorrector(string name)
@@ -148,12 +145,6 @@ namespace Services.HUD.Canvases.LeaderboardFolder
                 name = Anonymous;
 
             return name;
-        }
-
-        private void ReRenderCanvas()
-        {
-            gameObject.SetActive(false);
-            gameObject.SetActive(true);
         }
     }
 }

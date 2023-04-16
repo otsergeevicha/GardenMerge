@@ -33,6 +33,7 @@ namespace Field.GardenerLogic.StateMachine
                 _counter++;
                 _fxOperator.PlaySoundCollect();
                 _vegetation.Collect();
+                SaveLoad.ApplyPointCollect(_vegetation.PriceCollect());
             }
 
             if (_vegetation.IsRipe() == false)
@@ -44,7 +45,6 @@ namespace Field.GardenerLogic.StateMachine
             Animator.SetBool(IsCollect, false);
             _counter = 0;
             SaveLoad.ApplyMoney(_vegetation.PriceCollect());
-            SaveLoad.ApplyPointCollect(_vegetation.PriceCollect());
             _almanac.IncreaseTotalReceivedCoins(_vegetation.PriceCollect(), _vegetation.GetLevel());
             _iconEnlarger.EnlargeIcon();
             _fxOperator.PlaySoundCoins();

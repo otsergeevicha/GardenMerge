@@ -22,7 +22,10 @@ namespace Services.HUD.Canvases
         public void ContinueGame()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart");
-            InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+           // InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+           
+           print("заглушка, удалить метод снизу");
+           OnCloseCallback(true);
         }
 
         public void OnVisibleSettingCanvas() =>

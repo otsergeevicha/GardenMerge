@@ -17,7 +17,7 @@ namespace Infrastructure.SaveLoadLogic
         public bool IsTempSubscribe;
         public float ValueMusic = .2f;
         public float ValueFX = .2f;
-        public int Money = 100;
+        public int Money = 100000;
         public int CountSpins;
         public int PriceSeed = 1;
         public int ScoreMerge;
