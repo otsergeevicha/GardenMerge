@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using CrazyGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.Sound;
@@ -22,53 +22,34 @@ namespace Services.HUD.Canvases
             LockGame();
         }
 
-        public void OffVisible() =>
-            InterstitialAd.Show(
-                delegate
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:InterstitialAd:Open");
-                    LockGame();
-                    _soundOperator.Mute();
-                },
-                delegate
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:InterstitialAd:Close");
-                    UnLockGame();
-                    _soundOperator.UnMute();
-                },
-                (description) =>
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:InterstitialAd:Error:{description}");
-                    UnLockGame();
-                    _soundOperator.UnMute();
-                });
+        public void OffVisible()
+        {
+            UnLockGame();
+        }
 
-        public void SeeReward() =>
-            VideoAd.Show(
-                delegate
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Open");
-                    LockGame();
-                    _soundOperator.Mute();
-                }, delegate
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Reward");
-                    _saveLoad.ApplyMoneyGift(RewardMoney);
-                    UnLockGame();
-                    _soundOperator.UnMute();
-                },
-                delegate
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Close");
-                    UnLockGame();
-                    _soundOperator.UnMute();
-                },
-                (description) =>
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Error:{description}");
-                    UnLockGame();
-                    _soundOperator.UnMute();
-                });
+        public void SeeReward()
+        {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Open");
+            LockGame();
+            _soundOperator.Mute();
+
+            CrazyAds.Instance.beginAdBreakRewarded(SuccessCallback, ErrorCallback);
+        }
+
+        private void ErrorCallback()
+        {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Error");
+            UnLockGame();
+            _soundOperator.UnMute();
+        }
+
+        private void SuccessCallback()
+        {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Reward");
+            _saveLoad.ApplyMoneyGift(RewardMoney);
+            UnLockGame();
+            _soundOperator.UnMute();
+        }
 
         private void UnLockGame()
         {

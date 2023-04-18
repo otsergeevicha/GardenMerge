@@ -1,19 +1,5 @@
 {
   "dependencies": {
-    "com.agava.webutility": {
-      "version": "https://github.com/forcepusher/com.agava.webutility.git#2.1.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "547838c97590eacc47490a4137e54c7882b38f30"
-    },
-    "com.agava.yandexgames": {
-      "version": "https://github.com/forcepusher/com.agava.yandexgames.git#11.2.1",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "93cd4254e13830886ba1c2b3054481844372140c"
-    },
     "com.autodesk.fbx": {
       "version": "4.1.2",
       "depth": 1,
@@ -134,15 +120,6 @@
       "source": "registry",
       "dependencies": {
         "com.unity.settings-manager": "1.0.2"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.recorder": {
-      "version": "3.0.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.timeline": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

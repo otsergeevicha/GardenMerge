@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using CrazyGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.Sound;
@@ -53,18 +53,23 @@ namespace Services.HUD.Buttons
             return false;
         }
 
-        public void See() => 
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
-
-        private void OnOpenCallback()
+        public void See()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Open");
             Time.timeScale = 0;
             _soundOperator.Mute();
+            
+            CrazyAds.Instance.beginAdBreakRewarded(SuccessCallback, ErrorCallback);
         }
 
-        private void OnRewardedCallback()
-        { 
+        private void ErrorCallback()
+        {
+            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Error");
+            UnLockGame();
+        }
+
+        private void SuccessCallback()
+        {
             GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Reward");
             
             _counterSpins += RewardSpinsADS;
@@ -72,18 +77,6 @@ namespace Services.HUD.Buttons
             if (_counterSpins > MaxCountSpins) 
                 _counterSpins = MaxCountSpins;
             
-            UnLockGame();
-        }
-
-        private void OnCloseCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Close");
-            UnLockGame();
-        }
-
-        private void OnErrorCallback(string description)
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Error:{description}");
             UnLockGame();
         }
 

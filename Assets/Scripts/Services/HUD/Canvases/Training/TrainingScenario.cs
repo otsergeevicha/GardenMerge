@@ -14,7 +14,6 @@ namespace Services.HUD.Canvases.Training
         [SerializeField] private GameObject _handMerge;
         [SerializeField] private GameObject _handMove;
         
-        [SerializeField] private GameObject _iconStore;
         [SerializeField] private GameObject _iconSubscribe;
         [SerializeField] private GameObject _iconMoney;
         [SerializeField] private GameObject _iconGift;
@@ -41,7 +40,6 @@ namespace Services.HUD.Canvases.Training
                 aiTraining.Init(this);
                 
                 _iconGift.gameObject.SetActive(false);
-                _iconStore.gameObject.SetActive(false);
                 _iconSubscribe.gameObject.SetActive(false);
                 _iconMoney.gameObject.SetActive(false);
                 _iconPause.gameObject.SetActive(false);
@@ -100,7 +98,6 @@ namespace Services.HUD.Canvases.Training
             GameAnalytics.NewDesignEvent($"TrainingScenario:Finish");
             
             _iconGift.gameObject.SetActive(true);
-            _iconStore.gameObject.SetActive(true);
             _iconSubscribe.gameObject.SetActive(true);
             _iconMoney.gameObject.SetActive(true);
             _iconPause.gameObject.SetActive(true);

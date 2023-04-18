@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using CrazyGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases;
@@ -13,38 +13,30 @@ namespace Services.ADS
         [SerializeField] private SaveLoad _saveLoad;
         [SerializeField] private CanvasKit _canvasKit;
 
-        private const int BonusCoins = 100;
+        private const int BonusCoins = 500;
 
-        public void See() => 
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
-
-        private void OnOpenCallback()
+        public void See()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Open");
             
             Time.timeScale = 0;
             _soundOperator.Mute();
+            
+            CrazyAds.Instance.beginAdBreakRewarded(SuccessCallback, ErrorCallback);
         }
 
-        private void OnRewardedCallback()
-        { 
+        private void ErrorCallback()
+        {
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Error");
+            
+            UnLockGame();
+        }
+
+        private void SuccessCallback()
+        {
             GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Reward");
             
             _saveLoad.ApplyMoneyGift(BonusCoins);
-            UnLockGame();
-        }
-
-        private void OnCloseCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Close");
-            
-            UnLockGame();
-        }
-
-        private void OnErrorCallback(string description)
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Error:{description}");
-            
             UnLockGame();
         }
 

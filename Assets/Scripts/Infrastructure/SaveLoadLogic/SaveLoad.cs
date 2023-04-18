@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Agava.YandexGames;
 using Field.Plants;
+using GameAnalyticsSDK;
 using Infrastructure.Factory;
 using Services.HUD.Canvases.AlmanacLogic;
 using UnityEngine;
@@ -26,6 +26,8 @@ namespace Infrastructure.SaveLoadLogic
 
         private void OnEnable()
         {
+            GameAnalytics.Initialize();
+            
             _dataBase = PlayerPrefs.HasKey(Key)
                 ? JsonUtility.FromJson<DataBase>(PlayerPrefs.GetString(Key))
                 : new DataBase();
@@ -185,9 +187,7 @@ namespace Infrastructure.SaveLoadLogic
                 _dataBase.SaveVegetation(_factory.GetAllPlants());
                 SaveAlmanac();
                 Save();
-                
-                print("заглушка сейва");
-                //PlayerAccount.SetPlayerData(_data);
+
                 yield return _waitForSeconds;
             }
         }
