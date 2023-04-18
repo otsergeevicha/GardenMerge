@@ -19,8 +19,7 @@ namespace Services.HUD.Buttons
         [SerializeField] private SaveLoad _saveLoad;
 
         [SerializeField] private TrainingScenario _trainingScenario;
-
-        [SerializeField] private IconShake _iconShakeStore;
+        
         [SerializeField] private IconShake _iconShakeButtonAdd;
 
         [SerializeField] private CanvasWarning _canvasWarning;
@@ -62,7 +61,6 @@ namespace Services.HUD.Buttons
 
             if (_saveLoad.CheckAmountMoney(_currentPrice) == false)
             {
-                _iconShakeStore.Shake();
                 _iconShakeButtonAdd.Shake();
 
                 _counterEmptyWallet++;

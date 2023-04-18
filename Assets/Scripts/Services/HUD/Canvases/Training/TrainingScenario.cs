@@ -47,6 +47,12 @@ namespace Services.HUD.Canvases.Training
                 _fxTutorial.gameObject.SetActive(true);
             }
 
+            if (_saveLoad.ReadFirstTraining())
+            {
+                _handMerge.SetActive(false);
+                _handMove.SetActive(false);
+            }
+            
             OffSteps();
         }
 
