@@ -42,7 +42,21 @@ namespace Services.HUD.Buttons
         public void Buy()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:BuySeed");
-            
+
+            if (_saveLoad.CheckAmountMoney(_currentPrice) == false)
+            {
+                _iconShakeStore.Shake();
+                _iconShakeButtonAdd.Shake();
+
+                _counterEmptyWallet++;
+
+                if (_counterEmptyWallet == 3)
+                {
+                    _canvasProposal.OnVisible();
+                    _counterEmptyWallet = 0;
+                }
+            }
+
             if (_saveLoad.CheckAmountMoney(_currentPrice) && TryFreePlace())
             {
                 _saveLoad.BuySeed(_currentPrice);
@@ -58,20 +72,6 @@ namespace Services.HUD.Buttons
 
                 if (_saveLoad.ReadFirstTraining() == false)
                     WorkTrainingAI();
-            }
-
-            if (_saveLoad.CheckAmountMoney(_currentPrice) == false)
-            {
-                _iconShakeStore.Shake();
-                _iconShakeButtonAdd.Shake();
-
-                _counterEmptyWallet++;
-
-                if (_counterEmptyWallet == 3)
-                {
-                    _canvasProposal.OnVisible();
-                    _counterEmptyWallet = 0;
-                }
             }
         }
 
