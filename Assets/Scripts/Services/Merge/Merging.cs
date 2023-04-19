@@ -15,6 +15,10 @@ namespace Services.Merge
 
         [SerializeField] private TrainingScenario _trainingScenario;
         [SerializeField] private SaveLoad _saveLoad;
+        
+        private const int RewardCompletedGame = 50000;
+        private const int LastLevel = 12;
+        
         private int _counterMerge;
 
         public event Action<int> Merged;
@@ -23,7 +27,13 @@ namespace Services.Merge
         {
             if(vegetationCollision.GetLevel() == vegetation.GetLevel())
             {
-
+                if (vegetationCollision.GetLevel() == LastLevel)
+                {
+                    _saveLoad.ApplyMoneyGift(RewardCompletedGame);
+                    _saveLoad.SaveNewPriceSeed(_saveLoad.ReadPriceSeed() / 2);
+                    return;
+                }
+                
                 Vector3 placeMerge = vegetationCollision.transform.position;
                 int levelMerge = vegetationCollision.GetLevel();
                 levelMerge++;
@@ -58,5 +68,6 @@ namespace Services.Merge
                 vegetation.InitPosition(tempVarPoint);
             }
         }
+
     }
 }
