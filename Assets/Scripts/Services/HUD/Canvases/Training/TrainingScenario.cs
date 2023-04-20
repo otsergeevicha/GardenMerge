@@ -16,17 +16,16 @@ namespace Services.HUD.Canvases.Training
         
         [SerializeField] private GameObject _iconSubscribe;
         [SerializeField] private GameObject _iconMoney;
-        [SerializeField] private GameObject _iconGift;
         [SerializeField] private GameObject _iconPause;
         [SerializeField] private GameObject _iconBuySeed;
         [SerializeField] private GameObject _iconAlmanacSlider;
         
         [SerializeField] private GameObject _fxTutorial;
 
-        private bool _stepOne = false;
-        private bool _stepTwo = false;
-        private bool _stepThree = false;
-        private bool _stepFour = false;
+        private bool _stepOne;
+        private bool _stepTwo;
+        private bool _stepThree;
+        private bool _stepFour;
 
         private Coroutine _coroutine;
 
@@ -39,7 +38,6 @@ namespace Services.HUD.Canvases.Training
                 var aiTraining = Instantiate(_prefab, transform.parent);
                 aiTraining.Init(this);
                 
-                _iconGift.gameObject.SetActive(false);
                 _iconSubscribe.gameObject.SetActive(false);
                 _iconMoney.gameObject.SetActive(false);
                 _iconPause.gameObject.SetActive(false);
@@ -103,7 +101,6 @@ namespace Services.HUD.Canvases.Training
         {
             GameAnalytics.NewDesignEvent($"TrainingScenario:Finish");
             
-            _iconGift.gameObject.SetActive(true);
             _iconSubscribe.gameObject.SetActive(true);
             _iconMoney.gameObject.SetActive(true);
             _iconPause.gameObject.SetActive(true);

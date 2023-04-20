@@ -48,7 +48,7 @@ namespace Services.HUD.Buttons
 
                 _counterEmptyWallet++;
 
-                if (_counterEmptyWallet == 3)
+                if (_counterEmptyWallet == 5)
                 {
                     _canvasProposal.OnVisible();
                     _counterEmptyWallet = 0;

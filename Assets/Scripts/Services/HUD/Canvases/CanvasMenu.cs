@@ -1,4 +1,3 @@
-using CrazyGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.AlmanacLogic;
@@ -24,40 +23,9 @@ namespace Services.HUD.Canvases
         public void ContinueGame()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart");
-            
 
-
-            if (_saveLoad.ReadFirstTraining())
-            {
-                GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart:InterstitialAd:Open");
-                CrazyAds.Instance.beginAdBreak(SuccessCallback, ErrorCallback);
-            }
-
-            if (_saveLoad.ReadFirstTraining() == false)
-            {
-                gameObject.SetActive(false);
-                _canvasHud.gameObject.SetActive(true);
-                Time.timeScale = 1;
-            }
-        }
-
-        private void ErrorCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart:InterstitialAd:Error");
-            
             gameObject.SetActive(false);
             _canvasHud.gameObject.SetActive(true);
-            _almanacModule.FirstSelection();
-            Time.timeScale = 1;
-        }
-
-        private void SuccessCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart:InterstitialAd:Close");
-            
-            gameObject.SetActive(false);
-            _canvasHud.gameObject.SetActive(true);
-            _almanacModule.FirstSelection();
             Time.timeScale = 1;
         }
 
