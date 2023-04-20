@@ -5,6 +5,8 @@ namespace Services.HUD.Canvases.CoinsStore
 {
     public class CanvasBarter : MonoBehaviour
     {
+        [SerializeField] private CanvasHud _canvasHud;
+        
         public void OnVisible()
         {
             GameAnalytics.NewDesignEvent($"CanvasBarter:Open");
@@ -15,6 +17,7 @@ namespace Services.HUD.Canvases.CoinsStore
 
         public void OffVisible()
         {
+            _canvasHud.gameObject.SetActive(true);
             Time.timeScale = 1;
             gameObject.SetActive(false);
         }

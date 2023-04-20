@@ -1,7 +1,5 @@
 using Agava.YandexGames;
-using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
-using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,14 +14,7 @@ namespace Services.Yandex
 
         private void Awake()
         {
-            GameAnalytics.Initialize();
-            
-            print("место заглушки, удалить инициализатор выше");
-            
-          //  Billing.GetPurchasedProducts(OnSuccessCallback, OnErrorCallback);
-
-          //  LeanLocalization.SetCurrentLanguageAll(YandexGamesSdk.Environment.i18n.lang);
-          //  LeanLocalization.UpdateTranslations();
+            Billing.GetPurchasedProducts(OnSuccessCallback, OnErrorCallback);
 
             if (_saveLoad.ReadStatusSubscribe() && _saveLoad.ReadTempStatusSubscribe() == false)
                 return;

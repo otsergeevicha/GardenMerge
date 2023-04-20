@@ -13,16 +13,20 @@ namespace Services.Yandex
 
         private const string Key = "Key";
 
-        private void Awake() => 
-            StartCoroutine(InitSDK());
-
-       private IEnumerator InitSDK()
+        private void Start()
         {
             GameAnalytics.Initialize();
             
+            StartCoroutine(InitSDK());
+        }
+
+        private IEnumerator InitSDK()
+        {
             while (!YandexGamesSdk.IsInitialized)
                 yield return YandexGamesSdk.Initialize();
-
+            
+            yield return new WaitForSeconds(1f);
+            
             if (PlayerAccount.IsAuthorized)
                 PlayerAccount.GetPlayerData(OnSuccessCallback);
 
@@ -33,10 +37,12 @@ namespace Services.Yandex
             }
         }
 
+
+        
         private void OnSuccessCallback(string data)
         {
             GameAnalytics.NewDesignEvent($"Player:Authorization:Success");
-            
+
             PlayerPrefs.SetString(Key, data);
             PlayerPrefs.Save();
 

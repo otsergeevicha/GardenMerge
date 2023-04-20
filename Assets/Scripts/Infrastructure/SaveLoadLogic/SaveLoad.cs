@@ -185,9 +185,8 @@ namespace Infrastructure.SaveLoadLogic
                 _dataBase.SaveVegetation(_factory.GetAllPlants());
                 SaveAlmanac();
                 Save();
-                
-                print("заглушка сейва");
-                //PlayerAccount.SetPlayerData(_data);
+
+                PlayerAccount.SetPlayerData(_data);
                 yield return _waitForSeconds;
             }
         }

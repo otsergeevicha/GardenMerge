@@ -14,20 +14,14 @@ namespace Services
 
         private void OnDisable() => 
             WebApplication.InBackgroundChangeEvent -= OnInBackgroundChange;
-
-        private void Start()
-        {
-            Time.timeScale = 1;
-            _soundOperator.UnMute();
-        }
-
+        
         private void OnInBackgroundChange(bool inBackground)
         {
             switch (inBackground)
             {
                 case true:
-                    Time.timeScale = 0;
                     _soundOperator.Mute();
+                    Time.timeScale = 0;
                     break;
                 case false:
                     InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
@@ -49,6 +43,10 @@ namespace Services
             _soundOperator.UnMute();
         }
 
-        private void OnOpenCallback(){}
+        private void OnOpenCallback()
+        {
+            _soundOperator.Mute();
+            Time.timeScale = 0;
+        }
     }
 }

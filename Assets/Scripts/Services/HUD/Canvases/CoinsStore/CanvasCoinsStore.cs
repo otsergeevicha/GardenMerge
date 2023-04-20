@@ -10,6 +10,7 @@ namespace Services.HUD.Canvases.CoinsStore
     {
         [SerializeField] private CanvasKit _canvasKit;
         [SerializeField] private CanvasHud _canvasHud;
+        [SerializeField] private CanvasBarter _canvasBarter;
         [SerializeField] private OperatorFactory _factory;
 
         public void OnVisible()
@@ -36,6 +37,8 @@ namespace Services.HUD.Canvases.CoinsStore
 
             if (vegetation == null)
             {
+
+                _canvasBarter.OnVisible();
                 gameObject.SetActive(false);
                 return false;
             }

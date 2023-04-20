@@ -1,6 +1,9 @@
+using System;
 using Agava.YandexGames;
 using GameAnalyticsSDK;
+using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.AlmanacLogic;
+using Services.Sound;
 using UnityEngine;
 
 namespace Services.HUD.Canvases
@@ -10,22 +13,35 @@ namespace Services.HUD.Canvases
         [SerializeField] private CanvasSetting _canvasSetting;
         [SerializeField] private CanvasHud _canvasHud;
         [SerializeField] private AlmanacModule _almanacModule;
+        [SerializeField] private SoundOperator _soundOperator;
+        [SerializeField] private SaveLoad _saveLoad;
+
+        private void Start() => 
+            _soundOperator.UnMute();
 
         private void FixedUpdate()
         {
             if (isActiveAndEnabled == false)
                 return;
-
+            
             Time.timeScale = 0;
         }
 
         public void ContinueGame()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart");
-           // InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
-           
-           print("заглушка, удалить метод снизу");
-           OnCloseCallback(true);
+
+            if (_saveLoad.ReadFirstTraining() == false)
+            {
+                gameObject.SetActive(false);
+                _canvasHud.gameObject.SetActive(true);
+                _almanacModule.FirstSelection();
+                Time.timeScale = 1;
+                _soundOperator.UnMute();
+            }
+            
+            if (_saveLoad.ReadFirstTraining()) 
+                InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
         }
 
         public void OnVisibleSettingCanvas() =>
@@ -39,6 +55,7 @@ namespace Services.HUD.Canvases
             _canvasHud.gameObject.SetActive(true);
             _almanacModule.FirstSelection();
             Time.timeScale = 1;
+            _soundOperator.UnMute();
         }
 
         private void OnCloseCallback(bool obj)
@@ -49,9 +66,13 @@ namespace Services.HUD.Canvases
             _canvasHud.gameObject.SetActive(true);
             _almanacModule.FirstSelection();
             Time.timeScale = 1;
+            _soundOperator.UnMute();
         }
 
-        private void OnOpenCallback() => 
+        private void OnOpenCallback()
+        {
+            _soundOperator.Mute();
             GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart:InterstitialAd:Open");
+        }
     }
 }

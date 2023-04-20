@@ -16,7 +16,7 @@ namespace Services.Merge
         [SerializeField] private TrainingScenario _trainingScenario;
         [SerializeField] private SaveLoad _saveLoad;
         
-        private const int RewardCompletedGame = 50000;
+        private const int RewardCompletedGame = 100000;
         private const int LastLevel = 12;
         
         private int _counterMerge;
@@ -30,7 +30,9 @@ namespace Services.Merge
                 if (vegetationCollision.GetLevel() == LastLevel)
                 {
                     _saveLoad.ApplyMoneyGift(RewardCompletedGame);
-                    _saveLoad.SaveNewPriceSeed(_saveLoad.ReadPriceSeed() / 2);
+                    _saveLoad.SaveNewPriceSeed(0);
+                    vegetationCollision.gameObject.SetActive(false);
+                    vegetation.gameObject.SetActive(false);
                     return;
                 }
                 
