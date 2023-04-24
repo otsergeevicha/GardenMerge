@@ -37,13 +37,12 @@ namespace Services.HUD.Canvases.CoinsStore
 
             if (vegetation == null)
             {
-
                 _canvasBarter.OnVisible();
                 gameObject.SetActive(false);
                 return false;
             }
 
-            vegetation.gameObject.SetActive(false);
+            vegetation.Wipe();
             return true;
         }
     }

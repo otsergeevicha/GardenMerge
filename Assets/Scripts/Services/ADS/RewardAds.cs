@@ -13,25 +13,23 @@ namespace Services.ADS
         [SerializeField] private SaveLoad _saveLoad;
         [SerializeField] private CanvasKit _canvasKit;
 
-        private const int BonusCoins = 100;
+        private const int BonusCoins = 500;
 
-        public void See() => 
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
-
-        private void OnOpenCallback()
+        public void See()
         {
-            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Open");
-            
             Time.timeScale = 0;
             _soundOperator.Mute();
+            
+            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
         }
+
+        private void OnOpenCallback() => 
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Open");
 
         private void OnRewardedCallback()
         { 
             GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Reward");
-            
             _saveLoad.ApplyMoneyGift(BonusCoins);
-            UnLockGame();
         }
 
         private void OnCloseCallback()

@@ -39,9 +39,13 @@ namespace Services.HUD.Canvases
                 Time.timeScale = 1;
                 _soundOperator.UnMute();
             }
-            
-            if (_saveLoad.ReadFirstTraining()) 
+
+            if (_saveLoad.ReadFirstTraining())
+            {
+                _soundOperator.Mute();
+                
                 InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+            }
         }
 
         public void OnVisibleSettingCanvas() =>
@@ -69,10 +73,7 @@ namespace Services.HUD.Canvases
             _soundOperator.UnMute();
         }
 
-        private void OnOpenCallback()
-        {
-            _soundOperator.Mute();
+        private void OnOpenCallback() => 
             GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart:InterstitialAd:Open");
-        }
     }
 }

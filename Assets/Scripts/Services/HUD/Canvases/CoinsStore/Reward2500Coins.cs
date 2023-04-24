@@ -18,23 +18,21 @@ namespace Services.HUD.Canvases.CoinsStore
 
         public void See()
         {
-            if (_coinsStore.TryGetVegetation((int)WorkingLevelVegetation.TreeBronze)) 
+            if (_coinsStore.TryGetVegetation((int)WorkingLevelVegetation.TreeBronze))
+            {
+                LockGame();
+                _soundOperator.Mute();
                 VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
+            }
         }
 
-        private void OnOpenCallback()
-        {
+        private void OnOpenCallback() => 
             GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:2500:Open");
-            LockGame();
-            _soundOperator.Mute();
-        }
 
         private void OnRewardedCallback()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:2500:Success");
             _saveLoad.ApplyMoneyGift(RewardMoney);
-            UnLockGame();
-            _soundOperator.UnMute();
         }
 
         private void OnCloseCallback()

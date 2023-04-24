@@ -53,15 +53,15 @@ namespace Services.HUD.Buttons
             return false;
         }
 
-        public void See() => 
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
-
-        private void OnOpenCallback()
+        public void See()
         {
-            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Open");
             Time.timeScale = 0;
             _soundOperator.Mute();
+            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
         }
+
+        private void OnOpenCallback() => 
+            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Open");
 
         private void OnRewardedCallback()
         { 
@@ -71,8 +71,6 @@ namespace Services.HUD.Buttons
             
             if (_counterSpins > MaxCountSpins) 
                 _counterSpins = MaxCountSpins;
-            
-            UnLockGame();
         }
 
         private void OnCloseCallback()

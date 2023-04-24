@@ -37,6 +37,7 @@ namespace Field.Plants.EpicPlants
             if (isActiveAndEnabled == false)
             {
                 _isFirstMerge = false;
+                _isRiped = false;
                 return;
             }
 
@@ -82,6 +83,17 @@ namespace Field.Plants.EpicPlants
         private void OnDisable() => 
             OffCoroutine();
 
+        public override void Wipe()
+        {
+            OffCoroutine();
+            _leaves.gameObject.SetActive(true);
+            _isRiped = false;
+                
+            _leafExplosion.gameObject.SetActive(false);
+            _dustStorm.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+        }
+        
         private void OffCoroutine()
         {
             if (_coroutine != null)

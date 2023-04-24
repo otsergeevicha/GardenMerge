@@ -36,6 +36,7 @@ namespace Field.Plants.BronzePlants
             if (isActiveAndEnabled == false)
             {
                 _isFirstMerge = false;
+                _isRiped = false;
                 return;
             }
 
@@ -95,6 +96,17 @@ namespace Field.Plants.BronzePlants
 
         public override int PriceCollect() => 
             Price;
+
+        public override void Wipe()
+        {
+            OffCoroutine();
+            _leaves.gameObject.SetActive(true);
+            _isRiped = false;
+                
+            _leafExplosion.gameObject.SetActive(false);
+            _dustStorm.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+        }
 
         public override bool IsRipe() =>
             _isRiped;

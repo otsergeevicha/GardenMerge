@@ -22,13 +22,15 @@ namespace Services.HUD.Canvases
             LockGame();
         }
 
-        public void OffVisible() =>
+        public void OffVisible()
+        {
+            LockGame();
+            _soundOperator.Mute();
+            
             InterstitialAd.Show(
                 delegate
                 {
                     GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:InterstitialAd:Open");
-                    LockGame();
-                    _soundOperator.Mute();
                 },
                 delegate
                 {
@@ -42,15 +44,15 @@ namespace Services.HUD.Canvases
                     UnLockGame();
                     _soundOperator.UnMute();
                 });
+        }
 
-        public void SeeReward() =>
+        public void SeeReward()
+        {
+            LockGame();
+            _soundOperator.Mute();
+            
             VideoAd.Show(
-                delegate
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Open");
-                    LockGame();
-                    _soundOperator.Mute();
-                }, delegate
+                delegate { GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Open"); }, delegate
                 {
                     GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Reward");
                     _saveLoad.ApplyMoneyGift(RewardMoney);
@@ -69,6 +71,7 @@ namespace Services.HUD.Canvases
                     UnLockGame();
                     _soundOperator.UnMute();
                 });
+        }
 
         private void UnLockGame()
         {

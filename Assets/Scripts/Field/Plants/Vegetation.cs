@@ -6,6 +6,8 @@ namespace Field.Plants
     {
         private Vector3 _firstPosition;
 
+        public abstract void Wipe();
+        
         public abstract bool IsRipe();
 
         public abstract int GetLevel();

@@ -15,16 +15,16 @@ namespace Services.HUD.Canvases
         [SerializeField] private SoundOperator _soundOperator;
         [SerializeField] private CustomTimer _customTimer;
 
-        public void See() =>
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
-
-        private void OnOpenCallback()
+        public void See()
         {
-            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Open");
-            
             Time.timeScale = 0;
             _soundOperator.Mute();
+            
+            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
         }
+
+        private void OnOpenCallback() => 
+            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Open");
 
         private void OnRewardedCallback()
         {
@@ -33,21 +33,19 @@ namespace Services.HUD.Canvases
             _customTimer.Status = true;
             _saveLoad.ChangeStatusSubscribe(true);
             _saveLoad.ChangeStatusTempSubscribe(true);
-
-            _subscribe.OffVisibleCanvas();
-            Time.timeScale = 1;
-            _soundOperator.UnMute();
         }
 
         private void OnCloseCallback()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Close");
+            _subscribe.OffVisibleCanvas();
             UnLockGame();
         }
 
         private void OnErrorCallback(string description)
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Error:{description}");
+            _subscribe.OffVisibleCanvas();
             UnLockGame();
         }
 

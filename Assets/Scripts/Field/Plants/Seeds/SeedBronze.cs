@@ -7,6 +7,8 @@ namespace Field.Plants.Seeds
         public override int GetLevel() => 
             Level;
 
+        public override void Wipe() {}
+
         public override bool IsRipe() => 
             false;
         
