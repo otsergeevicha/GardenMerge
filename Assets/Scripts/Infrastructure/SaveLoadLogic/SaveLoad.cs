@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Agava.YandexGames;
 using Field.Plants;
 using Infrastructure.Factory;
 using Services.HUD.Canvases.AlmanacLogic;
@@ -185,8 +184,6 @@ namespace Infrastructure.SaveLoadLogic
                 _dataBase.SaveVegetation(_factory.GetAllPlants());
                 SaveAlmanac();
                 Save();
-
-                PlayerAccount.SetPlayerData(_data);
                 yield return _waitForSeconds;
             }
         }

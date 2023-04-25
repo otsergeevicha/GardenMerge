@@ -50,7 +50,7 @@ namespace Services.Merge
                         plant.gameObject.transform.position = placeMerge;
                         plant.gameObject.SetActive(true);
                         _fxOperator.PlaySoundMerge();
-                        Merged?.Invoke(levelMerge * 3);
+                        Merged?.Invoke(levelMerge);
 
                         if (_saveLoad.ReadFirstTraining() == false && _counterMerge == 0)
                         {

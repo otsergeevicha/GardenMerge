@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using DungeonGames.VKGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.Sound;
@@ -24,35 +24,17 @@ namespace Services.HUD.Canvases
 
         public void OffVisible()
         {
-            LockGame();
-            _soundOperator.Mute();
-            
-            InterstitialAd.Show(
-                delegate
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:InterstitialAd:Open");
-                },
-                delegate
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:InterstitialAd:Close");
-                    UnLockGame();
-                    _soundOperator.UnMute();
-                },
-                (description) =>
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:InterstitialAd:Error:{description}");
-                    UnLockGame();
-                    _soundOperator.UnMute();
-                });
+            UnLockGame();
+            _soundOperator.UnMute();
         }
 
         public void SeeReward()
         {
             LockGame();
             _soundOperator.Mute();
-            
+
             VideoAd.Show(
-                delegate { GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Open"); }, delegate
+                delegate
                 {
                     GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Reward");
                     _saveLoad.ApplyMoneyGift(RewardMoney);
@@ -62,12 +44,6 @@ namespace Services.HUD.Canvases
                 delegate
                 {
                     GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Close");
-                    UnLockGame();
-                    _soundOperator.UnMute();
-                },
-                (description) =>
-                {
-                    GameAnalytics.NewDesignEvent($"ButtonClick:Proposal:VideoAd:Error:{description}");
                     UnLockGame();
                     _soundOperator.UnMute();
                 });

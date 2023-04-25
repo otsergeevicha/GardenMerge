@@ -1,3 +1,4 @@
+using DungeonGames.VKGames;
 using GameAnalyticsSDK;
 using UnityEngine;
 
@@ -29,5 +30,8 @@ namespace Services.HUD.Canvases
             _canvasMenu.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
+        
+        public void InviteFriend() =>
+            SocialInteraction.InviteFriends();
     }
 }

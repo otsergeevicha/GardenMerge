@@ -1,5 +1,4 @@
 using Agava.WebUtility;
-using Agava.YandexGames;
 using Services.Sound;
 using UnityEngine;
 
@@ -24,29 +23,10 @@ namespace Services
                     Time.timeScale = 0;
                     break;
                 case false:
-                    InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
                     Time.timeScale = 1;
                     _soundOperator.UnMute();
                     break;
             }
-        }
-
-        private void OnErrorCallback(string obj)
-        {
-            Time.timeScale = 1;
-            _soundOperator.UnMute();
-        }
-
-        private void OnCloseCallback(bool obj)
-        {
-            Time.timeScale = 1;
-            _soundOperator.UnMute();
-        }
-
-        private void OnOpenCallback()
-        {
-            _soundOperator.Mute();
-            Time.timeScale = 0;
         }
     }
 }

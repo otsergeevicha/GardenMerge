@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using DungeonGames.VKGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.AlmanacLogic;
@@ -22,27 +22,19 @@ namespace Services.HUD.Canvases.CoinsStore
             {
                 LockGame();
                 _soundOperator.Mute();
-                VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
+                VideoAd.Show(OnRewardedCallback, OnErrorCallback);
             }
         }
-
-        private void OnOpenCallback() => 
-            GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Open");
-
+        
         private void OnRewardedCallback()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Success");
             _saveLoad.ApplyMoneyGift(RewardMoney);
-        }
-
-        private void OnCloseCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Close");
             UnLockGame();
             _soundOperator.UnMute();
         }
 
-        private void OnErrorCallback(string description)
+        private void OnErrorCallback()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Error");
             UnLockGame();

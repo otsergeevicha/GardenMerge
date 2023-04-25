@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using DungeonGames.VKGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases;
@@ -20,11 +20,8 @@ namespace Services.ADS
             Time.timeScale = 0;
             _soundOperator.Mute();
             
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
+            VideoAd.Show(OnRewardedCallback, OnErrorCallback);
         }
-
-        private void OnOpenCallback() => 
-            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Open");
 
         private void OnRewardedCallback()
         { 
@@ -32,17 +29,9 @@ namespace Services.ADS
             _saveLoad.ApplyMoneyGift(BonusCoins);
         }
 
-        private void OnCloseCallback()
+        private void OnErrorCallback()
         {
-            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Close");
-            
-            UnLockGame();
-        }
-
-        private void OnErrorCallback(string description)
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Error:{description}");
-            
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Error");
             UnLockGame();
         }
 

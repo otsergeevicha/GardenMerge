@@ -1,5 +1,3 @@
-using System;
-using Agava.YandexGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.AlmanacLogic;
@@ -14,16 +12,15 @@ namespace Services.HUD.Canvases
         [SerializeField] private CanvasHud _canvasHud;
         [SerializeField] private AlmanacModule _almanacModule;
         [SerializeField] private SoundOperator _soundOperator;
-        [SerializeField] private SaveLoad _saveLoad;
 
-        private void Start() => 
+        private void Start() =>
             _soundOperator.UnMute();
 
         private void FixedUpdate()
         {
             if (isActiveAndEnabled == false)
                 return;
-            
+
             Time.timeScale = 0;
         }
 
@@ -31,49 +28,14 @@ namespace Services.HUD.Canvases
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart");
 
-            if (_saveLoad.ReadFirstTraining() == false)
-            {
-                gameObject.SetActive(false);
-                _canvasHud.gameObject.SetActive(true);
-                _almanacModule.FirstSelection();
-                Time.timeScale = 1;
-                _soundOperator.UnMute();
-            }
-
-            if (_saveLoad.ReadFirstTraining())
-            {
-                _soundOperator.Mute();
-                
-                InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
-            }
+            gameObject.SetActive(false);
+            _canvasHud.gameObject.SetActive(true);
+            _almanacModule.FirstSelection();
+            Time.timeScale = 1;
+            _soundOperator.UnMute();
         }
 
         public void OnVisibleSettingCanvas() =>
             _canvasSetting.gameObject.SetActive(true);
-
-        private void OnErrorCallback(string description)
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart:InterstitialAd:Error:{description}");
-            
-            gameObject.SetActive(false);
-            _canvasHud.gameObject.SetActive(true);
-            _almanacModule.FirstSelection();
-            Time.timeScale = 1;
-            _soundOperator.UnMute();
-        }
-
-        private void OnCloseCallback(bool obj)
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart:InterstitialAd:Close");
-            
-            gameObject.SetActive(false);
-            _canvasHud.gameObject.SetActive(true);
-            _almanacModule.FirstSelection();
-            Time.timeScale = 1;
-            _soundOperator.UnMute();
-        }
-
-        private void OnOpenCallback() => 
-            GameAnalytics.NewDesignEvent($"ButtonClick:TapToStart:InterstitialAd:Open");
     }
 }

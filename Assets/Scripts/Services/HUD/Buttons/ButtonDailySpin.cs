@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using DungeonGames.VKGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.Sound;
@@ -57,11 +57,8 @@ namespace Services.HUD.Buttons
         {
             Time.timeScale = 0;
             _soundOperator.Mute();
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
+            VideoAd.Show(OnRewardedCallback, OnErrorCallback);
         }
-
-        private void OnOpenCallback() => 
-            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Open");
 
         private void OnRewardedCallback()
         { 
@@ -71,17 +68,13 @@ namespace Services.HUD.Buttons
             
             if (_counterSpins > MaxCountSpins) 
                 _counterSpins = MaxCountSpins;
-        }
-
-        private void OnCloseCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Close");
+            
             UnLockGame();
         }
 
-        private void OnErrorCallback(string description)
+        private void OnErrorCallback()
         {
-            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin:Error:{description}");
+            GameAnalytics.NewDesignEvent($"ButtonClick:Roulette:CanSpin");
             UnLockGame();
         }
 
