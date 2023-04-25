@@ -16,6 +16,6 @@ namespace Services.ScorePlayer
             _merging.Merged -= SavePoint;
 
         private void SavePoint(int amountPoints) => 
-            _saveLoad.ApplyPointMerge(amountPoints);
+            _saveLoad.ApplyPointMerge(amountPoints * 3);
     }
 }
