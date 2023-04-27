@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "com.agava.webutility": "https://github.com/forcepusher/com.agava.webutility.git#2.1.0",
-    "com.agava.yandexgames": "https://github.com/forcepusher/com.agava.yandexgames.git#11.2.1",
     "com.deltation.toon-shader": "https://github.com/Delt06/urp-toon-shader.git?path=Packages/com.deltation.toon-shader",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "1.0.0-exp.4",

@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using CrazyGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases;
@@ -19,30 +19,21 @@ namespace Services.ADS
         {
             Time.timeScale = 0;
             _soundOperator.Mute();
-            
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
-        }
-
-        private void OnOpenCallback() => 
             GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Open");
-
-        private void OnRewardedCallback()
+            
+            CrazyAds.Instance.beginAdBreakRewarded(CompletedCallback, ErrorCallback);
+        }
+        
+        private void CompletedCallback()
         { 
             GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Reward");
             _saveLoad.ApplyMoneyGift(BonusCoins);
-        }
-
-        private void OnCloseCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Close");
-            
             UnLockGame();
         }
 
-        private void OnErrorCallback(string description)
+        private void ErrorCallback()
         {
-            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Error:{description}");
-            
+            GameAnalytics.NewDesignEvent($"ButtonClick:CanvasKit:VideoAd:Error");
             UnLockGame();
         }
 

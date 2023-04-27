@@ -1,5 +1,5 @@
 using Agava.WebUtility;
-using Agava.YandexGames;
+using CrazyGames;
 using Services.Sound;
 using UnityEngine;
 
@@ -20,33 +20,16 @@ namespace Services
             switch (inBackground)
             {
                 case true:
+                    CrazyEvents.Instance.GameplayStop();
                     _soundOperator.Mute();
                     Time.timeScale = 0;
                     break;
                 case false:
-                    InterstitialAd.Show(OnOpenCallback, OnCloseCallback, OnErrorCallback);
+                    CrazyEvents.Instance.GameplayStart();
                     Time.timeScale = 1;
                     _soundOperator.UnMute();
                     break;
             }
-        }
-
-        private void OnErrorCallback(string obj)
-        {
-            Time.timeScale = 1;
-            _soundOperator.UnMute();
-        }
-
-        private void OnCloseCallback(bool obj)
-        {
-            Time.timeScale = 1;
-            _soundOperator.UnMute();
-        }
-
-        private void OnOpenCallback()
-        {
-            _soundOperator.Mute();
-            Time.timeScale = 0;
         }
     }
 }

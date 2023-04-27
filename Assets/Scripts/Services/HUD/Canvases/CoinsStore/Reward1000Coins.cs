@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using CrazyGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Canvases.AlmanacLogic;
@@ -13,7 +13,7 @@ namespace Services.HUD.Canvases.CoinsStore
         [SerializeField] private SaveLoad _saveLoad;
         [SerializeField] private SoundOperator _soundOperator;
         [SerializeField] private CanvasHud _canvasHud;
-        
+
         private const int RewardMoney = 1000;
 
         public void See()
@@ -22,33 +22,28 @@ namespace Services.HUD.Canvases.CoinsStore
             {
                 LockGame();
                 _soundOperator.Mute();
-                VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
+                GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Open");
+                CrazyAds.Instance.beginAdBreakRewarded(CompletedCallback, ErrorCallback);
             }
         }
 
-        private void OnOpenCallback() => 
-            GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Open");
-
-        private void OnRewardedCallback()
+        private void CompletedCallback()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Success");
-            _saveLoad.ApplyMoneyGift(RewardMoney);
-        }
 
-        private void OnCloseCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Close");
+            _saveLoad.ApplyMoneyGift(RewardMoney);
             UnLockGame();
             _soundOperator.UnMute();
         }
 
-        private void OnErrorCallback(string description)
+        private void ErrorCallback()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:BuyCoins:Reward:1000:Error");
+
             UnLockGame();
             _soundOperator.UnMute();
         }
-        
+
         private void UnLockGame()
         {
             Time.timeScale = 1;

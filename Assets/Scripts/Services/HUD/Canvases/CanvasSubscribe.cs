@@ -1,4 +1,4 @@
-using Agava.YandexGames;
+using CrazyGames;
 using GameAnalyticsSDK;
 using Infrastructure.SaveLoadLogic;
 using Services.HUD.Buttons;
@@ -19,32 +19,27 @@ namespace Services.HUD.Canvases
         {
             Time.timeScale = 0;
             _soundOperator.Mute();
+            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Open");
             
-            VideoAd.Show(OnOpenCallback, OnRewardedCallback, OnCloseCallback, OnErrorCallback);
+            CrazyAds.Instance.beginAdBreakRewarded(CompletedCallback, ErrorCallback);
         }
 
-        private void OnOpenCallback() => 
-            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Open");
-
-        private void OnRewardedCallback()
+        private void CompletedCallback()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Reward");
+            CrazyEvents.Instance.HappyTime();
             
             _customTimer.Status = true;
             _saveLoad.ChangeStatusSubscribe(true);
             _saveLoad.ChangeStatusTempSubscribe(true);
-        }
-
-        private void OnCloseCallback()
-        {
-            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Close");
+            
             _subscribe.OffVisibleCanvas();
             UnLockGame();
         }
 
-        private void OnErrorCallback(string description)
+        private void ErrorCallback()
         {
-            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Error:{description}");
+            GameAnalytics.NewDesignEvent($"ButtonClick:ButtonSubscribe:VideoSub:Error");
             _subscribe.OffVisibleCanvas();
             UnLockGame();
         }

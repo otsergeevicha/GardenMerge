@@ -1,3 +1,4 @@
+using CrazyGames;
 using GameAnalyticsSDK;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ namespace Services.HUD.Canvases
         public void OnMenu()
         {
             GameAnalytics.NewDesignEvent($"ButtonClick:Pause:OpenMenu");
+            CrazyEvents.Instance.GameplayStop();
             _canvasMenu.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
